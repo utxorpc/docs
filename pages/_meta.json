@@ -1,0 +1,33 @@
+{
+  "index": {
+    "title": "UTxO RPC",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "layout": "full"
+    }
+  },
+  "-- Basics --": {
+    "type": "separator",
+    "title": "About"
+  },
+  "introduction": "Introduction",
+  "architectural": "Architectural Decisions",
+  "modules": "Modules",
+  "-- Modules --": {
+    "type": "separator",
+    "title": "Specification"
+  },
+  "ledger": "Ledger",
+  "state": "State",
+  "sync": "Sync",
+  "watch": "Watch",
+  "-- SDK --": {
+    "type": "separator",
+    "title": "SDK"
+  },
+  "rust": "Rust",
+  "python": "Python",
+  "go": "Go",
+  "nodejs": "NodeJS"
+}

@@ -1,0 +1,17 @@
+# Architectural Decisions
+
+## Favor developer experience over direct 1:1 mappings
+
+UtxoRpc's ledger interface is designed to prioritize ease of use and understanding for developers, rather than trying to create an exact one-to-one correspondence with the underlying blockchain structures. By doing so, the protocol aims to make it simpler for developers to work with the UTxO-based blockchains, increasing efficiency and reducing the learning curve.
+
+## Favor developer experience over _excessive_ wire performance
+
+This decision implies that UtxoRpc places significant emphasis on optimizing the performance and size of data transmitted over the wire (the network). The goal is to make the protocol fast and lightweight while maintaining excellent developer experience. However, if optimizing performance and size would compromise the developer experience, the priority would shift towards maintaining an easy-to-use and understandable interface.
+
+## v1 focus on Ouroboros protocol and the Cardano ledger
+
+This architectural decision highlights that the initial version (v1) of UtxoRpc is designed to be compatible specifically with the Ouroboros protocol and Cardano ledger. In future iterations, the protocol may be extended to support other UTxO-based blockchains, but the primary focus for v1 is to ensure seamless integration and interaction with Cardano's ecosystem.
+
+## The ledger data model as a superset of all eras
+
+This decision signifies that UtxoRpc's ledger data model aims to encompass all data structures from every Cardano era, effectively creating a comprehensive and unified representation of Cardano's blockchain history. In cases where certain data structures are not present or applicable in specific eras, these will be represented as null or missing values. This approach ensures that the data model remains flexible and can accommodate the evolution of the Cardano blockchain over time.
