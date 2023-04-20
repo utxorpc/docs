@@ -18,10 +18,16 @@
     "type": "separator",
     "title": "Specification"
   },
-  "ledger": "Ledger",
-  "state": "State",
-  "sync": "Sync",
-  "watch": "Watch",
+  "build": "Build Module",
+  "submit": "Submit Module",
+  "sync": "Sync Module",
+  "watch": "Watch Module",
+  "query": "Query Module",
+  "-- Ledgers --": {
+    "type": "separator",
+    "title": "Ledgers"
+  },
+  "cardano": "Cardano Module",
   "-- SDK --": {
     "type": "separator",
     "title": "SDK"
@@ -34,7 +40,6 @@
     "type": "separator",
     "title": "Ecosystem"
   },
-  "blockchains": "Blockchains",
   "providers": "Providers",
   "clients": "Clients",
   "tooling": "Tooling",

@@ -1,4 +1,14 @@
-# State Module
+# Build
+
+<a name="utxorpc-state-v1-AnyChainUtxo"></a>
+
+## AnyChainUtxo
+
+An evenlope that holds an UTxO from any of compatible chains
+
+| Field   | Type                                                        | Label | Description |
+| ------- | ----------------------------------------------------------- | ----- | ----------- |
+| cardano | [utxorpc.cardano.v1.TxOutput](#utxorpc-cardano-v1-TxOutput) |       |             |
 
 <a name="utxorpc-state-v1-ChainParam"></a>
 
@@ -76,10 +86,10 @@ Request to get UTxOs by their associated addresses.
 
 Response containing the UTxOs associated with the requested addresses.
 
-| Field      | Type                                                      | Label    | Description           |
-| ---------- | --------------------------------------------------------- | -------- | --------------------- |
-| items      | [utxorpc.ledger.v1.TxOutput](#utxorpc-ledger-v1-TxOutput) | repeated | List of UTxOs.        |
-| next_token | [string](#string)                                         |          | Token for pagination. |
+| Field      | Type                                           | Label    | Description           |
+| ---------- | ---------------------------------------------- | -------- | --------------------- |
+| items      | [AnyChainUtxo](#utxorpc-state-v1-AnyChainUtxo) | repeated | List of UTxOs.        |
+| next_token | [string](#string)                              |          | Token for pagination. |
 
 <a name="utxorpc-state-v1-GetUtxoByRefRequest"></a>
 
@@ -98,10 +108,10 @@ Request to get UTxOs by their references.
 
 Response containing the UTxOs associated with the requested references.
 
-| Field      | Type                                                      | Label    | Description           |
-| ---------- | --------------------------------------------------------- | -------- | --------------------- |
-| items      | [utxorpc.ledger.v1.TxOutput](#utxorpc-ledger-v1-TxOutput) | repeated | List of UTxOs.        |
-| next_token | [string](#string)                                         |          | Token for pagination. |
+| Field      | Type                                           | Label    | Description           |
+| ---------- | ---------------------------------------------- | -------- | --------------------- |
+| items      | [AnyChainUtxo](#utxorpc-state-v1-AnyChainUtxo) | repeated | List of UTxOs.        |
+| next_token | [string](#string)                              |          | Token for pagination. |
 
 <a name="utxorpc-state-v1-HoldUtxoRequest"></a>
 

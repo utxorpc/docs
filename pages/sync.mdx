@@ -1,5 +1,15 @@
 # Sync Module
 
+<a name="utxorpc-sync-v1-AnyChainTx"></a>
+
+## AnyChainTx
+
+| Field   | Type                                            | Label | Description            |
+| ------- | ----------------------------------------------- | ----- | ---------------------- |
+| cardano | [utxorpc.cardano.v1.Tx](#utxorpc-cardano-v1-Tx) |       | A Cardano transaction. |
+
+<a name="utxorpc-sync-v1-Block"></a>
+
 ## Block
 
 Represents a complete block, including header and body.
@@ -16,9 +26,9 @@ Represents a complete block, including header and body.
 
 Contains the transaction data for a block.
 
-| Field | Type                                          | Label    | Description           |
-| ----- | --------------------------------------------- | -------- | --------------------- |
-| tx    | [utxorpc.ledger.v1.Tx](#utxorpc-ledger-v1-Tx) | repeated | List of transactions. |
+| Field | Type                                      | Label    | Description           |
+| ----- | ----------------------------------------- | -------- | --------------------- |
+| tx    | [AnyChainTx](#utxorpc-sync-v1-AnyChainTx) | repeated | List of transactions. |
 
 <a name="utxorpc-sync-v1-BlockHeader"></a>
 
