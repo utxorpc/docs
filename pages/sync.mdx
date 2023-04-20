@@ -1,0 +1,123 @@
+# Sync Module
+
+## Block
+
+Represents a complete block, including header and body.
+
+| Field  | Type                                        | Label | Description              |
+| ------ | ------------------------------------------- | ----- | ------------------------ |
+| header | [BlockHeader](#utxorpc-sync-v1-BlockHeader) |       | Block header.            |
+| body   | [BlockBody](#utxorpc-sync-v1-BlockBody)     |       | Block body.              |
+| cbor   | [bytes](#bytes)                             |       | CBOR-encoded block data. |
+
+<a name="utxorpc-sync-v1-BlockBody"></a>
+
+## BlockBody
+
+Contains the transaction data for a block.
+
+| Field | Type                                          | Label    | Description           |
+| ----- | --------------------------------------------- | -------- | --------------------- |
+| tx    | [utxorpc.ledger.v1.Tx](#utxorpc-ledger-v1-Tx) | repeated | List of transactions. |
+
+<a name="utxorpc-sync-v1-BlockHeader"></a>
+
+## BlockHeader
+
+Contains the header information for a block.
+
+| Field  | Type              | Label | Description   |
+| ------ | ----------------- | ----- | ------------- |
+| slot   | [uint64](#uint64) |       | Slot number.  |
+| height | [uint64](#uint64) |       | Block height. |
+| hash   | [string](#string) |       | Block hash.   |
+
+<a name="utxorpc-sync-v1-BlockRef"></a>
+
+## BlockRef
+
+Represents a reference to a specific block.
+
+| Field  | Type              | Label | Description   |
+| ------ | ----------------- | ----- | ------------- |
+| slot   | [uint64](#uint64) |       | Slot number.  |
+| height | [uint64](#uint64) |       | Block height. |
+| hash   | [string](#string) |       | Block hash.   |
+
+<a name="utxorpc-sync-v1-DumpHistoryRequest"></a>
+
+## DumpHistoryRequest
+
+Request to dump the block history.
+
+| Field       | Type                                                    | Label | Description                                |
+| ----------- | ------------------------------------------------------- | ----- | ------------------------------------------ |
+| start_token | [BlockRef](#utxorpc-sync-v1-BlockRef)                   |       | Starting point for the block history dump. |
+| max_items   | [uint32](#uint32)                                       |       | Maximum number of items to return.         |
+| field_mask  | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |       | Field mask to selectively return fields.   |
+
+<a name="utxorpc-sync-v1-DumpHistoryResponse"></a>
+
+## DumpHistoryResponse
+
+Response containing the dumped block history.
+
+| Field      | Type                                  | Label    | Description                    |
+| ---------- | ------------------------------------- | -------- | ------------------------------ |
+| block      | [Block](#utxorpc-sync-v1-Block)       | repeated | List of blocks in the history. |
+| next_token | [BlockRef](#utxorpc-sync-v1-BlockRef) |          | Next token for pagination.     |
+
+<a name="utxorpc-sync-v1-FetchBlockRequest"></a>
+
+## FetchBlockRequest
+
+Request to fetch a block by its reference.
+
+| Field      | Type                                                    | Label    | Description                              |
+| ---------- | ------------------------------------------------------- | -------- | ---------------------------------------- |
+| ref        | [BlockRef](#utxorpc-sync-v1-BlockRef)                   | repeated | List of block references.                |
+| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |          | Field mask to selectively return fields. |
+
+<a name="utxorpc-sync-v1-FetchBlockResponse"></a>
+
+## FetchBlockResponse
+
+Response containing the fetched blocks.
+
+| Field | Type                            | Label    | Description             |
+| ----- | ------------------------------- | -------- | ----------------------- |
+| block | [Block](#utxorpc-sync-v1-Block) | repeated | List of fetched blocks. |
+
+<a name="utxorpc-sync-v1-FollowTipRequest"></a>
+
+## FollowTipRequest
+
+Request to follow the tip of the blockchain.
+
+| Field     | Type                                  | Label    | Description                                        |
+| --------- | ------------------------------------- | -------- | -------------------------------------------------- |
+| intersect | [BlockRef](#utxorpc-sync-v1-BlockRef) | repeated | List of block references to find the intersection. |
+
+<a name="utxorpc-sync-v1-FollowTipResponse"></a>
+
+## FollowTipResponse
+
+Response containing the action to perform while following the tip.
+
+| Field | Type                                  | Label | Description                    |
+| ----- | ------------------------------------- | ----- | ------------------------------ |
+| apply | [Block](#utxorpc-sync-v1-Block)       |       | Apply this block.              |
+| undo  | [Block](#utxorpc-sync-v1-Block)       |       | Undo this block.               |
+| reset | [BlockRef](#utxorpc-sync-v1-BlockRef) |       | Reset to this block reference. |
+
+<a name="utxorpc-sync-v1-ChainSyncService"></a>
+
+## ChainSyncService
+
+Service definition for syncing chain data.
+
+| Method Name | Request Type                                              | Response Type                                                  | Description                       |
+| ----------- | --------------------------------------------------------- | -------------------------------------------------------------- | --------------------------------- |
+| FetchBlock  | [FetchBlockRequest](#utxorpc-sync-v1-FetchBlockRequest)   | [FetchBlockResponse](#utxorpc-sync-v1-FetchBlockResponse)      | Fetch a block by its reference.   |
+| DumpHistory | [DumpHistoryRequest](#utxorpc-sync-v1-DumpHistoryRequest) | [DumpHistoryResponse](#utxorpc-sync-v1-DumpHistoryResponse)    | Dump the block history.           |
+| FollowTip   | [FollowTipRequest](#utxorpc-sync-v1-FollowTipRequest)     | [FollowTipResponse](#utxorpc-sync-v1-FollowTipResponse) stream | Follow the tip of the blockchain. |

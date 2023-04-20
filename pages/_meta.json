@@ -29,5 +29,14 @@
   "rust": "Rust",
   "python": "Python",
   "go": "Go",
-  "nodejs": "NodeJS"
+  "nodejs": "NodeJS",
+  "-- Ecosystem --": {
+    "type": "separator",
+    "title": "Ecosystem"
+  },
+  "blockchains": "Blockchains",
+  "providers": "Providers",
+  "clients": "Clients",
+  "tooling": "Tooling",
+  "developers": "Developers"
 }
