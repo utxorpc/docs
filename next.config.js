@@ -1,9 +1,10 @@
-const withNextra = require("nextra")({
+import { remarkMermaid } from "remark-mermaid-nextra";
+import nextra from "nextra";
+
+export default nextra({
   theme: "nextra-theme-docs",
   themeConfig: "./theme.config.jsx",
+  mdxOptions: {
+    remarkPlugins: [remarkMermaid],
+  },
 });
-
-module.exports = withNextra();
-
-// If you have other Next.js configurations, you can pass them as the parameter:
-// module.exports = withNextra({ /* other next.js config */ })
