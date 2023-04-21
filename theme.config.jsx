@@ -3,5 +3,7 @@ export default {
     project: {
       link: 'https://github.com/shuding/nextra',
     },
-    // ...
+    sidebar: {
+      defaultMenuCollapseLevel: 0
+    }
   }

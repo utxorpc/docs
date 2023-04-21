@@ -1,0 +1,29 @@
+# UtxoRpc Node.js SDK
+
+The UtxoRpc Node.js SDK is a comprehensive toolkit for building clients and servers to interact with UTxO-based blockchains using the UtxoRpc protocol. This SDK simplifies the process of developing Node.js applications that communicate with blockchain gateways, providing an easy-to-use interface for querying and managing transactions.
+
+## Prerequisites
+
+- Node.js 14.0 or higher
+- `npm`, the Node.js package manager
+
+## Installation
+
+To add the UtxoRpc Node.js SDK to your project, run the following command:
+
+```bash
+npm install utxorpc --save
+```
+
+## Usage
+
+To use the UtxoRpc Node.js SDK, simply import the library and initialize the client:
+
+```javascript
+const UtxoRpc = require("utxorpc");
+
+// Initialize the UtxoRpc client
+const client = new UtxoRpc.Client({
+  // Configuration options
+});
+```

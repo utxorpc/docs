@@ -13,7 +13,6 @@
   },
   "introduction": "Introduction",
   "architectural": "Architectural Decisions",
-  "modules": "Modules",
   "-- Modules --": {
     "type": "separator",
     "title": "Specification"
@@ -40,7 +39,7 @@
     "type": "separator",
     "title": "Ecosystem"
   },
-  "providers": "Providers",
+  "servers": "Servers",
   "clients": "Clients",
   "tooling": "Tooling",
   "developers": "Developers"
