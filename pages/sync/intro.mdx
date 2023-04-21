@@ -19,17 +19,26 @@ The _Sync_ module provides an interface for synchronizing chain data, fetching b
 ```mermaid
 %%{init: { 'theme': 'dark' } }%%
 sequenceDiagram
-  participant Client
-  participant Server
+  actor Client
+  participant SyncService
 
-  Client->>Server: FetchBlockRequest (ref, field_mask)
-  Server-->>Client: FetchBlockResponse (block)
+  Note over Client,SyncService: fetch a particular block
+  Client->>+SyncService: FetchBlock (<ref>)
+  SyncService-->>-Client: <block>
 
-  Client->>Server: DumpHistoryRequest (start_token, max_items, field_mask)
-  Server-->>Client: DumpHistoryResponse (block, next_token)
+  Note over Client,SyncService: dump history of chain in chunks of 100 blocks
+  Client->>+SyncService: DumpHistory (origin, 100)
+  SyncService-->>-Client: <block>[origin..100]
 
-  Client->>Server: FollowTipRequest (intersect)
-  Server-->>Client: FollowTipResponse (apply) [stream]
-  Server-->>Client: FollowTipResponse (undo) [stream]
-  Server-->>Client: FollowTipResponse (reset) [stream]
+  Client->>+SyncService: DumpHistory (last_ref, 100)
+  SyncService-->>-Client: <block>[101..200]
+
+  Note over Client,SyncService: stream change events from tip of the chain
+  Client->>SyncService: FollowTip (<intersection>)
+  activate SyncService
+  SyncService-->>Client: <apply>(block)
+  SyncService-->>Client: <undo>(block)
+  SyncService-->>Client: <reset>(point)
+  Client->>SyncService: Done
+  deactivate SyncService
 ```

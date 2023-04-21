@@ -17,10 +17,39 @@ The _Watch_ module provides an interface for streaming transactions based on spe
 ```mermaid
 %%{init: { 'theme': 'dark' } }%%
 sequenceDiagram
-  participant Client
-  participant Server
+  actor Client
+  participant WatchService
 
-  Client->>Server: WatchTxRequest (predicate, field_mask)
-  Server-->>Client: WatchTxResponse (apply) [stream]
-  Server-->>Client: WatchTxResponse (undo) [stream]
+  note over Client,WatchService: watch txs involved with specific address
+  Client->>WatchService: WatchTx (addr1xxx)
+  activate WatchService
+  WatchService--)Client: <apply>(tx with input from addr1xxx)
+  WatchService--)Client: <apply>(tx with output to addr1xxx)
+  Client->>WatchService: Done
+  deactivate WatchService
+
+  note over Client,WatchService: watch txs involved with specific utxo
+  Client->>WatchService: WatchTx (tx hash, tx output index)
+  activate WatchService
+  WatchService--)Client: <apply>(tx with matching input)
+  Client->>WatchService: Done
+  deactivate WatchService
+
+
+  note over Client,WatchService: watch txs involved with specific asset
+  Client->>WatchService: WatchTx (asset policy, asset name)
+  activate WatchService
+  WatchService--)Client: <apply>(tx with asset mint)
+  WatchService--)Client: <apply>(tx with asset in output)
+  WatchService--)Client: <apply>(tx with asset in input)
+  Client->>WatchService: Done
+  deactivate WatchService
+
+  note over Client,WatchService: watch txs involved with specific datum
+  Client->>WatchService: WatchTx (datum hash)
+  activate WatchService
+  WatchService--)Client: <apply>(tx with inline datum)
+  WatchService--)Client: <apply>(tx with redeemer datum)
+  Client->>WatchService: Done
+  deactivate WatchService
 ```
