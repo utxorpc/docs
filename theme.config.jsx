@@ -29,4 +29,11 @@ export default {
     footer: {
         text: "UTxO RPC",
     },
+    primaryHue: 178,
+    darkMode: false, //disable theme toggle
+    nextThemes: {
+      defaultTheme: "dark",
+      forcedTheme: "dark",
+      enableSystem: false
+    }
   }

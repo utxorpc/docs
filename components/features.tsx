@@ -21,7 +21,7 @@ export function Features(props: {}) {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 items-center gap-6 md:gap-10">
         <Card
           title="Specification"
-          description="A comment set of contracts, agnostic of any particular API provider or client tooling. A strict versioning system to deal with breaking changes."
+          description="A common contract, agnostic of any particular API provider or client tooling. A strict versioning system to deal with breaking changes."
         />
         <Card
           title="SDKs"
