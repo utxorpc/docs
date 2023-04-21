@@ -21,21 +21,31 @@ The _Build_ module provides an interface for querying the state of the ledger an
 ```mermaid
 %%{init: { 'theme': 'dark' } }%%
 sequenceDiagram
-  participant Client
-  participant Server
+  actor Client
+  participant BuildService
 
-  Client->>Server: GetChainTipRequest
-  Server->>Client: GetChainTipResponse (tip)
+  Note over Client,BuildService: query tip to define tx validity params
+  Client->>+BuildService: GetChainTip
+  BuildService-->>-Client: <tip>
 
-  Client->>Server: GetChainParamRequest (param)
-  Server->>Client: GetChainParamResponse (param)
+  Note over Client,BuildService: query params to define fees / other criteria
+  Client->>+BuildService: GetChainParam (<key>[])
+  BuildService-->>-Client: <param>[]
 
-  Client->>Server: GetUtxoByAddressRequest (address, acquire_point)
-  Server->>Client: GetUtxoByAddressResponse (items, next_token)
+  Note over Client,BuildService: query wallet UTxO to balance tx
+  Client->>+BuildService: GetUtxoByAddress (address, acquire_point)
+  BuildService-->>-Client: GetUtxoByAddress (items, next_token)
 
-  Client->>Server: GetUtxoByRefRequest (ref, acquire_point)
-  Server->>Client: GetUtxoByRefResponse (items, next_token)
+  Note over Client,BuildService: query UTxO by ref to resolve other inputs
+  Client->>+BuildService: GetUtxoByRef (ref, acquire_point)
+  BuildService-->>-Client: GetUtxoByRef (items, next_token)
 
-  Client->>Server: HoldUtxoRequest (refs)
-  Server-->>Client: HoldUtxoResponse (lost) [stream]
+  Note over Client,BuildService: monitor these UTxO because we plan on using them
+  Client->>BuildService: HoldUtxo (refs)
+  activate BuildService
+  BuildService--)Client: <utxo 1 was lost>
+  BuildService--)Client: <utxo 2 was lost>
+  Client->>Client: construct / sign the Tx
+  Client->>BuildService: Done
+  deactivate BuildService
 ```
