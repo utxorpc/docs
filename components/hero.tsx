@@ -15,8 +15,8 @@ export function Hero(props: {}) {
 
       <div className="mt-5 max-w-3xl text-center mx-auto">
         <p className="text-lg text-gray-600 dark:text-gray-400">
-          Interact with UTxO-based blockchains using an industry-standard wire
-          protocol with focus on developer experience and performance.
+          Interact with UTxO-based blockchains using a shared specification with
+          focus on developer experience and performance.
         </p>
       </div>
 
