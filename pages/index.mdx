@@ -1,5 +1,66 @@
 import { Hero } from "../components/hero";
-import { Features } from "../components/features";
+import { CardGrid, Card, SDKCard, SectionHeader } from "../components/features";
 
 <Hero />
-<Features />
+
+<SectionHeader title="Motivation" subtitle="why do we need UTxO RPC" />
+
+<CardGrid>
+    <Card
+        title="Reusability"
+        description="Enabling shared components that can be reused across different projects to simplify the integration effort."
+    />
+
+    <Card
+        title="Interoperability"
+        description="A common interface to simplify integrations between different parties and avoid the common pitfall of vendor lock-in."
+    />
+    <Card
+        title="Performance"
+        description="A serialized binary format which is compact and efficient, resulting in smaller message sizes and reduced network overhead compared to its JSON counterpart"
+    />
+
+</CardGrid>
+
+<SectionHeader
+  title="Tenets"
+  subtitle="Guiding principles that shape the specification"
+/>
+
+<CardGrid>
+    <Card
+        title="Event-Driven"
+        description="An interface that embraces the asynchronous nature of blockchains by leveraging event-driven integration patterns."
+    />
+    <Card
+        title="Minimal Boilerplate"
+        description="A rich set SDKs for many mainstream languages such as Go, Rust, Python, JS, C++ and more, minimizing much of the tedious boilerplate."
+    />
+
+    <Card
+        title="Open Governance"
+        description="A Technical Steering Committee (TSC) defined by the level of involvement in the source-code. Maintainers of the code decide how to evolve the protocol."
+    />
+    <Card
+        title="Proto3 & gRPC"
+        description="A versatile IDL that facilitates reliable communication between systems while promoting cross-language compatibility and ease of use."
+    />
+    <Card
+        title="Good Documentation"
+        description="Extensive documentation of all interfaces and structures to streamline the integration process."
+    />
+    <Card
+        title="Forward Compatible"
+        description="Leverage the strengths of the Proto3 IDL to accommodate for future changes, plus a strict versioning system to deal with breaking changes."
+    />
+
+</CardGrid>
+
+<SectionHeader title="SDKs" subtitle="Libraries to build clients and servers" />
+
+<CardGrid>
+  <SDKCard title="Python SDK" iconSrc="python.png" href="python" />
+  <SDKCard title="Go SDK" iconSrc="golang.png" href="go" />
+  <SDKCard title="Rust SDK" iconSrc="rust.png" href="rust" />
+  <SDKCard title="NodeJS SDK" iconSrc="node.png" href="nodejs" />
+</CardGrid>

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
-function Card(props: { title: string; description: string }) {
+export function Card(props: { title: string; description: string }) {
   return (
     <div className="w-full h-full bg-white shadow-lg rounded-lg p-5 dark:bg-gray-800">
       <div className="flex items-center gap-x-4 mb-3">
@@ -15,43 +15,47 @@ function Card(props: { title: string; description: string }) {
   );
 }
 
-export function Features(props: {}) {
+export function CardGrid(props: PropsWithChildren<{}>) {
   return (
     <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 items-center gap-6 md:gap-10">
-        <Card
-          title="Specification"
-          description="A common contract, agnostic of any particular API provider or client tooling. A strict versioning system to deal with breaking changes."
-        />
-        <Card
-          title="SDKs"
-          description="A rich set SDKs for many mainstream languages such as Go, Rust, Python, JS, C++ and more, lowering the entry barrier for devs of any ecosystem."
-        />
-        <Card
-          title="Documentation"
-          description="Extensive documentation of all interfaces and structures to streamline the integration process."
-        />
-        <Card
-          title="Performance"
-          description="A serialized binary format which is compact and efficient, resulting in smaller message sizes and reduced network overhead compared to its JSON counterpart"
-        />
-        <Card
-          title="Event-Driven"
-          description="An interface that embraces the asynchronous nature of blockchains by leveraging event-driven integration patterns."
-        />
-        <Card
-          title="Proto3"
-          description="A versatile IDL that facilitates reliable communication between systems while promoting cross-language compatibility and ease of use."
-        />
-        <Card
-          title="Interoperability"
-          description="A common interface simplifies integrations between parties and avoids the common pitfall of vendor lock-in."
-        />
-        <Card
-          title="Open Governance"
-          description="A Technical Steering Committee (TSC) defined by the level of involvement in the source-code. Maintainers of the code decide how to evolve the protocol."
-        />
+        {props.children}
       </div>
     </div>
+  );
+}
+
+export function SectionHeader(props: { title: string; subtitle?: string }) {
+  return (
+    <div className="w-full text-center">
+      <h4 className="text-3xl font-semibold dark:text-gray-300">
+        {props.title}
+      </h4>
+      {!!props.subtitle && (
+        <h4 className="text-xl dark:text-gray-500">{props.subtitle}</h4>
+      )}
+    </div>
+  );
+}
+
+export function SDKCard(props: {
+  title: string;
+  iconSrc: string;
+  href: string;
+}) {
+  return (
+    <a href={props.href}>
+      <div className="h-36 sm:h-56 flex flex-col justify-center border border-gray-200 rounded-xl text-center p-4 md:p-5 dark:border-gray-700">
+        <div className="flex justify-center items-center w-24 h-24 mx-auto">
+          <img src={props.iconSrc} className="max-h-20" />
+        </div>
+
+        <div className="mt-3">
+          <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+            {props.title}
+          </h3>
+        </div>
+      </div>
+    </a>
   );
 }
