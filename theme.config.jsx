@@ -4,11 +4,16 @@ export default {
       link: "https://github.com/utxorpc",
     },
     sidebar: {
-      defaultMenuCollapseLevel: 0
+      defaultMenuCollapseLevel: 1
     },    
     chat: {
         link: "https://discord.gg/Vc3x8N9nz2",
     },
+    head: (
+      <>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      </>
+    ),
     docsRepositoryBase: "https://github.com/utxorpc/docs/blob/main",
     useNextSeoProps() {
         return {
@@ -20,6 +25,15 @@ export default {
                 url: "https://utxorpc.org",
                 title: "UTxO RPC",
                 description: "gRPC interface for UTxO blockchains",
+                images: [
+                  {
+                    url: "https://utxorpc.org/og-image.png",
+                    width: 1182,
+                    height: 202,
+                    alt: "UTxO RPC",
+                    type: "image/png",
+                  }
+                ] 
             },
             twitter: {
                 handle: "@utxorpc",
@@ -34,6 +48,6 @@ export default {
     nextThemes: {
       defaultTheme: "dark",
       forcedTheme: "dark",
-      enableSystem: false
+      // enableSystem: false
     }
   }
