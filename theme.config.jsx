@@ -12,6 +12,7 @@ export default {
     head: (
       <>
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <meta name="twitter:card" content="summary_large_image" />
       </>
     ),
     docsRepositoryBase: "https://github.com/utxorpc/docs/blob/main",
@@ -28,15 +29,16 @@ export default {
                 images: [
                   {
                     url: "https://utxorpc.org/og-image.png",
-                    width: 1182,
-                    height: 202,
+                    width: 761,
+                    height: 508,
                     alt: "UTxO RPC",
                     type: "image/png",
                   }
                 ] 
             },
             twitter: {
-                handle: "@utxorpc",
+                site: "@utxorpc",
+                card: "summary_large_image",
             },
         };
     },
