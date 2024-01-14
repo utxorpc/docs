@@ -42,5 +42,10 @@
   "servers": "Servers",
   "clients": "Clients",
   "tooling": "Tooling",
-  "developers": "Developers"
+  "developers": "Developers",
+  "-- Guides --": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "grpcurl": "Using grpcurl"
 }
