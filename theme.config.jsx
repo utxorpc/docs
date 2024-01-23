@@ -4,7 +4,7 @@ export default {
       link: "https://github.com/utxorpc",
     },
     sidebar: {
-      defaultMenuCollapseLevel: 0
+      defaultMenuCollapseLevel: 1
     },    
     chat: {
         link: "https://discord.gg/Vc3x8N9nz2",
@@ -31,9 +31,5 @@ export default {
     },
     primaryHue: 178,
     darkMode: false, //disable theme toggle
-    nextThemes: {
-      defaultTheme: "dark",
-      forcedTheme: "dark",
-      enableSystem: false
-    }
+    
   }
