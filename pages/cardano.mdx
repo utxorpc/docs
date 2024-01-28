@@ -328,20 +328,21 @@ Represents a stake delegation certificate in Cardano.
 
 Represents a transaction in the Cardano blockchain.
 
-| Field            | Type                                           | Label    | Description                                                |
-| ---------------- | ---------------------------------------------- | -------- | ---------------------------------------------------------- |
-| inputs           | [TxInput](#utxorpc-cardano-v1-TxInput)         | repeated | List of transaction inputs                                 |
-| outputs          | [TxOutput](#utxorpc-cardano-v1-TxOutput)       | repeated | List of transaction outputs                                |
-| certificates     | [Certificate](#utxorpc-cardano-v1-Certificate) | repeated | List of certificates                                       |
-| withdrawals      | [Withdrawal](#utxorpc-cardano-v1-Withdrawal)   | repeated | List of withdrawals                                        |
-| mint             | [Multiasset](#utxorpc-cardano-v1-Multiasset)   | repeated | List of minted custom assets                               |
-| reference_inputs | [TxInput](#utxorpc-cardano-v1-TxInput)         | repeated | List of reference inputs                                   |
-| witnesses        | [WitnessSet](#utxorpc-cardano-v1-WitnessSet)   |          | Witnesses that validte the transaction                     |
-| collateral       | [Collateral](#utxorpc-cardano-v1-Collateral)   |          | Collateral details in case of failed transaction           |
-| fee              | [uint64](#uint64)                              |          | Transaction fee in ADA                                     |
-| validity         | [TxValidity](#utxorpc-cardano-v1-TxValidity)   |          | Validity interval of the transaction                       |
-| successful       | [bool](#bool)                                  |          | Flag indicating whether the transaction was successful     |
-| auxiliary        | [AuxData](#utxorpc-cardano-v1-AuxData)         |          | Auxiliary data not directly tied to the validation process |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| hash | [bytes](#bytes) |  | Hash of the transaction |
+| inputs | [TxInput](#utxorpc-cardano-v1-TxInput) | repeated | List of transaction inputs |
+| outputs | [TxOutput](#utxorpc-cardano-v1-TxOutput) | repeated | List of transaction outputs |
+| certificates | [Certificate](#utxorpc-cardano-v1-Certificate) | repeated | List of certificates |
+| withdrawals | [Withdrawal](#utxorpc-cardano-v1-Withdrawal) | repeated | List of withdrawals |
+| mint | [Multiasset](#utxorpc-cardano-v1-Multiasset) | repeated | List of minted custom assets |
+| reference_inputs | [TxInput](#utxorpc-cardano-v1-TxInput) | repeated | List of reference inputs |
+| witnesses | [WitnessSet](#utxorpc-cardano-v1-WitnessSet) |  | Witnesses that validte the transaction |
+| collateral | [Collateral](#utxorpc-cardano-v1-Collateral) |  | Collateral details in case of failed transaction |
+| fee | [uint64](#uint64) |  | Transaction fee in ADA |
+| validity | [TxValidity](#utxorpc-cardano-v1-TxValidity) |  | Validity interval of the transaction |
+| successful | [bool](#bool) |  | Flag indicating whether the transaction was successful |
+| auxiliary | [AuxData](#utxorpc-cardano-v1-AuxData) |  | Auxiliary data not directly tied to the validation process |
 
 <a name="utxorpc-cardano-v1-TxInput"></a>
 
