@@ -4,7 +4,7 @@ The UtxoRpc Node.js SDK is a comprehensive toolkit for building clients and serv
 
 ## Prerequisites
 
-- Node.js 14.0 or higher
+- Node.js 16.0 or higher
 - `npm`, the Node.js package manager
 
 ## Installation
@@ -12,7 +12,7 @@ The UtxoRpc Node.js SDK is a comprehensive toolkit for building clients and serv
 To add the UtxoRpc Node.js SDK to your project, run the following command:
 
 ```bash
-npm install utxorpc --save
+npm install @utxorpc/sdk --save
 ```
 
 ## Usage
@@ -20,10 +20,11 @@ npm install utxorpc --save
 To use the UtxoRpc Node.js SDK, simply import the library and initialize the client:
 
 ```javascript
-const UtxoRpc = require("utxorpc");
+import { CardanoClientV1Alpha } from "@utxorpc/sdk";
 
 // Initialize the UtxoRpc client
-const client = new UtxoRpc.Client({
-  // Configuration options
-});
+const client = new CardanoClientV1Alpha("https://utxorpcserver.example");
+
+// make any of the available calls
+const chainPage1 = await client.chainSync.dumpHistory();
 ```
