@@ -10,7 +10,7 @@ Dolos is a Cardano "Data Node". It's a trimmed-down, Rust-based implementation o
 | Module  | Status        |
 | ------- | ------------- |
 | Sync    | ✅ supported   |
-| Build   | 🛠️ development |
+| Query   | 🛠️ development |
 | Submit  | 🛠️ development |
 | Watch   | 🛠️ development |
 | Cardano | ✅ supported   |
@@ -22,7 +22,7 @@ Blink Labs' Node API is a query layer solution for interfacing with a Cardano no
 | Module  | Status        |
 | ------- | ------------- |
 | Sync    | 🛠️ development |
-| Build   | 🛠️ development |
+| Query   | 🛠️ development |
 | Submit  | 🛠️ development |
 | Watch   | 🛠️ development |
 | Cardano | 🛠️ development |
@@ -34,7 +34,7 @@ Demeter is a PaaS (Platform-as-a-Service) that provides managed Cardano infrastr
 | Module  | Status        |
 | ------- | ------------- |
 | Sync    | ✅ supported   |
-| Build   | 🛠️ development |
+| Query   | 🛠️ development |
 | Submit  | 🛠️ development |
 | Watch   | 🛠️ development |
 | Cardano | ✅ supported   |

@@ -16,7 +16,7 @@
     "type": "separator",
     "title": "Specification"
   },
-  "build": "Build Module",
+  "query": "Query Module",
   "submit": "Submit Module",
   "sync": "Sync Module",
   "watch": "Watch Module",

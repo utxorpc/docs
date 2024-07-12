@@ -9,7 +9,7 @@ Oura is a stream processing pipeline for Cardano. It's a tool that reads data fr
 | Module  | Status         |
 | ------- | -------------- |
 | Sync    | ✅ supported    |
-| Build   | ⏺️ not required |
+| Query   | ⏺️ not required |
 | Submit  | ⏺️ not required |
 | Watch   | ⏺️ not required |
 | Cardano | ✅ supported    |
@@ -21,7 +21,7 @@ Scrolls is a data indexer for Cardano. It's a tool that reads blocks from the Ca
 | Module  | Status         |
 | ------- | -------------- |
 | Sync    | ✅ supported    |
-| Build   | ⏺️ not required |
+| Query   | ⏺️ not required |
 | Submit  | ⏺️ not required |
 | Watch   | ⏺️ not required |
 | Cardano | ✅ supported    |
