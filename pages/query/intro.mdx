@@ -1,0 +1,41 @@
+import { Callout } from "nextra-theme-docs";
+
+# Query Module
+
+The _Query_ module provides an interface for querying the state of the ledger with the main goal of constructing new transactions.
+
+## Operations
+
+- `ReadParams`: Read chain-wide parameters. 
+- `ReadUtxos`: Read specific UTxOs by reference. 
+- `SearchUtxos`: Search for UTxO based on a pattern. 
+- `ReadData`: Read specific data (plural of datum) by hash.
+
+<Callout type="info">
+  The schema details can be found in the [spec reference](spec).
+</Callout>
+
+## Sequence Example
+
+```mermaid
+%%{init: { 'theme': 'dark' } }%%
+sequenceDiagram
+  actor Client
+  participant QueryService
+
+  Note over Client,QueryService: query params to define fees / other criteria
+  Client->>+QueryService: ReadParams (field_mask)
+  QueryService-->>-Client: <param>[]
+
+  Note over Client,QueryService: read UTxO by ref to resolve tx inputs
+  Client->>+QueryService: ReadUtxos (refs)
+  QueryService-->>-Client: ReadUtxos (utxos)
+
+  Note over Client,QueryService: query UTxO by address to balance tx
+  Client->>+QueryService: SearchUtxos (address_pattern)
+  QueryService-->>-Client: SearchUtxos (utxos)
+
+  Note over Client,QueryService: query UTxO by token used as beacon
+  Client->>+QueryService: SearchUtxos (token_pattern)
+  QueryService-->>-Client: SearchUtxos (utxos)
+```
