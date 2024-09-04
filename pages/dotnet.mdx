@@ -13,7 +13,7 @@ dotnet add package Utxorpc.Sdk
 
 ### Getting Started
 
-Here’s how you can start using the `SyncServiceClient` to interact with the UTXO RPC service.
+Here’s how you can start using the `SyncServiceClient` to interact with the UTxoRPC.
 
 #### 1. Initialize the Client
 
@@ -25,7 +25,7 @@ SyncServiceClient? syncServiceClient = new("http://localhost:50051");
 
 #### 2. Follow the Tip of the Blockchain
 
-The `FollowTipAsync` method allows you to receive real-time updates as the blockchain progresses. You need to provide a `BlockRef` to indicate where you want to start following.
+The `FollowTipAsync` method allows you to receive real-time updates as the blockchain progresses. You need to provide a `BlockRef` or a Block Reference to indicate where you want to start following.
 
 ```csharp
 using Utxorpc.Sdk.Models;
@@ -85,3 +85,10 @@ if (block is not null)
     Console.WriteLine($"Block CBOR: {Convert.ToHexString(block.NativeBytes ?? [])}");
 }
 ```
+Certainly! Here's a conclusion in the same format typically used in Node.js documentation:
+
+---
+
+### Conclusion
+
+The `SyncServiceClient` in this SDK offers streamlined access to blockchain data through intuitive methods like `FetchBlockAsync` and `FollowTipAsync`. With these tools, you can effortlessly integrate block retrieval and real-time blockchain monitoring into your .NET applications, enabling you to stay synchronized with the latest network state and react promptly to blockchain events.
