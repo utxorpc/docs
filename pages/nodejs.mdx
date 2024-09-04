@@ -1,12 +1,12 @@
-# UtxoRpc Node.js SDK Documentation
+# Node.js SDK
 
-The UtxoRpc Node.js SDK provides a powerful and intuitive set of tools for developers building applications on UTxO-based blockchains. This SDK allows you to interact with blockchain nodes using gRPC and other APIs, facilitating operations such as querying blockchain data, submitting transactions, and syncing with the latest blocks.
+This SDK allows you to interact with UTxoRPC compatible nodes, enabling operations such as fetching blocks, submitting transactions, and syncing with the latest blocks.
 
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
 
-- **Node.js**: Version 16.0 or higher.
+- **Node.js**: Version 20.0 or higher.
 - **npm**: The Node.js package manager.
 
 ## Installation
@@ -19,27 +19,32 @@ npm install @utxorpc/sdk --save
 
 ## Overview
 
-The SDK provides three primary clients for interacting with a UTxO-based blockchain:
+The SDK provides three primary clients for interacting with UTxoRPC:
 
-1. **SyncClient**: Handles synchronization with the blockchain, including following tips and fetching blocks.
-2. **QueryClient**: Facilitates querying blockchain data, such as reading parameters and searching UTXOs.
-3. **SubmitClient**: Manages the submission of transactions to the blockchain.
+1. **CardanoSyncClient**: Provides an interface for synchronizing chain data, fetching blocks, and tracking the tip of the blockchain.
+2. **CardanoQueryClient**: Provides an interface for submitting transactions and monitoring their progress through various stages in their lifecycle.
+3. **CardanoSubmitClient**: Provides an interface for querying the state of the ledger with the main goal of constructing new transactions.
 
 ## Usage
 
 Below are examples of how to use each of the clients in the SDK.
 
-### 1. SyncClient
+### 1. CardanoSyncClient
 
-The `SyncClient` allows you to synchronize with the blockchain, follow the tip, and fetch specific blocks.
+The `CardanoSyncClient` allows you to synchronize with the blockchain, follow the tip, and fetch specific blocks.
 
 #### Example: Following the Tip
 
 ```javascript
-import { SyncClient } from "@utxorpc/sdk";
+import { CardanoSyncClient } from "@utxorpc/sdk";
 
 async function followTipExample() {
-  const syncClient = new SyncClient({ uri: "https://utxorpcserver.example" });
+  const syncClient = new CardanoSyncClient({
+    uri: "https://preview.utxorpc-v0.demeter.run",
+    headers: {
+      "dmtr-api-key": "dmtr_utxorpc1vc0m93rynmltysttwm7ns9m3n5cklws6"
+    }
+  });
 
   const tip = syncClient.followTip([
     { 
@@ -59,8 +64,15 @@ followTipExample().catch(console.error);
 #### Example: Fetching a Block
 
 ```javascript
+import { CardanoSyncClient } from "@utxorpc/sdk";
+
 async function fetchBlockExample() {
-  const syncClient = new SyncClient({ uri: "https://utxorpcserver.example" });
+  const syncClient = new CardanoSyncClient({
+    uri: "https://preview.utxorpc-v0.demeter.run",
+    headers: {
+      "dmtr-api-key": "dmtr_utxorpc1vc0m93rynmltysttwm7ns9m3n5cklws6"
+    }
+  });
 
   const block = await syncClient.fetchBlock({
     slot: 54131816,
@@ -73,17 +85,22 @@ async function fetchBlockExample() {
 fetchBlockExample().catch(console.error);
 ```
 
-### 2. QueryClient
+### 2. CardanoQueryClient
 
-The `QueryClient` allows you to query blockchain data, including reading protocol parameters and searching UTXOs.
+The `CardanoQueryClient` allows you to query blockchain data, including reading protocol parameters and searching UTXOs.
 
 #### Example: Reading Blockchain Parameters
 
 ```javascript
-import { QueryClient } from "@utxorpc/sdk";
+import { CardanoQueryClient } from "@utxorpc/sdk";
 
 async function readParamsExample() {
-  const queryClient = new QueryClient({ uri: "https://utxorpcserver.example" });
+  const queryClient = new CardanoQueryClient({
+    uri: "https://preview.utxorpc-v0.demeter.run",
+    headers: {
+      "dmtr-api-key": "dmtr_utxorpc1vc0m93rynmltysttwm7ns9m3n5cklws6"
+    }
+  });
 
   const params = await queryClient.readParams();
   console.log(params);
@@ -95,8 +112,15 @@ readParamsExample().catch(console.error);
 #### Example: Searching UTXOs by Address
 
 ```javascript
+import { CardanoQueryClient } from "@utxorpc/sdk";
+
 async function searchUtxosByAddressExample() {
-  const queryClient = new QueryClient({ uri: "https://utxorpcserver.example" });
+  const queryClient = new CardanoQueryClient({
+    uri: "https://preview.utxorpc-v0.demeter.run",
+    headers: {
+      "dmtr-api-key": "dmtr_utxorpc1vc0m93rynmltysttwm7ns9m3n5cklws6"
+    }
+  });
 
   const utxos = await queryClient.searchUtxosByAddress(
     Buffer.from("705c87cbca3a88cbfee6f6ad820acea99f484b4830fc632610f2a30146", "hex")
@@ -110,48 +134,33 @@ async function searchUtxosByAddressExample() {
 searchUtxosByAddressExample().catch(console.error);
 ```
 
-### 3. SubmitClient
+### 3. CardanoSubmitClient
 
-The `SubmitClient` is used to submit transactions to the blockchain.
+The `CardanoSubmitClient` is used to submit transactions to the blockchain.
 
 #### Example: Submitting a Transaction
 
 ```javascript
-import { SubmitClient } from "@utxorpc/sdk";
+import { CardanoSubmitClient } from "@utxorpc/sdk";
 
 async function submitTxExample() {
-  const submitClient = new SubmitClient({ uri: "https://utxorpcserver.example" });
+  const submitClient = new CardanoSubmitClient({
+    uri: "https://preview.utxorpc-v0.demeter.run",
+    headers: {
+      "dmtr-api-key": "dmtr_utxorpc1vc0m93rynmltysttwm7ns9m3n5cklws6"
+    }
+  });
+
   const txSample = "/* Tx cborHex */";
   const txHash = await submitClient.submitTx(Buffer.from(txSample, "hex"));
 
   const txHashHex = Buffer.from(txHash).toString("hex");
+  console.log(txHashHex);
 }
 
 submitTxExample().catch(console.error);
 ```
 
-## Detailed API Reference
-
-### SyncClient
-
-- **`constructor(options: ClientBuilderOptions)`**: Initializes the SyncClient with the given options.
-- **`async *followTip(intersect?: ChainPoint[]): AsyncIterable<TipEvent>`**: Follows the tip of the blockchain, yielding tip events such as block applications, undos, and resets.
-- **`async fetchBlock(p: ChainPoint): Promise<cardano.Block>`**: Fetches a block based on the provided chain point.
-
-### QueryClient
-
-- **`constructor(options: ClientBuilderOptions)`**: Initializes the QueryClient with the given options.
-- **`async readParams(): Promise<cardano.PParams>`**: Reads the current protocol parameters from the blockchain.
-- **`async readUtxosByOutputRef(refs: { txHash: Uint8Array; outputIndex: number }[]): Promise<Utxo[]>`**: Retrieves UTXOs by their output reference.
-- **`async searchUtxosByAddress(address: Uint8Array): Promise<Utxo[]>`**: Searches for UTXOs associated with a specific address.
-- **`async searchUtxosByAsset(policyId?: Uint8Array, name?: Uint8Array): Promise<Utxo[]>`**: Searches for UTXOs based on an asset's policy ID and/or name.
-- **`async searchUtxosByAddressWithAsset(address: Uint8Array, policyId?: Uint8Array, name?: Uint8Array): Promise<Utxo[]>`**: Searches for UTXOs by both address and asset.
-
-### SubmitClient
-
-- **`constructor(options: ClientBuilderOptions)`**: Initializes the SubmitClient with the given options.
-- **`async submitTx(tx: TxCbor): Promise<TxHash>`**: Submits a transaction to the blockchain and returns the transaction hash.
-
 ## Conclusion
 
-The UtxoRpc Node.js SDK is designed to streamline the process of interacting with UTxO-based blockchains. Whether you're syncing with the latest blockchain data, querying UTXOs, or submitting transactions, this SDK provides the necessary tools to build robust blockchain applications with ease.
+This SDK is designed to streamline the process of interacting with UTxoRPC using Node.js. Whether you're syncing with the latest blockchain data, querying UTXOs, or submitting transactions, this SDK provides the necessary tools to build robust blockchain applications with ease.
