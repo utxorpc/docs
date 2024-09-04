@@ -33,6 +33,7 @@
   "python": "Python",
   "go": "Go",
   "nodejs": "NodeJS",
+  "dotnet": ".NET",
   "-- Ecosystem --": {
     "type": "separator",
     "title": "Ecosystem"
