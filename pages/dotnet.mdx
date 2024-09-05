@@ -1,0 +1,102 @@
+## .NET SDK
+
+### Overview
+This provides an interface for interacting with UTxORPC compatible nodes. It currently only includes the `SyncServiceClient`, which allows you to fetch blocks and follow the tip of the blockchain.
+
+### Installation
+
+To install the SDK, you can add the NuGet package to your project:
+
+```bash
+dotnet add package Utxorpc.Sdk
+```
+
+### Getting Started
+
+Here’s how you can start using the `SyncServiceClient` to interact with the UTxORPC.
+
+#### 1. Initialize the Client
+
+```csharp
+using Utxorpc.Sdk;
+
+var headers = new Dictionary<string, string>
+{
+    { "dmtr-api-key", "dmtr_utxorpc1vc0m93rynmltysttwm7ns9m3n5cklws6" },
+};
+
+var client = new SyncServiceClient(
+    url: "https://preview.utxorpc-v0.demeter.run",
+    headers
+);
+```
+
+#### 2. Follow the Tip of the Blockchain
+
+The `FollowTipAsync` method allows you to receive real-time updates as the blockchain progresses. You need to provide a `BlockRef` or a Block Reference to indicate where you want to start following.
+
+```csharp
+using Utxorpc.Sdk.Models;
+using Utxorpc.Sdk.Models.Enums;
+
+await foreach (NextResponse? response in client.FollowTipAsync(
+    new BlockRef
+    (
+        "b977e548f3364b114505f3311a10f89e5f5cf47e815765bce6750a5de48e5951",
+        58717900
+    )))
+{
+    Console.WriteLine("___________________");
+    switch (response.Action)
+    {
+        case NextResponseAction.Apply:
+            Block? applyBlock = response.AppliedBlock;
+            if (applyBlock is not null)
+            {
+                Console.WriteLine($"Apply Block: {applyBlock.Hash} Slot: {applyBlock.Slot}");
+                Console.WriteLine($"Cbor: {Convert.ToHexString(applyBlock.NativeBytes ?? [])}");
+            }
+            break;
+        case NextResponseAction.Undo:
+            Block? undoBlock = response.UndoneBlock;
+            if (undoBlock is not null)
+            {
+                Console.WriteLine($"Undo Block: {undoBlock.Hash} Slot: {undoBlock.Slot}");
+            }
+            break;
+        case NextResponseAction.Reset:
+            BlockRef? resetRef = response.ResetRef;
+            if (resetRef is not null)
+            {
+                Console.WriteLine($"Reset to Block: {resetRef.Hash} Slot: {resetRef.Index}");
+            }
+            break;
+    }
+    Console.WriteLine("___________________");
+}
+```
+
+This example listens for updates from the blockchain and handles them based on whether blocks are applied, undone, or reset.
+
+#### 3. Fetch a Block
+
+The `FetchBlockAsync` method retrieves a specific block by providing a `BlockRef`.
+
+```csharp
+BlockRef? blockRef = new BlockRef("b977e548f3364b114505f3311a10f89e5f5cf47e815765bce6750a5de48e5951", 58717900);
+Block? block = await syncServiceClient.FetchBlockAsync(blockRef);
+
+if (block is not null)
+{
+    Console.WriteLine($"Block Hash: {block.Hash}");
+    Console.WriteLine($"Block Slot: {block.Slot}");
+    Console.WriteLine($"Block CBOR: {Convert.ToHexString(block.NativeBytes ?? [])}");
+}
+```
+Certainly! Here's a conclusion in the same format typically used in Node.js documentation:
+
+---
+
+### Conclusion
+
+The `SyncServiceClient` in this SDK offers streamlined access to blockchain data through intuitive methods like `FetchBlockAsync` and `FollowTipAsync`. With these tools, you can effortlessly integrate block retrieval and real-time blockchain monitoring into your .NET applications, enabling you to stay synchronized with the latest network state and react promptly to blockchain events.
