@@ -54,7 +54,7 @@ async function followTipExample() {
   ]);
 
   for await (const event of tip) {
-    console.log(event.block.header.slot);
+    console.log(event);
   }
 }
 
@@ -127,7 +127,7 @@ async function searchUtxosByAddressExample() {
   );
 
   utxos.forEach((utxo) => {
-    console.log(utxo.parsedValued?.script);
+    console.log(utxo);
   });
 }
 
@@ -151,7 +151,7 @@ async function submitTxExample() {
     }
   });
 
-  const txSample = "/* Tx cborHex */";
+  const txSample = "84a30081825820639b4af1e7bf25edd5d9dfb63ea79827a25e15b2ecf2bc861eeeeead0279108901018282583900e63022b0f461602484968bb10fd8f872787b862ace2d7e943292a37003ec6a12860ef8c07d4c1a8de7df06acb0f0330a6087ecbe972082a71a00766272825839004693c0ac525d045cb0a4e75bd3adbd6956b3b744e88d21e041fc9b630df092006419e469e0c77876a499124bf903735b434c7989f7a8090a1b000000025208a690021a00029075a10081825820e6e75c7876c610afd28a19c2947e72c1a629ab7903283e14915badee7c55402e5840b5d23d73a2c52515862310b08c94d51c6a0ccc2a6d61008d67070317a4dff6e0e41ae62423852007bfa6778162296362c0a1f951ad7634706a1ac6922085b602f5f6";
   const txHash = await submitClient.submitTx(Buffer.from(txSample, "hex"));
 
   const txHashHex = Buffer.from(txHash).toString("hex");
