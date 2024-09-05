@@ -20,7 +20,15 @@ Here’s how you can start using the `SyncServiceClient` to interact with the UT
 ```csharp
 using Utxorpc.Sdk;
 
-SyncServiceClient? syncServiceClient = new("http://localhost:50051");
+var headers = new Dictionary<string, string>
+{
+    { "dmtr-api-key", "dmtr_utxorpc1vc0m93rynmltysttwm7ns9m3n5cklws6" },
+};
+
+var client = new SyncServiceClient(
+    url: "https://preview.utxorpc-v0.demeter.run",
+    headers
+);
 ```
 
 #### 2. Follow the Tip of the Blockchain
@@ -31,11 +39,11 @@ The `FollowTipAsync` method allows you to receive real-time updates as the block
 using Utxorpc.Sdk.Models;
 using Utxorpc.Sdk.Models.Enums;
 
-await foreach (NextResponse? response in syncServiceClient.FollowTipAsync(
+await foreach (NextResponse? response in client.FollowTipAsync(
     new BlockRef
     (
-        "b977e548f3364b114505f3311a10f89e5f5cf47e815765bce6750a5de48e5951", // Block hash
-        58717900 // Block index (slot)
+        "b977e548f3364b114505f3311a10f89e5f5cf47e815765bce6750a5de48e5951",
+        58717900
     )))
 {
     Console.WriteLine("___________________");
@@ -68,7 +76,7 @@ await foreach (NextResponse? response in syncServiceClient.FollowTipAsync(
 }
 ```
 
-This example listens for updates from the blockchain and handles them based on whether blocks are applied, undone, or if the chain is reset.
+This example listens for updates from the blockchain and handles them based on whether blocks are applied, undone, or reset.
 
 #### 3. Fetch a Block
 
