@@ -12,16 +12,14 @@
     "title": "About"
   },
   "introduction": "Introduction",
-  "architectural": "Architectural Decisions",
   "-- Modules --": {
     "type": "separator",
     "title": "Specification"
   },
-  "build": "Build Module",
+  "query": "Query Module",
   "submit": "Submit Module",
   "sync": "Sync Module",
   "watch": "Watch Module",
-  "query": "Query Module",
   "-- Ledgers --": {
     "type": "separator",
     "title": "Ledgers"
@@ -41,8 +39,7 @@
   },
   "servers": "Servers",
   "clients": "Clients",
-  "tooling": "Tooling",
-  "developers": "Developers",
+  "teams": "Teams",
   "-- Guides --": {
     "type": "separator",
     "title": "Guides"

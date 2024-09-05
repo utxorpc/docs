@@ -1,9 +1,49 @@
+import { Cards, Card, Callout } from 'nextra/components' 
+
 # Introduction
 
-UTxO RPC (_u5c_ for short) is an interface tailored for interactions with UTxO-based blockchains, prioritizing performance and developer experience. By providing a common contract, a range of SDKs, and thorough documentation, UtxoRpc aims to facilitate seamless integration across an heteregenous ecosystems of clients and data providers. Utilizing event-driven patterns and the capabilities of Proto3, the interface supports efficient communication, cross-language compatibility, and adaptability between systems.
+UTxO RPC (_u5c_ for short) is an interface tailored for interactions with UTxO-based blockchains, prioritizing performance and developer experience. By providing a common contract, a range of SDKs, and thorough documentation, _UTxO RPC_ aims to facilitate:
 
-## Only a Specification
+- **Reusability**: Enabling shared components that can be reused across different projects to simplify the integration effort.
+- **Interoperability**: A common interface to simplify integrations between different parties and avoid the common pitfall of vendor lock-in.
+- **Performance**: A serialized binary format which is compact and efficient, resulting in smaller message sizes and reduced network overhead compared to its JSON counterpart
+    
+Please note that UTxO RPC is just a specification of an interface between agents and the blockchain, it doesn't provide any concrete client / provider implementations. The primary purpose of _u5c_ is to define a set of standardized methods, data structures, and communication patterns.
 
-UtxoRpc serves just as a specification of an interface between agents and the blockchain, it doesn't provide any concrete client / provider implementations. The primary purpose of _u5c_ is to define a set of standardized methods, data structures, and communication patterns.
+## Use-cases
 
-By providing a well-defined specification, _u5c_ encourages different actors in the ecosystem to contribute their own implementations while ensuring interoperability between them. This approach promotes collaboration and innovation among developers, as they can build on each other's work and leverage existing tools and libraries that adhere to the _u5c_ specification.
+The interface is divided into different modules that represent specific use-cases. Not every client will be interested in every module and not every provider will be serving every module.
+
+<Cards>
+  <Card title="Query Module" icon="🔍&nbsp;" href="build/intro" />
+  <Card title="Submit Module" icon="⚡️&nbsp;" href="submit/intro" />
+  <Card title="Sync Module" icon="🔄&nbsp;" href="sync/intro" />
+  <Card title="Watch Module" icon="👀&nbsp;" href="watch/intro" />
+</Cards>
+
+## Ledgers
+
+Modules are blockchain-agnostic, they need to be paired with a specific ledger to be used. A ledger represents a set of primitive structures that are specific to a particular blockchain ecosystem.
+
+<Callout type="info">
+  So far, the spec focuses only on Cardano. Other UTxO-based blockchains will follow.
+</Callout>
+
+<Cards>
+  <Card title="Cardano Ledger" href="cardano" />
+</Cards>
+
+## SDKs
+
+Thanks to all of the available gRPC toolchain, generating SDKs in several programming languages is low effort. These are the official libraries maintained as part of the UTxO RPC effort.
+
+<Cards>
+  <Card title="Rust" href="rust" />
+  <Card title="Go" href="go" />
+  <Card title="NodeJs" href="nodejs" />
+  <Card title="Python" href="Python" />
+</Cards>
+
+<Callout type="info">
+  If you need a client in a language not found above, check the [gRPC documentation](https://grpc.io/docs/) for instruction on how to auto-generate client code from proto specs.
+</Callout>
