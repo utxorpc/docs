@@ -39,5 +39,10 @@
   },
   "servers": "Servers",
   "clients": "Clients",
-  "teams": "Teams"
+  "teams": "Teams",
+  "-- Guides --": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "grpcurl": "Using grpcurl"
 }
