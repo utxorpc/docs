@@ -8,10 +8,30 @@ Grpcurl is to gRPC what curl is to HTTP. While HTTP APIs are prevalent and famil
 
 Grpcurl can be installed on various operating systems. Detailed installation instructions and binaries can be found on its official GitHub repository (https://github.com/fullstorydev/grpcurl#installation).
 
-## Connecting to a Local [Dolos](https://github.com/txpipe/dolos) Node (U5C compliant node)
+## Connecting to a U5C server
+
+To interact with U5C choose one of the compliant [servers](/servers)
+
+### A Local [Dolos](https://github.com/txpipe/dolos) Node
 
 ```sh
 grpcurl -plaintext localhost:50051 list
+```
+
+This command will list the available services on the Dolos node running locally on port 50051.
+
+### A Local [Cardano Node API](https://github.com/blinklabs-io/cardano-node-api)
+
+```sh
+grpcurl -plaintext localhost:9090 list
+```
+
+This command will list the available services on the Cardano Node API running locally on port 9090.
+
+### [Demeter](https://demeter.run) UTxO RPC Service
+
+```sh
+grpcurl -H 'dmtr-api-key: <api-key>' preprod.utxorpc-v0.demeter.run:443 list
 ```
 
 This command will list the available services on the Dolos node running locally on port 50051.
@@ -21,34 +41,34 @@ This command will list the available services on the Dolos node running locally 
 You can list the services or describe specific methods provided by the U5C endpoint:
 
 ```sh
-grpcurl -plaintext localhost:50051 list utxorpc.sync.v1.ChainSyncService
+grpcurl -plaintext localhost:50051 list utxorpc.v1alpha.sync.SyncService
 ```
 
 ## Executing Request/Reply Method
 
 ```sh
-grpcurl -plaintext localhost:50051 describe utxorpc.sync.v1.ChainSyncService.FetchBlock
+grpcurl -plaintext localhost:50051 describe utxorpc.v1alpha.sync.SyncService.FetchBlock
 ```
 
-This command will describe the FetchBlock method provided by the ChainSyncService. The output will be similar to the following:
+This command will describe the FetchBlock method provided by the SyncService. The output will be similar to the following:
 
 ```sh
-utxorpc.sync.v1.ChainSyncService.FetchBlock is a method:
-rpc FetchBlock ( .utxorpc.sync.v1.FetchBlockRequest ) returns ( .utxorpc.sync.v1.FetchBlockResponse );
+utxorpc.v1alpha.sync.SyncService.FetchBlock is a method:
+rpc FetchBlock ( .utxorpc.v1alpha.sync.FetchBlockRequest ) returns ( .utxorpc.v1alpha.sync.FetchBlockResponse );
 ```
 
 We can describe the FetchBlockRequest to see what parameters it takes:
 
 ```sh
-grpcurl -plaintext localhost:50051 describe utxorpc.sync.v1.FetchBlockRequest
+grpcurl -plaintext localhost:50051 describe utxorpc.v1alpha.sync.FetchBlockRequest
 ```
 
 The output will be similar to the following:
 ```sh
-utxorpc.sync.v1.FetchBlockRequest is a message:
+utxorpc.v1alpha.sync.FetchBlockRequest is a message:
 // Request to fetch a block by its reference.
 message FetchBlockRequest {
-  repeated .utxorpc.sync.v1.BlockRef ref = 1;
+  repeated .utxorpc.v1alpha.sync.BlockRef ref = 1;
   .google.protobuf.FieldMask field_mask = 2;
 }
 ```
@@ -56,7 +76,7 @@ message FetchBlockRequest {
 Once you understand the request format, you can execute a method. For instance, fetching a specific block:
 
 ```sh
-grpcurl -plaintext -d '{"ref": [{"index": 300042, "hash": "LRptYoRi+RG+TmxUmSsoB3lr6BLEQ2pLA+UWhgwgiIA="}]}' localhost:50051 utxorpc.sync.v1.ChainSyncService.FetchBlock
+grpcurl -plaintext -d '{"ref": [{"index": 300042, "hash": "LRptYoRi+RG+TmxUmSsoB3lr6BLEQ2pLA+UWhgwgiIA="}]}' localhost:50051 utxorpc.v1alpha.sync.SyncService.FetchBlock
 ```
 
 In this example the hash is the `Block` hash bytes encoded in `base64`.
@@ -114,13 +134,13 @@ Streaming methods are one of the core features of gRPC. To execute a streaming m
 1. First, understand the method:
 
 ```sh
-grpcurl -plaintext localhost:50051 describe utxorpc.sync.v1.ChainSyncService.FollowTip
+grpcurl -plaintext localhost:50051 describe utxorpc.v1alpha.sync.SyncService.FollowTip
 ```
 
 2. Then execute the method, observing the streaming responses:
 
 ```sh
-grpcurl -plaintext localhost:50051 utxorpc.sync.v1.ChainSyncService.FollowTip
+grpcurl -plaintext localhost:50051 utxorpc.v1alpha.sync.SyncService.FollowTip
 ```
 
 ## Conclusion
