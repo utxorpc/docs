@@ -16,20 +16,25 @@ dotnet add package Utxorpc.Sdk
 Here’s how you can start using the `SyncServiceClient` to interact with the UTxORPC.
 
 #### 1. Initialize the Client
+The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
 
+For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
+
+Here's how to initialize the client:
 ```csharp
 using Utxorpc.Sdk;
 
 var headers = new Dictionary<string, string>
 {
-    { "dmtr-api-key", "dmtr_utxorpc1vc0m93rynmltysttwm7ns9m3n5cklws6" },
+    { "api-key", "" },
 };
 
 var client = new SyncServiceClient(
-    url: "https://preview.utxorpc-v0.demeter.run",
+    url: "http://localhost:50051",
     headers
 );
 ```
+This sample is structured in a way that can be used if your UTxORPC node comes from a provider and you need to attach needed information to your header.
 
 #### 2. Follow the Tip of the Blockchain
 
