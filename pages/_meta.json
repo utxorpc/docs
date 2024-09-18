@@ -45,5 +45,6 @@
     "type": "separator",
     "title": "Guides"
   },
-  "grpcurl": "Using grpcurl"
+  "grpcurl": "Using grpcurl",
+  "blaze": "Blaze Provider"
 }
