@@ -75,44 +75,24 @@ message FetchBlockRequest {
 Once you understand the request structure, you can execute a method like `FetchBlock` to fetch a specific block. Here's an example using a block's `index` and `hash` which are its parameters to make a Block Reference or a `ref`:
 
 ```sh
-grpcurl -plaintext -d '{"ref": [{"index": 300042, "hash": "LRptYoRi+RG+TmxUmSsoB3lr6BLEQ2pLA+UWhgwgiIA="}]}' localhost:50051 utxorpc.v1alpha.sync.SyncService.FetchBlock
+grpcurl -plaintext -d '{"ref": [{"index": 61724995, "hash": "1eVsN7YMlpLBKAFCNjes+zcDa/fiEtQ5d1uP6cdtj/U="}]}' localhost:50051 utxorpc.v1alpha.sync.SyncService.FetchBlock
 ```
+
+But do note that this sample depends on which network you're in right now. You may find a block's `index` and `hash` from your node's network through other sources in Cardano. But for the current example we're using a `preview` node.
 
 In this example, the block hash is base64-encoded. The response looks similar to this:
 ```json
 {
   "block": [
     {
+      "nativeBytes": "ggeFgooaACcESBoDrdlDWCAnkCF3rtAsCpHfVvTy9+NFiXIBYoAThcbTk1Z0txLPr1ggK1eZ8uNhRbMbKL+jcfyQ/IZfK/U0DwiU8+Pr/BKXSvVYIHGuxo/Z+o4sIzKlrg26zlfPMX9HSmTV8yZNvwv/ZRZYglhAVUw7ggt4IEfPnoUkjJJHv9gy0Cs8PkE9o2fRSaUHyMpGpO0boIkfyx04J3mX3MDAD5mFuwDgVzorvlyyxZsTWVhQnCTkvpXKidNGxCVAbRhXmOy8xswhm+FrfEQ0xCTch+48mWZcNfFVgm51RSd2kUr6m1A4q5dIOTKIZhfX5QMGPXAjzdzATdXu/9636T+mgQEEWCApVx0W8IFwmzxIZRhgB3vr+TQKuz/HEzRDxU8fWl7c8YRYICcRRHXgLsoi3KIu3YK6NSr34OcMvnY60Wv1+VK6vFTQCBkB2lhA0OS7Vb+HWCswkdWtDCm8DyEqPsw7rjXxDgzxTYm8lOF3nvkJTj8BSBJ9fiTx8roFXOIY3h9qj5Ys8MUX0V84CoIJAVkBwBfOLrhPCQ3dzXU3Fhdyjse6uB1emBtGoEcxIQDZnHnSpriV87rasiU+Y63xs5o2ZR/EEcWQNYOl9GDvYv7rmQT2NTrBgIGCemZQgWHPtm7ljJDkd2fVY/XrfKE7z16G2KIV/7+KH2RblJ1ykvpBJBzMAZyAwxkmHGZZe7CN8hvHOHHZJnvFaxSuZBVXgpUuOpESQYXizt2YoqLBWXYqRPrQuOsfCLwWYc7eFSAovAzC9s4zERz9lJXuoQhrLjKdO2kxZuCjpOOhEP2BPCJPbstgWTCAXoLdlDf9l/tMZHEZLFabf3MJ4afJWIDBUuNPTGa2k6iPhwc/uaztTJn3zDC2yLaCs1vhB6xCF74cih8fPPDuS8pCPXHHvVBi03CQpwR6DMvh/0DQqO/3z8l2hkc66PEgGr+h9AyOXBeIBKDpHJeheJ7nVzfK52VBlZQMq4tlLMwsN/+b5y66CXPrJiU/o14wpLqXIf/rnQStspjIX3akaIIAQnl25rzN4O1NGegP/4BHlh4lSno+eu8n/2Z8WhMN3eN+rWbXNiPqISLecSOWTn0cUmN//zGv2xdltXPgj6Lkm84QKfIkYzsehoWAgKCA",
       "cardano": {
         "header": {
-          "slot": "300042",
-          "hash": "LRptYoRi+RG+TmxUmSsoB3lr6BLEQ2pLA+UWhgwgiIA="
+          "slot": "61724995",
+          "hash": "1eVsN7YMlpLBKAFCNjes+zcDa/fiEtQ5d1uP6cdtj/U=",
+          "height": "2557000"
         },
-        "body": {
-          "tx": [
-            {
-              "inputs": [
-                {
-                  "txHash": "KzlvndWhqG23d2GdZjia94LcRDqwk3nCodeuuRZVI0M=",
-                  "outputIndex": 1
-                },
-                {
-                  "txHash": "aUNQxBqVlZOv/hAiL8ZqhCMSmJR4ZLiKlNzzpwot66w="
-                }
-              ],
-              "outputs": [
-                {
-                  "address": "gtgYWEKDWBzE+sU/eyXZ3mt9Cbzb6HmcdZYQo+ENEiYDV/oioQFYHlgc6aRDIU6NiYGVLgPdq1GS6ZbJI5WXLL2VV3O2ngAahdniww==",
-                  "coin": "742008225111"
-                },
-                {
-                  "address": "gtgYWEKDWBwQXB0gBCdfHgxlVZOr2iQa4eUdi3cANpMA3QyFoQFYHlgcxdlJsC4jI0tnCIRphMmNR3Oe+l2wxIEj+eCZxgAauVbtDw==",
-                  "coin": "140000000000"
-                }
-              ]
-            }
-          ]
-        }
+        "body": {}
       }
     }
   ]
