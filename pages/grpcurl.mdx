@@ -30,7 +30,7 @@ This command lists the services available on a Cardano Node API running on port 
 
 ## Listing Services and Methods
 
-For this section, we’ll assume that a UTxORPC node is running locally at `localhost:50051`. If your node is hosted elsewhere, simply replace `"localhost:50051"` with the correct URL and port number.
+For the following sections, we’ll assume that a UTxORPC node is running locally at `localhost:50051`. If your node is hosted elsewhere, simply replace `"localhost:50051"` with the correct URL and port number.
 
 To list all the services or describe a specific method provided by the U5C endpoint, you can use the following commands:
 
@@ -78,8 +78,7 @@ Once you understand the request structure, you can execute a method like `FetchB
 grpcurl -plaintext -d '{"ref": [{"index": 300042, "hash": "LRptYoRi+RG+TmxUmSsoB3lr6BLEQ2pLA+UWhgwgiIA="}]}' localhost:50051 utxorpc.v1alpha.sync.SyncService.FetchBlock
 ```
 
-In this example, the block hash is base64-encoded. The response will be a JSON object that looks similar to this:
-
+In this example, the block hash is base64-encoded. The response looks similar to this:
 ```json
 {
   "block": [
