@@ -1,69 +1,66 @@
-# Using Grpcurl for Interacting with U5C
+# Using Grpcurl to Interact with U5C
 
 ## Introduction to Grpcurl
 
-Grpcurl is to gRPC what curl is to HTTP. While HTTP APIs are prevalent and familiar to most developers, gRPC is gradually gaining traction, especially for internal microservices communication due to its efficiency and performance. However, gRPC's binary protocol can make it seem less accessible, as traditional tools like curl don't work with it. Enter grpcurl - a command-line tool that brings the ease and familiarity of curl to gRPC.
+Grpcurl is a command-line tool for interacting with gRPC services, much like how curl is used for HTTP. While HTTP APIs are widespread and familiar, gRPC is becoming popular, especially for microservices due to its efficiency and performance. However, the binary protocol used by gRPC makes it harder to work with traditional tools like curl. Enter Grpcurl - which solves this by bringing that ease and familiarity of curl to gRPC.
 
 ## Installing Grpcurl
 
-Grpcurl can be installed on various operating systems. Detailed installation instructions and binaries can be found on its official GitHub repository (https://github.com/fullstorydev/grpcurl#installation).
+You can install Grpcurl on various operating systems. Detailed installation instructions and binaries are available on the [official GitHub repository](https://github.com/fullstorydev/grpcurl#installation).
 
-## Connecting to a U5C server
+## Connecting to a U5C Server
 
-To interact with U5C choose one of the compliant [servers](/servers)
+To interact with U5C, you first need to connect to a compliant server. You can choose one of the [available servers](/servers) for U5C.
 
-### A Local [Dolos](https://github.com/txpipe/dolos) Node
+### Example: Connecting to a Local [Dolos Node](https://github.com/txpipe/dolos) 
 
 ```sh
 grpcurl -plaintext localhost:50051 list
 ```
 
-This command will list the available services on the Dolos node running locally on port 50051.
+This command lists the services available on a local Dolos node running on port 50051.
 
-### A Local [Cardano Node API](https://github.com/blinklabs-io/cardano-node-api)
+### Example: Connecting to a Local [Cardano Node API](https://github.com/blinklabs-io/cardano-node-api)
 
 ```sh
 grpcurl -plaintext localhost:9090 list
 ```
 
-This command will list the available services on the Cardano Node API running locally on port 9090.
-
-### [Demeter](https://demeter.run) UTxO RPC Service
-
-```sh
-grpcurl -H 'dmtr-api-key: <api-key>' preprod.utxorpc-v0.demeter.run:443 list
-```
-
-This command will list the available services on the demeter UTxO RPC cloud-hosted endpoint.
+This command lists the services available on a Cardano Node API running on port 9090.
 
 ## Listing Services and Methods
 
-You can list the services or describe specific methods provided by the U5C endpoint:
+For the following sections, we’ll assume that a UTxORPC node is running locally at `localhost:50051`. If your node is hosted elsewhere, simply replace `"localhost:50051"` with the correct URL and port number.
+
+To list all the services or describe a specific method provided by the U5C endpoint, you can use the following commands:
 
 ```sh
 grpcurl -plaintext localhost:50051 list utxorpc.v1alpha.sync.SyncService
 ```
 
-## Executing Request/Reply Method
+## Describing a Method
+
+To get more details about a specific gRPC method, you can describe it using Grpcurl. For instance, if you want to describe the `FetchBlock` method of the `SyncService`:
 
 ```sh
 grpcurl -plaintext localhost:50051 describe utxorpc.v1alpha.sync.SyncService.FetchBlock
 ```
 
-This command will describe the FetchBlock method provided by the SyncService. The output will be similar to the following:
+This will return details about the method:
 
 ```sh
 utxorpc.v1alpha.sync.SyncService.FetchBlock is a method:
 rpc FetchBlock ( .utxorpc.v1alpha.sync.FetchBlockRequest ) returns ( .utxorpc.v1alpha.sync.FetchBlockResponse );
 ```
 
-We can describe the FetchBlockRequest to see what parameters it takes:
+You can also describe the request message for this method:
 
 ```sh
 grpcurl -plaintext localhost:50051 describe utxorpc.v1alpha.sync.FetchBlockRequest
 ```
 
-The output will be similar to the following:
+The output will look like this:
+
 ```sh
 utxorpc.v1alpha.sync.FetchBlockRequest is a message:
 // Request to fetch a block by its reference.
@@ -73,54 +70,29 @@ message FetchBlockRequest {
 }
 ```
 
-Once you understand the request format, you can execute a method. For instance, fetching a specific block:
+## Executing a Request/Reply Method
+
+Once you understand the request structure, you can execute a method like `FetchBlock` to fetch a specific block. Here's an example using a block's `index` and `hash` which are its parameters to make a Block Reference or a `ref`:
 
 ```sh
-grpcurl -plaintext -d '{"ref": [{"index": 300042, "hash": "LRptYoRi+RG+TmxUmSsoB3lr6BLEQ2pLA+UWhgwgiIA="}]}' localhost:50051 utxorpc.v1alpha.sync.SyncService.FetchBlock
+grpcurl -plaintext -d '{"ref": [{"index": 61724995, "hash": "1eVsN7YMlpLBKAFCNjes+zcDa/fiEtQ5d1uP6cdtj/U="}]}' localhost:50051 utxorpc.v1alpha.sync.SyncService.FetchBlock
 ```
 
-In this example the hash is the `Block` hash bytes encoded in `base64`.
+But do note that this sample depends on which network you're in right now. You may find a block's `index` and `hash` from your node's network through other sources in Cardano. But for the current example we're using a `preview` node.
 
-The output will be similar to the following:
+In this example, the block hash is base64-encoded. The response looks similar to this:
 ```json
 {
   "block": [
     {
+      "nativeBytes": "ggeFgooaACcESBoDrdlDWCAnkCF3rtAsCpHfVvTy9+NFiXIBYoAThcbTk1Z0txLPr1ggK1eZ8uNhRbMbKL+jcfyQ/IZfK/U0DwiU8+Pr/BKXSvVYIHGuxo/Z+o4sIzKlrg26zlfPMX9HSmTV8yZNvwv/ZRZYglhAVUw7ggt4IEfPnoUkjJJHv9gy0Cs8PkE9o2fRSaUHyMpGpO0boIkfyx04J3mX3MDAD5mFuwDgVzorvlyyxZsTWVhQnCTkvpXKidNGxCVAbRhXmOy8xswhm+FrfEQ0xCTch+48mWZcNfFVgm51RSd2kUr6m1A4q5dIOTKIZhfX5QMGPXAjzdzATdXu/9636T+mgQEEWCApVx0W8IFwmzxIZRhgB3vr+TQKuz/HEzRDxU8fWl7c8YRYICcRRHXgLsoi3KIu3YK6NSr34OcMvnY60Wv1+VK6vFTQCBkB2lhA0OS7Vb+HWCswkdWtDCm8DyEqPsw7rjXxDgzxTYm8lOF3nvkJTj8BSBJ9fiTx8roFXOIY3h9qj5Ys8MUX0V84CoIJAVkBwBfOLrhPCQ3dzXU3Fhdyjse6uB1emBtGoEcxIQDZnHnSpriV87rasiU+Y63xs5o2ZR/EEcWQNYOl9GDvYv7rmQT2NTrBgIGCemZQgWHPtm7ljJDkd2fVY/XrfKE7z16G2KIV/7+KH2RblJ1ykvpBJBzMAZyAwxkmHGZZe7CN8hvHOHHZJnvFaxSuZBVXgpUuOpESQYXizt2YoqLBWXYqRPrQuOsfCLwWYc7eFSAovAzC9s4zERz9lJXuoQhrLjKdO2kxZuCjpOOhEP2BPCJPbstgWTCAXoLdlDf9l/tMZHEZLFabf3MJ4afJWIDBUuNPTGa2k6iPhwc/uaztTJn3zDC2yLaCs1vhB6xCF74cih8fPPDuS8pCPXHHvVBi03CQpwR6DMvh/0DQqO/3z8l2hkc66PEgGr+h9AyOXBeIBKDpHJeheJ7nVzfK52VBlZQMq4tlLMwsN/+b5y66CXPrJiU/o14wpLqXIf/rnQStspjIX3akaIIAQnl25rzN4O1NGegP/4BHlh4lSno+eu8n/2Z8WhMN3eN+rWbXNiPqISLecSOWTn0cUmN//zGv2xdltXPgj6Lkm84QKfIkYzsehoWAgKCA",
       "cardano": {
         "header": {
-          "slot": "300042",
-          "hash": "LRptYoRi+RG+TmxUmSsoB3lr6BLEQ2pLA+UWhgwgiIA="
+          "slot": "61724995",
+          "hash": "1eVsN7YMlpLBKAFCNjes+zcDa/fiEtQ5d1uP6cdtj/U=",
+          "height": "2557000"
         },
-        "body": {
-          "tx": [
-            {
-              "inputs": [
-                {
-                  "txHash": "KzlvndWhqG23d2GdZjia94LcRDqwk3nCodeuuRZVI0M=",
-                  "outputIndex": 1
-                },
-                {
-                  "txHash": "aUNQxBqVlZOv/hAiL8ZqhCMSmJR4ZLiKlNzzpwot66w="
-                }
-              ],
-              "outputs": [
-                {
-                  "address": "gtgYWEKDWBzE+sU/eyXZ3mt9Cbzb6HmcdZYQo+ENEiYDV/oioQFYHlgc6aRDIU6NiYGVLgPdq1GS6ZbJI5WXLL2VV3O2ngAahdniww==",
-                  "coin": "742008225111"
-                },
-                {
-                  "address": "gtgYWEKDWBwQXB0gBCdfHgxlVZOr2iQa4eUdi3cANpMA3QyFoQFYHlgcxdlJsC4jI0tnCIRphMmNR3Oe+l2wxIEj+eCZxgAauVbtDw==",
-                  "coin": "140000000000"
-                }
-              ],
-              "witnesses": {},
-              "collateral": {},
-              "validity": {},
-              "successful": true,
-              "auxiliary": {}
-            }
-          ]
-        }
+        "body": {}
       }
     }
   ]
@@ -129,15 +101,19 @@ The output will be similar to the following:
 
 ## Executing a Streaming Method
 
-Streaming methods are one of the core features of gRPC. To execute a streaming method, such as **FollowTip** in the ChainSyncService:
+gRPC supports streaming methods, which allow for continuous data exchange between the client and server. To execute a streaming method like `FollowTip` in the `SyncService`, follow these steps:
 
-1. First, understand the method:
+### Step 1: Describe the Method
+
+First, understand the method:
 
 ```sh
 grpcurl -plaintext localhost:50051 describe utxorpc.v1alpha.sync.SyncService.FollowTip
 ```
 
-2. Then execute the method, observing the streaming responses:
+### Step 2: Execute the Streaming Method
+
+Now, you can execute the method and observe the real-time streaming responses:
 
 ```sh
 grpcurl -plaintext localhost:50051 utxorpc.v1alpha.sync.SyncService.FollowTip
@@ -146,5 +122,3 @@ grpcurl -plaintext localhost:50051 utxorpc.v1alpha.sync.SyncService.FollowTip
 ## Conclusion
 
 Grpcurl makes interacting with gRPC services as simple as using curl with HTTP APIs. It opens the door for developers to easily test and interact with gRPC services, making the transition from HTTP to gRPC smoother and more approachable.
-
-
