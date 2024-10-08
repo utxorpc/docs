@@ -1,0 +1,123 @@
+# Blaze UTxORPC Provider 
+
+This provides instructions on using the **UTxORPC (u5c)** provider for the [Blaze](https://github.com/butaneprotocol/blaze-cardano) library. 
+
+## Overview
+
+[Blaze](https://github.com/butaneprotocol/blaze-cardano) is a library designed to simplify the process of creating **Cardano transactions** and interacting with **Cardano smart contracts** using JavaScript/TypeScript. Blaze requires access to blockchain state information (e.g., UTxOs, protocol parameters) to build and sign transactions.
+
+The **UTxORPC (u5c)** provider facilitates access to this state in a standardized and efficient manner through **gRPC**, using a compact and high-performance binary format.
+
+## Features
+
+- **Standardized Interface**: Implements the UTxORPC specification to ensure compatibility and interoperability across UTxO-based blockchains.
+- **Performance Optimized**: Utilizes gRPC for efficient communication with blockchain nodes, minimizing network overhead and message size.
+- **Flexible Provider Options**: Suitable for use with hosted services, local nodes like **Dolos**, or any UTxORPC-compliant service.
+
+## Installation
+
+To install the UTxORPC provider, use npm:
+
+```bash
+npm install @utxorpc/blaze-provider
+```
+
+You also need to install the **Blaze SDK** if you haven’t already:
+
+```bash
+npm install @blaze-cardano/sdk
+```
+
+## Sample Usage
+
+### Step 1: Import Blaze SDK and UTxORPC Provider
+
+```javascript
+import {
+    Bip32PrivateKey,
+    mnemonicToEntropy,
+    wordlist,
+} from "@blaze-cardano/core";
+import {
+    HotWallet,
+    Core,
+    Blaze,
+} from "@blaze-cardano/sdk";
+import { U5C } from "@utxorpc/blaze-provider";
+```
+
+### Step 2: Create a New U5C Provider
+The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
+
+For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
+
+Here's how to create the U5C Provider:
+```javascript
+const provider = new U5C({
+    url: "http://localhost:50051",
+    headers: {
+        "api-key": "<api-key>",
+    },
+});
+```
+This sample is structured in a way that can be used if your UTxORPC node comes from a provider and you need to attach needed information to your header.
+
+### Step 3: Create a New Wallet from a Mnemonic
+
+```javascript
+const mnemonic = "your 24-word mnemonic here";
+const entropy = mnemonicToEntropy(mnemonic, wordlist);
+const masterkey = Bip32PrivateKey.fromBip39Entropy(Buffer.from(entropy), "");
+const wallet = await HotWallet.fromMasterkey(masterkey.hex(), provider);
+```
+
+### Step 4: Create a Blaze Instance from the Wallet and Provider
+
+```javascript
+const blaze = await Blaze.from(provider, wallet);
+```
+
+Optional: Print the wallet address
+
+```javascript
+console.log("Wallet address", wallet.address.toBech32());
+```
+
+Optional: Print the wallet balance
+
+```javascript
+console.log("Wallet balance", (await wallet.getBalance()).toCore());
+```
+
+### Step 5: Create an Example Transaction
+
+```javascript
+const tx = await blaze
+    .newTransaction()
+    .payLovelace(
+        Core.Address.fromBech32(
+            "addr_test1qrnrqg4s73skqfyyj69mzr7clpe8s7ux9t8z6l55x2f2xuqra34p9pswlrq86nq63hna7p4vkrcrxznqslkta9eqs2nsmlqvnk",
+        ),
+        5_000_000n,
+    )
+    .complete();
+```
+
+### Step 6: Sign the Transaction
+
+```javascript
+const signedTx = await blaze.signTransaction(tx);
+```
+
+### Step 7: Submit the Transaction to the Blockchain Network
+
+```javascript
+const txId = await blaze.provider.postTransactionToChain(signedTx);
+```
+
+## Conclusion
+
+The **UTxORPC (u5c)** provider for [Blaze](https://github.com/butaneprotocol/blaze-cardano) enables seamless interaction with the Cardano blockchain, integrating effectively with the Blaze library to facilitate the creation, signing, and submission of transactions. By following this guide, you should be able to set up and use the U5C provider with Blaze, allowing you to leverage Cardano blockchain in your JavaScript/TypeScript applications.
+
+For further customization and advanced usage, refer to the documentation for [Blaze](https://github.com/butaneprotocol/blaze-cardano). By understanding and utilizing these tools, you can develop robust applications that interact with Cardano and other UTxO-based blockchains efficiently.
+
