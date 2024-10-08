@@ -12,7 +12,7 @@ You can install Grpcurl on various operating systems. Detailed installation inst
 
 To interact with U5C, you first need to connect to a compliant server. You can choose one of the [available servers](/servers) for U5C.
 
-### Example: Connecting to a Local Dolos Node
+### Example: Connecting to a Local [Dolos Node](https://github.com/txpipe/dolos) 
 
 ```sh
 grpcurl -plaintext localhost:50051 list
@@ -20,7 +20,7 @@ grpcurl -plaintext localhost:50051 list
 
 This command lists the services available on a local Dolos node running on port 50051.
 
-### Example: Connecting to a Local Cardano Node API
+### Example: Connecting to a Local [Cardano Node API](https://github.com/blinklabs-io/cardano-node-api)
 
 ```sh
 grpcurl -plaintext localhost:9090 list
@@ -49,6 +49,7 @@ grpcurl -plaintext localhost:50051 describe utxorpc.v1alpha.sync.SyncService.Fet
 This will return details about the method:
 
 ```sh
+utxorpc.v1alpha.sync.SyncService.FetchBlock is a method:
 rpc FetchBlock ( .utxorpc.v1alpha.sync.FetchBlockRequest ) returns ( .utxorpc.v1alpha.sync.FetchBlockResponse );
 ```
 
@@ -61,6 +62,8 @@ grpcurl -plaintext localhost:50051 describe utxorpc.v1alpha.sync.FetchBlockReque
 The output will look like this:
 
 ```sh
+utxorpc.v1alpha.sync.FetchBlockRequest is a message:
+// Request to fetch a block by its reference.
 message FetchBlockRequest {
   repeated .utxorpc.v1alpha.sync.BlockRef ref = 1;
   .google.protobuf.FieldMask field_mask = 2;
@@ -69,7 +72,7 @@ message FetchBlockRequest {
 
 ## Executing a Request/Reply Method
 
-Once you understand the request structure, you can execute a method like `FetchBlock` to fetch a specific block. Here's an example using the block's `index` and `hash`:
+Once you understand the request structure, you can execute a method like `FetchBlock` to fetch a specific block. Here's an example using a block's `index` and `hash` which are its parameters to make a Block Reference or a `ref`:
 
 ```sh
 grpcurl -plaintext -d '{"ref": [{"index": 300042, "hash": "LRptYoRi+RG+TmxUmSsoB3lr6BLEQ2pLA+UWhgwgiIA="}]}' localhost:50051 utxorpc.v1alpha.sync.SyncService.FetchBlock
@@ -139,4 +142,4 @@ grpcurl -plaintext localhost:50051 utxorpc.v1alpha.sync.SyncService.FollowTip
 
 ## Conclusion
 
-Grpcurl simplifies working with gRPC services, providing a curl-like experience like how curl is used with HTTP APIs. Whether listing services, describing methods, or executing request/reply and streaming methods, Grpcurl makes interacting with gRPC services more accessible, enabling smoother development and testing workflows.
+Grpcurl makes interacting with gRPC services as simple as using curl with HTTP APIs. It opens the door for developers to easily test and interact with gRPC services, making the transition from HTTP to gRPC smoother and more approachable.
