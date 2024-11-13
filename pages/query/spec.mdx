@@ -2,14 +2,14 @@
 
 <a name="utxorpc-v1alpha-query-AnyChainDatum"></a>
 
-## AnyChainDatum
+### AnyChainDatum
 An evenlope that holds a datum for any of the compatible chains
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| native_bytes | [bytes](#bytes) |  | Original bytes as defined by the chain |
 | key | [bytes](#bytes) |  |  |
-| native_bytes | [bytes](#bytes) |  | An opaque bytestring corresponding to native representation in the source chain. |
 | cardano | [utxorpc.v1alpha.cardano.PlutusData](#utxorpc-v1alpha-cardano-PlutusData) |  | A cardano UTxO |
 
 
@@ -19,7 +19,7 @@ An evenlope that holds a datum for any of the compatible chains
 
 <a name="utxorpc-v1alpha-query-AnyChainParams"></a>
 
-## AnyChainParams
+### AnyChainParams
 An evenlope that holds parameter data from any of the compatible chains
 
 
@@ -34,14 +34,14 @@ An evenlope that holds parameter data from any of the compatible chains
 
 <a name="utxorpc-v1alpha-query-AnyUtxoData"></a>
 
-## AnyUtxoData
+### AnyUtxoData
 An evenlope that holds an UTxO from any of compatible chains
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| native_bytes | [bytes](#bytes) |  | Original bytes as defined by the chain |
 | txo_ref | [TxoRef](#utxorpc-v1alpha-query-TxoRef) |  | Hash of the previous transaction. |
-| native_bytes | [bytes](#bytes) |  | An opaque bytestring corresponding to native representation in the source chain. |
 | cardano | [utxorpc.v1alpha.cardano.TxOutput](#utxorpc-v1alpha-cardano-TxOutput) |  | A cardano UTxO |
 
 
@@ -51,7 +51,7 @@ An evenlope that holds an UTxO from any of compatible chains
 
 <a name="utxorpc-v1alpha-query-AnyUtxoPattern"></a>
 
-## AnyUtxoPattern
+### AnyUtxoPattern
 An evenlope that holds an UTxO patterns from any of compatible chains
 
 
@@ -66,7 +66,7 @@ An evenlope that holds an UTxO patterns from any of compatible chains
 
 <a name="utxorpc-v1alpha-query-ChainPoint"></a>
 
-## ChainPoint
+### ChainPoint
 Represents a specific point in the blockchain.
 
 
@@ -82,7 +82,7 @@ Represents a specific point in the blockchain.
 
 <a name="utxorpc-v1alpha-query-ReadDataRequest"></a>
 
-## ReadDataRequest
+### ReadDataRequest
 Request to get data (as in plural of datum)
 
 
@@ -98,7 +98,7 @@ Request to get data (as in plural of datum)
 
 <a name="utxorpc-v1alpha-query-ReadDataResponse"></a>
 
-## ReadDataResponse
+### ReadDataResponse
 Response containing data (as in plural of datum)
 
 
@@ -114,7 +114,7 @@ Response containing data (as in plural of datum)
 
 <a name="utxorpc-v1alpha-query-ReadParamsRequest"></a>
 
-## ReadParamsRequest
+### ReadParamsRequest
 Request to get the chain parameters
 
 
@@ -129,7 +129,7 @@ Request to get the chain parameters
 
 <a name="utxorpc-v1alpha-query-ReadParamsResponse"></a>
 
-## ReadParamsResponse
+### ReadParamsResponse
 Response containing the chain parameters
 
 
@@ -145,7 +145,7 @@ Response containing the chain parameters
 
 <a name="utxorpc-v1alpha-query-ReadUtxosRequest"></a>
 
-## ReadUtxosRequest
+### ReadUtxosRequest
 Request to get specific UTxOs
 
 
@@ -161,7 +161,7 @@ Request to get specific UTxOs
 
 <a name="utxorpc-v1alpha-query-ReadUtxosResponse"></a>
 
-## ReadUtxosResponse
+### ReadUtxosResponse
 Response containing the UTxOs associated with the requested addresses.
 
 
@@ -177,14 +177,16 @@ Response containing the UTxOs associated with the requested addresses.
 
 <a name="utxorpc-v1alpha-query-SearchUtxosRequest"></a>
 
-## SearchUtxosRequest
-Reques to search for UTxO based on a pattern.
+### SearchUtxosRequest
+Request to search for UTxO based on a pattern.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | predicate | [UtxoPredicate](#utxorpc-v1alpha-query-UtxoPredicate) |  | Pattern to match UTxOs by. |
 | field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields. |
+| max_items | [int32](#int32) |  | The maximum number of items to return. |
+| start_token | [string](#string) |  | The next_page_token value returned from a previous request, if any. |
 
 
 
@@ -193,7 +195,7 @@ Reques to search for UTxO based on a pattern.
 
 <a name="utxorpc-v1alpha-query-SearchUtxosResponse"></a>
 
-## SearchUtxosResponse
+### SearchUtxosResponse
 Response containing the UTxOs that match the requested addresses.
 
 
@@ -201,6 +203,7 @@ Response containing the UTxOs that match the requested addresses.
 | ----- | ---- | ----- | ----------- |
 | items | [AnyUtxoData](#utxorpc-v1alpha-query-AnyUtxoData) | repeated | List of UTxOs. |
 | ledger_tip | [ChainPoint](#utxorpc-v1alpha-query-ChainPoint) |  | The chain point that represent the ledger current position. |
+| next_token | [string](#string) |  | Token to retrieve the next page of results, or empty if there are no more results. |
 
 
 
@@ -209,7 +212,7 @@ Response containing the UTxOs that match the requested addresses.
 
 <a name="utxorpc-v1alpha-query-TxoRef"></a>
 
-## TxoRef
+### TxoRef
 Represents a reference to a transaction output
 
 
@@ -225,7 +228,7 @@ Represents a reference to a transaction output
 
 <a name="utxorpc-v1alpha-query-UtxoPredicate"></a>
 
-## UtxoPredicate
+### UtxoPredicate
 Represents a simple utxo predicate that can composed to create more complex ones
 
 
@@ -249,7 +252,7 @@ Represents a simple utxo predicate that can composed to create more complex ones
 
 <a name="utxorpc-v1alpha-query-QueryService"></a>
 
-## QueryService
+### QueryService
 Service definition for querying the state of the chain.
 
 | Method Name | Request Type | Response Type | Description |
@@ -258,5 +261,3 @@ Service definition for querying the state of the chain.
 | ReadUtxos | [ReadUtxosRequest](#utxorpc-v1alpha-query-ReadUtxosRequest) | [ReadUtxosResponse](#utxorpc-v1alpha-query-ReadUtxosResponse) | Read specific UTxOs by reference. |
 | SearchUtxos | [SearchUtxosRequest](#utxorpc-v1alpha-query-SearchUtxosRequest) | [SearchUtxosResponse](#utxorpc-v1alpha-query-SearchUtxosResponse) | Search for UTxO based on a pattern. |
 | ReadData | [ReadDataRequest](#utxorpc-v1alpha-query-ReadDataRequest) | [ReadDataResponse](#utxorpc-v1alpha-query-ReadDataResponse) | Read specific datum by hash |
-
- 

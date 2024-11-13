@@ -3,7 +3,7 @@
 
 <a name="utxorpc-v1alpha-watch-AnyChainTx"></a>
 
-## AnyChainTx
+### AnyChainTx
 Represents a transaction from any supported blockchain.
 
 
@@ -18,7 +18,7 @@ Represents a transaction from any supported blockchain.
 
 <a name="utxorpc-v1alpha-watch-AnyChainTxPattern"></a>
 
-## AnyChainTxPattern
+### AnyChainTxPattern
 Represents a tx pattern from any supported blockchain.
 
 
@@ -33,7 +33,7 @@ Represents a tx pattern from any supported blockchain.
 
 <a name="utxorpc-v1alpha-watch-BlockRef"></a>
 
-## BlockRef
+### BlockRef
 Represents a reference to a specific block
 
 
@@ -49,7 +49,7 @@ Represents a reference to a specific block
 
 <a name="utxorpc-v1alpha-watch-TxPredicate"></a>
 
-## TxPredicate
+### TxPredicate
 Represents a simple tx predicate that can composed to create more complex ones
 
 
@@ -67,7 +67,7 @@ Represents a simple tx predicate that can composed to create more complex ones
 
 <a name="utxorpc-v1alpha-watch-WatchTxRequest"></a>
 
-## WatchTxRequest
+### WatchTxRequest
 Request to watch transactions from the chain based on a set of predicates.
 
 
@@ -84,7 +84,7 @@ Request to watch transactions from the chain based on a set of predicates.
 
 <a name="utxorpc-v1alpha-watch-WatchTxResponse"></a>
 
-## WatchTxResponse
+### WatchTxResponse
 Response containing the matching chain transactions.
 
 
@@ -106,11 +106,9 @@ Response containing the matching chain transactions.
 
 <a name="utxorpc-v1alpha-watch-WatchService"></a>
 
-## WatchService
+### WatchService
 Service definition for watching transactions based on predicates.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | WatchTx | [WatchTxRequest](#utxorpc-v1alpha-watch-WatchTxRequest) | [WatchTxResponse](#utxorpc-v1alpha-watch-WatchTxResponse) stream | Stream transactions from the chain matching the specified predicates. |
-
- 

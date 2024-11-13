@@ -3,13 +3,13 @@
 
 <a name="utxorpc-v1alpha-sync-AnyChainBlock"></a>
 
-## AnyChainBlock
+### AnyChainBlock
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| raw | [bytes](#bytes) |  | Original bytes for a raw block |
+| native_bytes | [bytes](#bytes) |  | Original bytes as defined by the chain |
 | cardano | [utxorpc.v1alpha.cardano.Block](#utxorpc-v1alpha-cardano-Block) |  | A parsed Cardano block. |
 
 
@@ -19,7 +19,7 @@
 
 <a name="utxorpc-v1alpha-sync-BlockRef"></a>
 
-## BlockRef
+### BlockRef
 Represents a reference to a specific block
 
 
@@ -35,7 +35,7 @@ Represents a reference to a specific block
 
 <a name="utxorpc-v1alpha-sync-DumpHistoryRequest"></a>
 
-## DumpHistoryRequest
+### DumpHistoryRequest
 Request to dump the block history.
 
 
@@ -52,7 +52,7 @@ Request to dump the block history.
 
 <a name="utxorpc-v1alpha-sync-DumpHistoryResponse"></a>
 
-## DumpHistoryResponse
+### DumpHistoryResponse
 Response containing the dumped block history.
 
 
@@ -68,7 +68,7 @@ Response containing the dumped block history.
 
 <a name="utxorpc-v1alpha-sync-FetchBlockRequest"></a>
 
-## FetchBlockRequest
+### FetchBlockRequest
 Request to fetch a block by its reference.
 
 
@@ -84,7 +84,7 @@ Request to fetch a block by its reference.
 
 <a name="utxorpc-v1alpha-sync-FetchBlockResponse"></a>
 
-## FetchBlockResponse
+### FetchBlockResponse
 Response containing the fetched blocks.
 
 
@@ -99,7 +99,7 @@ Response containing the fetched blocks.
 
 <a name="utxorpc-v1alpha-sync-FollowTipRequest"></a>
 
-## FollowTipRequest
+### FollowTipRequest
 Request to follow the tip of the blockchain.
 
 
@@ -115,7 +115,7 @@ Request to follow the tip of the blockchain.
 
 <a name="utxorpc-v1alpha-sync-FollowTipResponse"></a>
 
-## FollowTipResponse
+### FollowTipResponse
 Response containing the action to perform while following the tip.
 
 
@@ -124,6 +124,31 @@ Response containing the action to perform while following the tip.
 | apply | [AnyChainBlock](#utxorpc-v1alpha-sync-AnyChainBlock) |  | Apply this block. |
 | undo | [AnyChainBlock](#utxorpc-v1alpha-sync-AnyChainBlock) |  | Undo this block. |
 | reset | [BlockRef](#utxorpc-v1alpha-sync-BlockRef) |  | Reset to this block reference. |
+
+
+
+
+
+
+<a name="utxorpc-v1alpha-sync-ReadTipRequest"></a>
+
+### ReadTipRequest
+Request to read the current tip of the blockchain.
+
+
+
+
+
+
+<a name="utxorpc-v1alpha-sync-ReadTipResponse"></a>
+
+### ReadTipResponse
+Response containing the current tip of the blockchain.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| tip | [BlockRef](#utxorpc-v1alpha-sync-BlockRef) |  | The current tip of the blockchain. |
 
 
 
@@ -138,7 +163,7 @@ Response containing the action to perform while following the tip.
 
 <a name="utxorpc-v1alpha-sync-SyncService"></a>
 
-## SyncService
+### SyncService
 Service definition for syncing chain data.
 
 | Method Name | Request Type | Response Type | Description |
@@ -146,5 +171,4 @@ Service definition for syncing chain data.
 | FetchBlock | [FetchBlockRequest](#utxorpc-v1alpha-sync-FetchBlockRequest) | [FetchBlockResponse](#utxorpc-v1alpha-sync-FetchBlockResponse) | Fetch a block by its reference. |
 | DumpHistory | [DumpHistoryRequest](#utxorpc-v1alpha-sync-DumpHistoryRequest) | [DumpHistoryResponse](#utxorpc-v1alpha-sync-DumpHistoryResponse) | Dump the block history. |
 | FollowTip | [FollowTipRequest](#utxorpc-v1alpha-sync-FollowTipRequest) | [FollowTipResponse](#utxorpc-v1alpha-sync-FollowTipResponse) stream | Follow the tip of the blockchain. |
-
- 
+| ReadTip | [ReadTipRequest](#utxorpc-v1alpha-sync-ReadTipRequest) | [ReadTipResponse](#utxorpc-v1alpha-sync-ReadTipResponse) | Read the current tip of the blockchain. |
