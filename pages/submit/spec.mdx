@@ -3,7 +3,7 @@
 
 <a name="utxorpc-v1alpha-submit-AnyChainEval"></a>
 
-## AnyChainEval
+### AnyChainEval
 Report containing the result of evaluating a particular transaction
 
 
@@ -18,7 +18,7 @@ Report containing the result of evaluating a particular transaction
 
 <a name="utxorpc-v1alpha-submit-AnyChainTx"></a>
 
-## AnyChainTx
+### AnyChainTx
 Represents a transaction from any supported blockchain.
 
 
@@ -33,7 +33,7 @@ Represents a transaction from any supported blockchain.
 
 <a name="utxorpc-v1alpha-submit-AnyChainTxPattern"></a>
 
-## AnyChainTxPattern
+### AnyChainTxPattern
 Represents a tx pattern from any supported blockchain.
 
 
@@ -48,7 +48,7 @@ Represents a tx pattern from any supported blockchain.
 
 <a name="utxorpc-v1alpha-submit-EvalTxRequest"></a>
 
-## EvalTxRequest
+### EvalTxRequest
 Request to evaluate transactions without submitting.
 
 
@@ -63,7 +63,7 @@ Request to evaluate transactions without submitting.
 
 <a name="utxorpc-v1alpha-submit-EvalTxResponse"></a>
 
-## EvalTxResponse
+### EvalTxResponse
 Response containing the reports form the transaction evaluation.
 
 
@@ -78,13 +78,8 @@ Response containing the reports form the transaction evaluation.
 
 <a name="utxorpc-v1alpha-submit-ReadMempoolRequest"></a>
 
-## ReadMempoolRequest
+### ReadMempoolRequest
 Request to check the status of submitted transactions.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| tx | [TxInMempool](#utxorpc-v1alpha-submit-TxInMempool) | repeated | List of transaction currently on the mempool. |
 
 
 
@@ -93,13 +88,13 @@ Request to check the status of submitted transactions.
 
 <a name="utxorpc-v1alpha-submit-ReadMempoolResponse"></a>
 
-## ReadMempoolResponse
+### ReadMempoolResponse
 Response containing the stage of the submitted transactions.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| stage | [Stage](#utxorpc-v1alpha-submit-Stage) | repeated | List of stages corresponding to the transaction references. |
+| items | [TxInMempool](#utxorpc-v1alpha-submit-TxInMempool) | repeated | List of transaction currently on the mempool. |
 
 
 
@@ -108,7 +103,7 @@ Response containing the stage of the submitted transactions.
 
 <a name="utxorpc-v1alpha-submit-SubmitTxRequest"></a>
 
-## SubmitTxRequest
+### SubmitTxRequest
 Request to submit transactions to the blockchain.
 
 
@@ -123,7 +118,7 @@ Request to submit transactions to the blockchain.
 
 <a name="utxorpc-v1alpha-submit-SubmitTxResponse"></a>
 
-## SubmitTxResponse
+### SubmitTxResponse
 Response containing references to the submitted transactions.
 
 
@@ -138,14 +133,16 @@ Response containing references to the submitted transactions.
 
 <a name="utxorpc-v1alpha-submit-TxInMempool"></a>
 
-## TxInMempool
+### TxInMempool
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| tx | [AnyChainTx](#utxorpc-v1alpha-submit-AnyChainTx) |  | The contents of the tx |
+| ref | [bytes](#bytes) |  | The transaction reference. |
+| native_bytes | [bytes](#bytes) |  | Original bytes as defined by the chain |
 | stage | [Stage](#utxorpc-v1alpha-submit-Stage) |  | The current stage of the tx |
+| cardano | [utxorpc.v1alpha.cardano.Tx](#utxorpc-v1alpha-cardano-Tx) |  | A Cardano transaction. |
 
 
 
@@ -154,7 +151,7 @@ Response containing references to the submitted transactions.
 
 <a name="utxorpc-v1alpha-submit-TxPredicate"></a>
 
-## TxPredicate
+### TxPredicate
 Represents a simple tx predicate that can composed to create more complex ones
 
 
@@ -172,7 +169,7 @@ Represents a simple tx predicate that can composed to create more complex ones
 
 <a name="utxorpc-v1alpha-submit-WaitForTxRequest"></a>
 
-## WaitForTxRequest
+### WaitForTxRequest
 Request to wait for transactions to reach a certain stage.
 
 
@@ -187,7 +184,7 @@ Request to wait for transactions to reach a certain stage.
 
 <a name="utxorpc-v1alpha-submit-WaitForTxResponse"></a>
 
-## WaitForTxResponse
+### WaitForTxResponse
 Response containing the transaction reference and stage once it has been reached.
 
 
@@ -203,7 +200,7 @@ Response containing the transaction reference and stage once it has been reached
 
 <a name="utxorpc-v1alpha-submit-WatchMempoolRequest"></a>
 
-## WatchMempoolRequest
+### WatchMempoolRequest
 Request to watch changes of specific mempool txs.
 
 
@@ -219,7 +216,7 @@ Request to watch changes of specific mempool txs.
 
 <a name="utxorpc-v1alpha-submit-WatchMempoolResponse"></a>
 
-## WatchMempoolResponse
+### WatchMempoolResponse
 Response that represents a change in a mempool tx.
 
 
@@ -236,7 +233,7 @@ Response that represents a change in a mempool tx.
 
 <a name="utxorpc-v1alpha-submit-Stage"></a>
 
-## Stage
+### Stage
 Enum representing the various stages of a transaction&#39;s lifecycle.
 
 | Name | Number | Description |
@@ -255,7 +252,7 @@ Enum representing the various stages of a transaction&#39;s lifecycle.
 
 <a name="utxorpc-v1alpha-submit-SubmitService"></a>
 
-## SubmitService
+### SubmitService
 Service definition for submitting transactions and checking their status.
 
 | Method Name | Request Type | Response Type | Description |
@@ -265,5 +262,3 @@ Service definition for submitting transactions and checking their status.
 | WaitForTx | [WaitForTxRequest](#utxorpc-v1alpha-submit-WaitForTxRequest) | [WaitForTxResponse](#utxorpc-v1alpha-submit-WaitForTxResponse) stream | Wait for transactions to reach a certain stage and stream the updates. |
 | ReadMempool | [ReadMempoolRequest](#utxorpc-v1alpha-submit-ReadMempoolRequest) | [ReadMempoolResponse](#utxorpc-v1alpha-submit-ReadMempoolResponse) | Returns a point-in-time snapshot of the mempool. |
 | WatchMempool | [WatchMempoolRequest](#utxorpc-v1alpha-submit-WatchMempoolRequest) | [WatchMempoolResponse](#utxorpc-v1alpha-submit-WatchMempoolResponse) stream | Stream transactions from the mempool matching the specified predicates. |
-
- 

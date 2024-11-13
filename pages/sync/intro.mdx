@@ -1,14 +1,85 @@
 import { Callout } from "nextra-theme-docs";
+import { Tabs, Tab } from 'nextra-theme-docs'
 
 # Sync Module
 
 The _Sync_ module provides an interface for synchronizing chain data, fetching blocks, and tracking the tip of the blockchain.
 
 ## Operations
+<Callout type="info">
+  **Important**: All byte fields in grpcurl examples (like hashes, addresses, assets) must be base64 encoded.
+  For more details and installation of grpcurl, refer to the [grpcurl guide](/grpcurl).
+</Callout>
 
-- `FetchBlock`: This method enables clients to fetch blocks by their references. Clients can selectively return fields using a field mask.
-- `DumpHistory`: This method allows clients to dump a segment of the block history, starting from a specified point and up to a maximum number of items. Clients can selectively return fields using a field mask.
-- `FollowTip`: This method enables clients to follow the tip of the blockchain by finding the intersection with a list of block references. The service will stream updates, including applying and undoing blocks or resetting to a specific block reference.
+<Callout type="note">
+    The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
+    
+    For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
+</Callout>
+### FetchBlock
+Fetch blocks by their references with optional field masking.
+
+<Tabs items={['grpcurl']}>
+  <Tab>
+    ```bash
+    grpcurl -d '{ "ref": [{ "index": 64270876, "hash": "Rmuje+QbnY6ARsca2HxoxeDvWCXEjOlIp3jcnKuhXPA=" }] }' \
+      localhost:50051 \
+      utxorpc.v1alpha.sync.SyncService.FetchBlock
+    ```
+  </Tab>
+</Tabs>
+
+### DumpHistory
+Dump a segment of block history from a specified point.
+
+<Tabs items={['grpcurl']}>
+  <Tab>
+    ```bash
+    grpcurl -plaintext \
+    -d '{ 
+        "start_token": { 
+          "index": 64270876, 
+          "hash": "Rmuje+QbnY6ARsca2HxoxeDvWCXEjOlIp3jcnKuhXPA=" 
+        },
+        "max_items": 100
+      }' \
+      localhost:50051 \
+      utxorpc.v1alpha.sync.SyncService.DumpHistory
+    ```
+  </Tab>
+</Tabs>
+
+### FollowTip
+Follow the blockchain tip with streaming updates.
+
+<Tabs items={['grpcurl']}>
+  <Tab>
+    ```bash
+    grpcurl -plaintext \
+      -d '{ "intersect": [{ "index": 64270876, "hash": "Rmuje+QbnY6ARsca2HxoxeDvWCXEjOlIp3jcnKuhXPA=" }] }' \
+      localhost:50051 \
+      utxorpc.v1alpha.sync.SyncService.FollowTip
+    ```
+  </Tab>
+</Tabs>
+
+### ReadTip
+Get the current blockchain tip information.
+
+<Callout type="warning">
+  This operation is yet to be implemented in Dolos and is still getting worked on.
+</Callout>
+
+<Tabs items={['grpcurl']}>
+  <Tab>
+    ```bash
+    grpcurl -plaintext \
+      -d '{}' \
+      localhost:50051 \
+      utxorpc.v1alpha.sync.SyncService.ReadTip
+    ```
+  </Tab>
+</Tabs>
 
 <Callout type="info">
   The schema details can be found in the [spec reference](spec).
@@ -41,4 +112,3 @@ sequenceDiagram
   SyncService-->>Client: <reset>(point)
   Client->>SyncService: Done
   deactivate SyncService
-```

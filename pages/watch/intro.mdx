@@ -1,12 +1,143 @@
 import { Callout } from "nextra-theme-docs";
+import { Tabs, Tab } from 'nextra-theme-docs'
 
 # Watch Module
 
 The _Watch_ module provides an interface for streaming transactions based on specified predicates, allowing clients to monitor specific aspects of the blockchain.
 
 ## Operations
+<Callout type="info">
+  **Important**: All byte fields in grpcurl examples (like hashes, addresses, assets) must be base64 encoded.
+  For more details and installation of grpcurl, refer to the [grpcurl guide](/grpcurl).
+</Callout>
 
-- `WatchTx`: This method enables clients to stream transactions matching a set of predicates, such as addresses, assets, UTXOs, or datums. The service will stream updates, including applying and undoing transactions. Clients can selectively return fields using a field mask.
+<Callout type="note">
+    The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
+    
+    For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
+</Callout>
+### WatchTx
+Watch transactions based on different patterns.
+
+#### By Address
+Watch all tx controlled by a specific Cardano address. The address must be base64 encoded.
+
+<Tabs items={['grpcurl']}>
+  <Tab>
+    ```bash
+    grpcurl -plaintext \
+      -d '{
+        "predicate": {
+          "match": {
+            "cardano": {
+              "has_address": {
+                "exact_address": "AJs7DC2gQcMrCyDdI49iEvCVlVjxfyrYvmj76rLmODCCS9vyMxgygxirZgrESIt1j2tbOSqOku8e"
+              }
+            }
+          }
+        }
+      }' \
+      localhost:50051 \
+      utxorpc.v1alpha.watch.WatchService.WatchTx
+    ```
+  </Tab>
+</Tabs>
+
+#### By Address Payment Part
+Watch tx by just the payment credential part of an address. Useful when you want to find UTXOs regardless of stake credential.
+
+<Tabs items={['grpcurl']}>
+  <Tab>
+    ```bash
+    grpcurl -plaintext \
+      -d '{
+        "predicate": {
+          "match": {
+            "cardano": {
+              "has_address": {
+                "payment_part": "p4WAOb31UfCR2qsqVlBLiUrsVwZoGPVOmYOjavDuEPs="
+              }
+            }
+          }
+        }
+      }' \
+      localhost:50051 \
+      utxorpc.v1alpha.watch.WatchService.WatchTx
+    ```
+  </Tab>
+</Tabs>
+
+#### By Address Delegation Part
+Watch tx by just the stake credential (delegation part) of an address. Helps find all UTXOs delegated to a specific stake key.
+
+<Tabs items={['grpcurl']}>
+  <Tab>
+    ```bash
+    grpcurl -plaintext \
+      -d '{
+        "predicate": {
+          "match": {
+            "cardano": {
+              "has_address": {
+                "delegation_part": "p4WAOb31UfCR2qsqVlBLiUrsVwZoGPVOmYOjavDuEPs="
+              }
+            }
+          }
+        }
+      }' \
+      localhost:50051 \
+      utxorpc.v1alpha.watch.WatchService.WatchTx
+    ```
+  </Tab>
+</Tabs>
+
+#### By Asset Policy
+Watch tx containing tokens from a specific policy ID. The policy ID must be base64 encoded.
+
+<Tabs items={['grpcurl']}>
+  <Tab>
+    ```bash
+    grpcurl -plaintext \
+      -d '{
+        "predicate": {
+          "match": {
+            "cardano": {
+              "moves_asset": {
+                "policy_id": "pDQq5fQKGM5sGXdgHjY8zDDKiBH4YpMeOpV8vmA="
+              }
+            }
+          }
+        }
+      }' \
+      localhost:50051 \
+      utxorpc.v1alpha.watch.WatchService.WatchTx
+    ```
+  </Tab>
+</Tabs>
+
+#### By Specific Asset
+Watch tx containing a specific token, identified by both policy ID and asset name (combined and base64 encoded).
+
+<Tabs items={['grpcurl']}>
+  <Tab>
+    ```bash
+    grpcurl -plaintext \
+      -d '{
+        "predicate": {
+          "match": {
+            "cardano": {
+              "moves_asset": {
+                "asset_name": "BH4PkSxCYP5mriceWuSU3NX3ljW7uxOGvhlfTkFMTEVZS0FUWjAwMDYw"
+              }
+            }
+          }
+        }
+      }' \
+      localhost:50051 \
+      utxorpc.v1alpha.watch.WatchService.WatchTx
+    ```
+  </Tab>
+</Tabs>
 
 <Callout type="info">
   The schema details can be found in the [spec reference](spec).
@@ -52,4 +183,3 @@ sequenceDiagram
   WatchService--)Client: <apply>(tx with redeemer datum)
   Client->>WatchService: Done
   deactivate WatchService
-```
