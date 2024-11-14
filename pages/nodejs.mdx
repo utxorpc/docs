@@ -1,3 +1,5 @@
+import { Callout } from "nextra-theme-docs";
+
 # Node.js SDK
 
 This SDK allows you to interact with UTxORPC compatible nodes, enabling operations such as fetching blocks, submitting transactions, and syncing with the latest blocks.
@@ -27,9 +29,11 @@ The SDK provides three primary clients for interacting with UTxORPC:
 
 ## Usage
 
-The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
-
-For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
+<Callout type="note">
+    The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
+    
+    For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
+</Callout>
 
 Below are examples of how to use each of the clients in the SDK.
 
@@ -85,7 +89,7 @@ fetchBlockExample().catch(console.error);
 
 ### 2. CardanoQueryClient
 
-The `CardanoQueryClient` allows you to query blockchain data, including reading protocol parameters and searching UTXOs.
+The `CardanoQueryClient` allows you to query blockchain data, including reading protocol parameters and searching UTxOs.
 
 #### Example: Reading Blockchain Parameters
 
@@ -104,7 +108,7 @@ async function readParamsExample() {
 readParamsExample().catch(console.error);
 ```
 
-#### Example: Searching UTXOs by Address
+#### Example: Searching UTxOs by Address
 
 ```javascript
 import { CardanoQueryClient } from "@utxorpc/sdk";
@@ -152,4 +156,4 @@ submitTxExample().catch(console.error);
 
 ## Conclusion
 
-This SDK is designed to streamline the process of interacting with UTxORPC using Node.js. Whether you're syncing with the latest blockchain data, querying UTXOs, or submitting transactions, this SDK provides the necessary tools to build robust blockchain applications with ease.
+This SDK is designed to streamline the process of interacting with UTxORPC using Node.js. Whether you're syncing with the latest blockchain data, querying UTxOs, or submitting transactions, this SDK provides the necessary tools to build robust blockchain applications with ease.

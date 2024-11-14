@@ -1,3 +1,5 @@
+import { Callout } from "nextra-theme-docs";
+
 # Blaze UTxORPC Provider 
 
 This provides instructions on using the **UTxORPC (u5c)** provider for the [Blaze](https://github.com/butaneprotocol/blaze-cardano) library. 
@@ -47,9 +49,11 @@ import { U5C } from "@utxorpc/blaze-provider";
 ```
 
 ### Step 2: Create a New U5C Provider
-The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
-
-For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
+<Callout type="note">
+    The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
+    
+    For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
+</Callout>
 
 Here's how to create the U5C Provider:
 ```javascript
