@@ -6,6 +6,35 @@ import { Tabs, Tab } from 'nextra-theme-docs'
 
 The _Query_ module provides an interface for querying the state of the ledger with the main goal of constructing new transactions.
 
+## Sequence Example
+
+The following diagram describes the message exchange between a client and service where the client queries protocol parameters, reads UTxOs, and queries UTxOs.
+
+
+```mermaid
+%%{init: { 'theme': 'dark' } }%%
+sequenceDiagram
+  actor Client
+  participant QueryService
+
+  Note over Client,QueryService: query params to define fees / other criteria
+  Client->>+QueryService: ReadParams (field_mask)
+  QueryService-->>-Client: <param>[]
+
+  Note over Client,QueryService: read UTxO by ref to resolve tx inputs
+  Client->>+QueryService: ReadUtxos (refs)
+  QueryService-->>-Client: ReadUtxos (utxos)
+
+  Note over Client,QueryService: query UTxO by address to balance tx
+  Client->>+QueryService: SearchUtxos (address_pattern)
+  QueryService-->>-Client: SearchUtxos (utxos)
+
+  Note over Client,QueryService: query UTxO by token used as beacon
+  Client->>+QueryService: SearchUtxos (token_pattern)
+  QueryService-->>-Client: SearchUtxos (utxos)
+```
+
+
 ## Operations
 
 <Callout type="info">
@@ -33,7 +62,7 @@ Retrieves the current protocol parameters for the chain, including important val
 </Tabs>
 
 ### ReadUtxos 
-Fetches specific UTXOs by their transaction reference (hash and index). Useful when you need to look up known UTXOs directly.
+Fetches specific UTxOs by their output reference (hash and index). Useful when you need to look up known UTxOs directly.
 
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -52,10 +81,10 @@ Fetches specific UTXOs by their transaction reference (hash and index). Useful w
 </Tabs>
 
 ### SearchUtxos
-Search for UTXOs using various filtering patterns. The following search methods are available:
+Search for UTxOs using various filtering patterns. The following search methods are available:
 
 #### By Address
-Search for all UTXOs controlled by a specific Cardano address. The address must be base64 encoded.
+Search for all UTxOs controlled by a specific Cardano address. The address must be base64 encoded.
 
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -79,7 +108,7 @@ Search for all UTXOs controlled by a specific Cardano address. The address must 
 </Tabs>
 
 #### By Address Payment Part 
-Search for UTXOs by just the payment credential part of an address. Useful when you want to find UTXOs regardless of stake credential.
+Search for UTxOs by just the payment credential part of an address. Useful when you want to find UTxOs regardless of stake credential.
 
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -103,7 +132,7 @@ Search for UTXOs by just the payment credential part of an address. Useful when 
 </Tabs>
 
 #### By Address Delegation Part
-Search for UTXOs by just the stake credential (delegation part) of an address. Helps find all UTXOs delegated to a specific stake key.
+Search for UTxOs by just the stake credential (delegation part) of an address. Helps find all UTxOs delegated to a specific stake key.
 
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -127,7 +156,7 @@ Search for UTXOs by just the stake credential (delegation part) of an address. H
 </Tabs>
 
 #### By Asset Policy
-Search for UTXOs containing tokens from a specific policy ID. The policy ID must be base64 encoded.
+Search for UTxOs containing tokens from a specific policy ID. The policy ID must be base64 encoded.
 
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -151,7 +180,7 @@ Search for UTXOs containing tokens from a specific policy ID. The policy ID must
 </Tabs>
 
 #### By Specific Asset 
-Search for UTXOs containing a specific token, identified by both policy ID and asset name (combined and base64 encoded).
+Search for UTxOs containing a specific token, identified by both policy ID and asset name (combined and base64 encoded).
 
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -177,7 +206,7 @@ Search for UTXOs containing a specific token, identified by both policy ID and a
 ### ReadData 
 Read specific data (plural of datum) by hash.
 <Callout type="warning">
-  This operation is yet to be implemented in Dolos and is still getting worked on.
+  This operation is currently under development in Dolos and is not yet available.
 </Callout>
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -198,28 +227,3 @@ Read specific data (plural of datum) by hash.
 <Callout type="info">
   The schema details can be found in the [spec reference](spec).
 </Callout>
-
-## Sequence Example
-
-```mermaid
-%%{init: { 'theme': 'dark' } }%%
-sequenceDiagram
-  actor Client
-  participant QueryService
-
-  Note over Client,QueryService: query params to define fees / other criteria
-  Client->>+QueryService: ReadParams (field_mask)
-  QueryService-->>-Client: <param>[]
-
-  Note over Client,QueryService: read UTxO by ref to resolve tx inputs
-  Client->>+QueryService: ReadUtxos (refs)
-  QueryService-->>-Client: ReadUtxos (utxos)
-
-  Note over Client,QueryService: query UTxO by address to balance tx
-  Client->>+QueryService: SearchUtxos (address_pattern)
-  QueryService-->>-Client: SearchUtxos (utxos)
-
-  Note over Client,QueryService: query UTxO by token used as beacon
-  Client->>+QueryService: SearchUtxos (token_pattern)
-  QueryService-->>-Client: SearchUtxos (utxos)
-```

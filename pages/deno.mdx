@@ -1,3 +1,5 @@
+import { Callout } from "nextra-theme-docs";
+
 # Deno with Node.js SDK
 
 The UTxORPC SDK, an npm package for interacting with UTxORPC-compatible nodes, is also compatible with Deno thanks to the latest 'Deno 2' update. This allows you to fetch blocks, submit transactions, and synchronize with the latest blocks seamlessly using Deno's now native npm package support.
@@ -63,9 +65,11 @@ The SDK includes three primary clients for interacting with UTxORPC nodes:
 
 ## Usage
 
-The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
-
-For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
+<Callout type="note">
+    The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
+    
+    For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
+</Callout>
 
 Below are examples of how to use each of the clients in the SDK.
 
@@ -118,7 +122,7 @@ fetchBlockExample().catch(console.error);
 
 ### 2. CardanoQueryClient
 
-`CardanoQueryClient` lets you query blockchain data, read protocol parameters, and search UTXOs.
+`CardanoQueryClient` lets you query blockchain data, read protocol parameters, and search UTxOs.
 
 #### Example: Reading Blockchain Parameters
 
@@ -137,7 +141,7 @@ async function readParamsExample() {
 readParamsExample().catch(console.error);
 ```
 
-#### Example: Searching UTXOs by Address
+#### Example: Searching UTxOs by Address
 
 ```typescript
 import { CardanoQueryClient } from "npm:@utxorpc/sdk";

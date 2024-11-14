@@ -5,6 +5,37 @@ import { Tabs, Tab } from 'nextra-theme-docs'
 
 The _Sync_ module provides an interface for synchronizing chain data, fetching blocks, and tracking the tip of the blockchain.
 
+## Sequence Example
+
+The following diagram describes the message exchange between a client and service where the client fetches a block, dumps history of chain, and streams the events from tip of the chain.
+
+```mermaid
+%%{init: { 'theme': 'dark' } }%%
+sequenceDiagram
+  actor Client
+  participant SyncService
+
+  Note over Client,SyncService: fetch a particular block
+  Client->>+SyncService: FetchBlock (<ref>)
+  SyncService-->>-Client: <block>
+
+  Note over Client,SyncService: dump history of chain in chunks of 100 blocks
+  Client->>+SyncService: DumpHistory (origin, 100)
+  SyncService-->>-Client: <block>[origin..100]
+
+  Client->>+SyncService: DumpHistory (last_ref, 100)
+  SyncService-->>-Client: <block>[101..200]
+
+  Note over Client,SyncService: stream change events from tip of the chain
+  Client->>SyncService: FollowTip (<intersection>)
+  activate SyncService
+  SyncService-->>Client: <apply>(block)
+  SyncService-->>Client: <undo>(block)
+  SyncService-->>Client: <reset>(point)
+  Client->>SyncService: Done
+  deactivate SyncService
+```
+
 ## Operations
 <Callout type="info">
   **Important**: All byte fields in grpcurl examples (like hashes, addresses, assets) must be base64 encoded.
@@ -67,7 +98,7 @@ Follow the blockchain tip with streaming updates.
 Get the current blockchain tip information.
 
 <Callout type="warning">
-  This operation is yet to be implemented in Dolos and is still getting worked on.
+  This operation is currently under development in Dolos and is not yet available.
 </Callout>
 
 <Tabs items={['grpcurl']}>
@@ -84,31 +115,3 @@ Get the current blockchain tip information.
 <Callout type="info">
   The schema details can be found in the [spec reference](spec).
 </Callout>
-
-## Sequence Example
-
-```mermaid
-%%{init: { 'theme': 'dark' } }%%
-sequenceDiagram
-  actor Client
-  participant SyncService
-
-  Note over Client,SyncService: fetch a particular block
-  Client->>+SyncService: FetchBlock (<ref>)
-  SyncService-->>-Client: <block>
-
-  Note over Client,SyncService: dump history of chain in chunks of 100 blocks
-  Client->>+SyncService: DumpHistory (origin, 100)
-  SyncService-->>-Client: <block>[origin..100]
-
-  Client->>+SyncService: DumpHistory (last_ref, 100)
-  SyncService-->>-Client: <block>[101..200]
-
-  Note over Client,SyncService: stream change events from tip of the chain
-  Client->>SyncService: FollowTip (<intersection>)
-  activate SyncService
-  SyncService-->>Client: <apply>(block)
-  SyncService-->>Client: <undo>(block)
-  SyncService-->>Client: <reset>(point)
-  Client->>SyncService: Done
-  deactivate SyncService

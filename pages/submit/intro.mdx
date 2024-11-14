@@ -5,6 +5,29 @@ import { Tabs, Tab } from 'nextra-theme-docs'
 
 The _Submit_ module provides an interface for submitting transactions and monitoring their progress through various stages in their lifecycle.
 
+## Sequence Example
+
+The following diagram describes the message exchange between a client and service where the client submits a transaction and waits for status updates asynchrounously.
+
+```mermaid
+%%{init: { 'theme': 'dark' } }%%
+sequenceDiagram
+  actor Client
+  participant SubmitService
+  Client->>+SubmitService: Submit (Tx)
+  SubmitService-->>-Client: Tx Ref
+  Client->>SubmitService: Wait For (Tx Ref)
+  activate SubmitService
+  SubmitService--)Client: Tx Acknowledged
+  SubmitService--)Client: Tx in Mempool
+  SubmitService--)Client: Tx in Network
+  SubmitService--)Client: Tx Confirmed (1 block)
+  SubmitService--)Client: Tx Confirmed (2 block)
+  SubmitService--)Client: Tx Confirmed (n block)
+  Client->>SubmitService: Done
+  deactivate SubmitService
+```
+
 ## Operations
 
 <Callout type="info">
@@ -111,7 +134,7 @@ Watch mempool by just the stake credential (delegation part) of an address.
 </Tabs>
 
 #### By Asset Policy
-Watch mempool for UTXOs containing tokens from a specific policy ID. The policy ID must be base64 encoded.
+Watch mempool for UTxOs containing tokens from a specific policy ID. The policy ID must be base64 encoded.
 
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -135,7 +158,7 @@ Watch mempool for UTXOs containing tokens from a specific policy ID. The policy 
 </Tabs>
 
 #### By Specific Asset
-Watch mempool for UTXOs containing a specific token, identified by both policy ID and asset name (combined and base64 encoded).
+Watch mempool for UTxOs containing a specific token, identified by both policy ID and asset name (combined and base64 encoded).
 
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -202,7 +225,7 @@ Evaluate transactions before submission to verify their validity and estimate ex
 Query the current state of the mempool to check status of pending transactions.
 
 <Callout type="warning">
-  This operation is yet to be implemented in Dolos and is still getting worked on.
+  This operation is currently under development in Dolos and is not yet available.
 </Callout>
 
 <Tabs items={['grpcurl']}>
@@ -219,25 +242,3 @@ Query the current state of the mempool to check status of pending transactions.
 <Callout type="info">
   The schema details can be found in the [spec reference](spec).
 </Callout>
-
-## Sequence Example
-
-The following diagram describes the message exchange between a client and service where the client submits a transaction and waits for status updates asynchrounously.
-
-```mermaid
-%%{init: { 'theme': 'dark' } }%%
-sequenceDiagram
-  actor Client
-  participant SubmitService
-  Client->>+SubmitService: Submit (Tx)
-  SubmitService-->>-Client: Tx Ref
-  Client->>SubmitService: Wait For (Tx Ref)
-  activate SubmitService
-  SubmitService--)Client: Tx Acknowledged
-  SubmitService--)Client: Tx in Mempool
-  SubmitService--)Client: Tx in Network
-  SubmitService--)Client: Tx Confirmed (1 block)
-  SubmitService--)Client: Tx Confirmed (2 block)
-  SubmitService--)Client: Tx Confirmed (n block)
-  Client->>SubmitService: Done
-  deactivate SubmitService
