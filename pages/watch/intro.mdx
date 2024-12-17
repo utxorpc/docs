@@ -5,6 +5,50 @@ import { Tabs, Tab } from 'nextra-theme-docs'
 
 The _Watch_ module provides an interface for streaming transactions based on specified predicates, allowing clients to monitor specific aspects of the blockchain.
 
+## Sequence Example
+
+The following diagram describes the message exchange between a client and service where the client watches transactions with a specific addresss, UTxO, asset, or datum.
+
+```mermaid
+%%{init: { 'theme': 'dark' } }%%
+sequenceDiagram
+  actor Client
+  participant WatchService
+
+  note over Client,WatchService: watch txs involved with specific address
+  Client->>WatchService: WatchTx (addr1xxx)
+  activate WatchService
+  WatchService--)Client: <apply>(tx with input from addr1xxx)
+  WatchService--)Client: <apply>(tx with output to addr1xxx)
+  Client->>WatchService: Done
+  deactivate WatchService
+
+  note over Client,WatchService: watch txs involved with specific utxo
+  Client->>WatchService: WatchTx (tx hash, tx output index)
+  activate WatchService
+  WatchService--)Client: <apply>(tx with matching input)
+  Client->>WatchService: Done
+  deactivate WatchService
+
+
+  note over Client,WatchService: watch txs involved with specific asset
+  Client->>WatchService: WatchTx (asset policy, asset name)
+  activate WatchService
+  WatchService--)Client: <apply>(tx with asset mint)
+  WatchService--)Client: <apply>(tx with asset in output)
+  WatchService--)Client: <apply>(tx with asset in input)
+  Client->>WatchService: Done
+  deactivate WatchService
+
+  note over Client,WatchService: watch txs involved with specific datum
+  Client->>WatchService: WatchTx (datum hash)
+  activate WatchService
+  WatchService--)Client: <apply>(tx with inline datum)
+  WatchService--)Client: <apply>(tx with redeemer datum)
+  Client->>WatchService: Done
+  deactivate WatchService
+```
+
 ## Operations
 <Callout type="info">
   **Important**: All byte fields in grpcurl examples (like hashes, addresses, assets) must be base64 encoded.
@@ -44,7 +88,7 @@ Watch all tx controlled by a specific Cardano address. The address must be base6
 </Tabs>
 
 #### By Address Payment Part
-Watch tx by just the payment credential part of an address. Useful when you want to find UTXOs regardless of stake credential.
+Watch tx by just the payment credential part of an address. Useful when you want to find UTxOs regardless of stake credential.
 
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -68,7 +112,7 @@ Watch tx by just the payment credential part of an address. Useful when you want
 </Tabs>
 
 #### By Address Delegation Part
-Watch tx by just the stake credential (delegation part) of an address. Helps find all UTXOs delegated to a specific stake key.
+Watch tx by just the stake credential (delegation part) of an address. Helps find all UTxOs delegated to a specific stake key.
 
 <Tabs items={['grpcurl']}>
   <Tab>
@@ -142,44 +186,3 @@ Watch tx containing a specific token, identified by both policy ID and asset nam
 <Callout type="info">
   The schema details can be found in the [spec reference](spec).
 </Callout>
-
-## Sequence Example
-
-```mermaid
-%%{init: { 'theme': 'dark' } }%%
-sequenceDiagram
-  actor Client
-  participant WatchService
-
-  note over Client,WatchService: watch txs involved with specific address
-  Client->>WatchService: WatchTx (addr1xxx)
-  activate WatchService
-  WatchService--)Client: <apply>(tx with input from addr1xxx)
-  WatchService--)Client: <apply>(tx with output to addr1xxx)
-  Client->>WatchService: Done
-  deactivate WatchService
-
-  note over Client,WatchService: watch txs involved with specific utxo
-  Client->>WatchService: WatchTx (tx hash, tx output index)
-  activate WatchService
-  WatchService--)Client: <apply>(tx with matching input)
-  Client->>WatchService: Done
-  deactivate WatchService
-
-
-  note over Client,WatchService: watch txs involved with specific asset
-  Client->>WatchService: WatchTx (asset policy, asset name)
-  activate WatchService
-  WatchService--)Client: <apply>(tx with asset mint)
-  WatchService--)Client: <apply>(tx with asset in output)
-  WatchService--)Client: <apply>(tx with asset in input)
-  Client->>WatchService: Done
-  deactivate WatchService
-
-  note over Client,WatchService: watch txs involved with specific datum
-  Client->>WatchService: WatchTx (datum hash)
-  activate WatchService
-  WatchService--)Client: <apply>(tx with inline datum)
-  WatchService--)Client: <apply>(tx with redeemer datum)
-  Client->>WatchService: Done
-  deactivate WatchService
