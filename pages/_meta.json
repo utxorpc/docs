@@ -25,6 +25,7 @@
     "title": "Ledgers"
   },
   "cardano": "Cardano Module",
+  "bitcoin": "Bitcoin Module",
   "-- SDK --": {
     "type": "separator",
     "title": "SDK"

@@ -1,0 +1,75 @@
+# Bitcoin Module
+
+<a name="bitcoin-v1-Block"></a>
+
+## Block
+
+Represents a block in the Bitcoin blockchain.
+
+| Field           | Type                                   | Label    | Description                                 |
+| --------------- | -------------------------------------- | -------- | ------------------------------------------- |
+| version         | [uint32](#uint32)                      |          | Block version number                        |
+| prev_block_hash | [bytes](#bytes)                        |          | Hash of the previous block                  |
+| merkle_root     | [bytes](#bytes)                        |          | Root hash of the Merkle tree                |
+| timestamp       | [uint32](#uint32)                      |          | Time when the block was created             |
+| bits            | [uint32](#uint32)                      |          | Target difficulty value                     |
+| nonce           | [uint32](#uint32)                      |          | Value used for Proof-of-Work                |
+| transactions    | [Transaction](#bitcoin-v1-Transaction) | repeated | List of transactions included in the block  |
+
+
+<a name="bitcoin-v1-Transaction"></a>
+
+## Transaction
+
+Represents a transaction in the Bitcoin network.
+
+| Field      | Type                             | Label    | Description                                         |
+| ---------- | -------------------------------- | -------- | --------------------------------------------------- |
+| version    | [uint32](#uint32)                |          | Transaction version number. Currently 1             |
+| inputs     | [TxInput](#bitcoin-v1-TxInput)   | repeated | List of transaction inputs                          |
+| outputs    | [TxOutput](#bitcoin-v1-TxOutput) | repeated | List of transaction outputs                         |
+| locktime   | [uint32](#uint32)                |          | Block height or timestamp when transaction is final |
+| hash       | [bytes](#bytes)                  |          |                                                     |
+| block_hash | [bytes](#bytes)                  |          | Transactions reference their block                  |
+| timestamp  | [uint32](#uint32)                |          |                                                     |
+
+
+<a name="bitcoin-v1-TxInput"></a>
+
+## TxInput
+
+Represents an input in a Bitcoin transaction.
+
+| Field      | Type              | Label    | Description                                                   |
+| ---------- | ----------------- | -------- | ------------------------------------------------------------- |
+| tx_id      | [bytes](#bytes)   |          | Hash of the previous transaction output                       |
+| script_sig | [bytes](#bytes)   |          | Unlocking script for spending the UTXO                        |
+| sequence   | [uint32](#uint32) |          | Used for relative timelocks                                   |
+| coinbase   | [bytes](#bytes)   |          | Coinbase transactions have this instead of txid and scriptSig |
+| witnesses  | [bytes](#bytes)   | repeated |                                                               |
+
+
+<a name="bitcoin-v1-TxOutput"></a>
+
+## TxOutput
+
+Represents an output in a Bitcoin transaction.
+
+| Field          | Type                                     | Label | Description                           |
+| -------------- | ---------------------------------------- | ----- | ------------------------------------- |
+| value          | [uint64](#uint64)                        |       | Amount of Bitcoin in Satoshis         |
+| script_pub_key | [ScriptPubKey](#bitcoin-v1-ScriptPubKey) |       | Locking script defining spendability  |
+
+
+<a name="bitcoin-v1-ScriptPubKey"></a>
+
+## ScriptPubKey
+
+Represents a script pub key in the output.
+
+| Field       | Type                 | Label | Description                     |
+| ----------- | -------------------- | ----- | ------------------------------- |
+| asm         | [bytes](#bytes)      |       | Script in human-readable format |
+| hex         | [bytes](#bytes)      |       | Script in hexadecimal format    |
+| script_type | [ScriptType](#bytes) |       | Can be ScriptHash, Multsig, etc |
+
