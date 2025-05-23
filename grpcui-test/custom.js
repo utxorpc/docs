@@ -13,16 +13,8 @@ window.addEventListener("DOMContentLoaded", () => {
   svcEl.value = svc;
   svcEl.dispatchEvent(new Event("change", { bubbles: true }));
 
-  const obs = new MutationObserver(() => {
-    for (const opt of mtdEl.options) {
-      if (opt.value === mtd) {
-        mtdEl.value = mtd;
-        mtdEl.dispatchEvent(new Event("change", { bubbles: true }));
-        obs.disconnect();
-        break;
-      }
-    }
-  });
-
-  obs.observe(mtdEl, { childList: true });
+  setTimeout(() => {
+    mtdEl.value = mtd;
+    mtdEl.dispatchEvent(new Event("change"));
+  }, 100);
 });
