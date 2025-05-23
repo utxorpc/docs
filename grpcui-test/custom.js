@@ -11,10 +11,18 @@ window.addEventListener("DOMContentLoaded", () => {
   if (!svcEl || !mtdEl) return;
 
   svcEl.value = svc;
-  svcEl.dispatchEvent(new Event("change"));
+  svcEl.dispatchEvent(new Event("change", { bubbles: true }));
 
-  setTimeout(() => {
-    mtdEl.value = mtd;
-    mtdEl.dispatchEvent(new Event("change"));
-  }, 0);
+  const obs = new MutationObserver(() => {
+    for (const opt of mtdEl.options) {
+      if (opt.value === mtd) {
+        mtdEl.value = mtd;
+        mtdEl.dispatchEvent(new Event("change", { bubbles: true }));
+        obs.disconnect();
+        break;
+      }
+    }
+  });
+
+  obs.observe(mtdEl, { childList: true });
 });
