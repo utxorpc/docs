@@ -20,6 +20,7 @@
   "submit": "Submit Module",
   "sync": "Sync Module",
   "watch": "Watch Module",
+  "playground": "Playground",
   "-- Ledgers --": {
     "type": "separator",
     "title": "Ledgers"
