@@ -2,14 +2,13 @@ import { useRouter } from "next/router"
 
 export default function PlaygroundRunner(props: {}) {
     const { query, isReady } = useRouter();
+
     if (!isReady) return null;
 
     const service = query.service as string;
     const method = query.method as string;
 
-    if (!service || !method) return null;
-
-    const src = `/grpcui?service=${encodeURIComponent(service)}&method=${encodeURIComponent(method)}`;
+    const src = service && method ? `/grpcui?service=${encodeURIComponent(service)}&method=${encodeURIComponent(method)}` : '/grpcui';
 
     return (
         <div style={{ height: '80vh', borderRadius: '0.75rem', overflow: 'hidden', marginTop: '60px' }}>
