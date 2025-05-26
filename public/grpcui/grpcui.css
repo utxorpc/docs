@@ -119,7 +119,7 @@
 
 #grpc-request-raw-tab textarea,
 #grpc-request-raw-tab .grpc-curl-panel {
-    background-color: #1F2632;
+    background-color: #1f2929;
     color: #ffffff;
     padding: 16px !important;
     border-radius: 4px;
@@ -143,6 +143,10 @@
     border-radius: 4px;
 }
 
+#grpc-form .grpc-request-table button.delete {
+    background-color: #f66 !important;
+}
+
 #grpc-history-list button.load {
     background: #80D4D9 !important;
     color: #002021;
@@ -154,7 +158,7 @@
 }
 
 #grpc-history-list .history-item-panel {
-    background-color: #1F2632;
+    background-color: #1f2929;
     color: white;
     border: none;
     padding: 16px;
@@ -213,7 +217,7 @@
 }
 
 #grpc-response-tab textarea {
-    background-color: #1F2632;
+    background-color: #1f2929 !important;
     border: transparent;
     border-radius: 4px;
     color: white;
