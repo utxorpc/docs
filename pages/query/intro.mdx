@@ -1,6 +1,6 @@
 import { Callout } from "nextra-theme-docs";
 import { Tabs, Tab } from 'nextra-theme-docs'
-
+import { Button } from "../../components/button";
 
 # Query Module
 
@@ -48,7 +48,14 @@ sequenceDiagram
     For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
 </Callout>
 
-### ReadParams
+<div className="flex items-center justify-between">
+  ### ReadParams
+  <Button
+    service="utxorpc.v1alpha.query.QueryService" 
+    method="ReadParams"
+  />
+</div>
+
 Retrieves the current protocol parameters for the chain, including important values like fees, epoch information, and other consensus settings.
 
 <Tabs items={['grpcurl']}>
@@ -61,7 +68,14 @@ Retrieves the current protocol parameters for the chain, including important val
   </Tab>
 </Tabs>
 
-### ReadUtxos 
+<div className="flex items-center justify-between">
+  ### ReadUtxos
+  <Button 
+    service="utxorpc.v1alpha.query.QueryService" 
+    method="ReadUtxos"
+  />
+</div>
+
 Fetches specific UTxOs by their output reference (hash and index). Useful when you need to look up known UTxOs directly.
 
 <Tabs items={['grpcurl']}>
@@ -80,7 +94,14 @@ Fetches specific UTxOs by their output reference (hash and index). Useful when y
   </Tab>
 </Tabs>
 
-### SearchUtxos
+<div className="flex items-center justify-between">
+  ### SearchUtxos
+  <Button 
+    service="utxorpc.v1alpha.query.QueryService" 
+    method="SearchUtxos"
+  />
+</div>
+
 Search for UTxOs using various filtering patterns. The following search methods are available:
 
 #### By Address
@@ -203,7 +224,14 @@ Search for UTxOs containing a specific token, identified by both policy ID and a
   </Tab>
 </Tabs>
 
-### ReadData 
+<div className="flex items-center justify-between">
+  ### ReadData
+  <Button
+    service="utxorpc.v1alpha.query.QueryService" 
+    method="ReadData"
+  />
+</div>
+
 Read specific data (plural of datum) by hash.
 <Callout type="warning">
   This operation is currently under development in Dolos and is not yet available.

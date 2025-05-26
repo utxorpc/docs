@@ -1,5 +1,6 @@
 import { Callout } from "nextra-theme-docs";
 import { Tabs, Tab } from 'nextra-theme-docs'
+import { Button } from "../../components/button";
 
 # Sync Module
 
@@ -47,7 +48,15 @@ sequenceDiagram
     
     For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
 </Callout>
-### FetchBlock
+
+<div className="flex items-center justify-between">
+  ### FetchBlock
+  <Button
+    service="utxorpc.v1alpha.sync.SyncService" 
+    method="FetchBlock"
+  />
+</div>
+
 Fetch blocks by their references with optional field masking.
 
 <Tabs items={['grpcurl']}>
@@ -60,7 +69,14 @@ Fetch blocks by their references with optional field masking.
   </Tab>
 </Tabs>
 
-### DumpHistory
+<div className="flex items-center justify-between">
+  ### DumpHistory
+  <Button
+    service="utxorpc.v1alpha.sync.SyncService" 
+    method="DumpHistory"
+  />
+</div>
+
 Dump a segment of block history from a specified point.
 
 <Tabs items={['grpcurl']}>
@@ -80,7 +96,14 @@ Dump a segment of block history from a specified point.
   </Tab>
 </Tabs>
 
-### FollowTip
+<div className="flex items-center justify-between">
+  ### FollowTip
+  <Button
+    service="utxorpc.v1alpha.sync.SyncService" 
+    method="FollowTip"
+  />
+</div>
+
 Follow the blockchain tip with streaming updates.
 
 <Tabs items={['grpcurl']}>
@@ -94,7 +117,14 @@ Follow the blockchain tip with streaming updates.
   </Tab>
 </Tabs>
 
-### ReadTip
+<div className="flex items-center justify-between">
+  ### ReadTip
+  <Button
+    service="utxorpc.v1alpha.sync.SyncService" 
+    method="ReadTip"
+  />
+</div>
+
 Get the current blockchain tip information.
 
 <Callout type="warning">
