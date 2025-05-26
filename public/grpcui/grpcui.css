@@ -143,8 +143,12 @@
     border-radius: 4px;
 }
 
-#grpc-form .grpc-request-table button.delete {
-    background-color: #f66 !important;
+#grpc-form button.delete {
+    background: black;
+    color: white;
+    padding: 2px 4px;
+    border-color: transparent;
+    border-radius: 4px;
 }
 
 #grpc-history-list button.load {
