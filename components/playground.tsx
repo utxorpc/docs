@@ -18,5 +18,5 @@ export default function PlaygroundRunner(props: {}) {
                 className="w-full h-[80vh] border-0"
             />
         </div>
-    )
+    );
 }
