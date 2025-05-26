@@ -9,6 +9,7 @@ body{
 
 #grpc-form{
     background-color: #1f2937;
+    padding: 24px 10px;
 }
 
 #grpc-descriptions{
@@ -19,6 +20,13 @@ body{
     color: #fff;
     font-weight: semibold !important;
     text-transform: capitalize;
+}
+
+.grpc-desc button#grpc-descriptions-toggle{
+    position: absolute;
+    top: 65px !important;
+    left: 266px !important;
+    rotate: -90deg !important;
 }
 
 #grpc-service{
@@ -41,6 +49,11 @@ body{
     background-color: #1f2937;
     margin-top: 7px;
     color: #fff;
+}
+
+.grpc-desc tbody tr{
+    display: flex !important;
+    flex-wrap: wrap !important;
 }
 
 #grpc-service-description{
