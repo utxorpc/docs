@@ -10,11 +10,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (!svcEl || !mtdEl) return;
 
+  const observer = new MutationObserver(() => {
+    mtdEl.value = mtd;
+    mtdEl.dispatchEvent(new Event("change", { bubbles: true }));
+    observer.disconnect();
+  });
+  observer.observe(mtdEl, { childList: true });
+
   svcEl.value = svc;
   svcEl.dispatchEvent(new Event("change", { bubbles: true }));
-
-  setTimeout(() => {
-    mtdEl.value = mtd;
-    mtdEl.dispatchEvent(new Event("change"));
-  }, 100);
 });
