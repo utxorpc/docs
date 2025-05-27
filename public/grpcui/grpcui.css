@@ -267,6 +267,7 @@ button, input[type="checkbox"], input[type="radio"]{
     border-color: transparent;
     font-family: var(--font-space-mono) !important;
     width: 95% !important;
+    margin-left: 1px;
 }
 
 #grpc-request-raw-tab textarea{
@@ -288,7 +289,7 @@ button, input[type="checkbox"], input[type="radio"]{
     padding: 6px 12px;
     border-color: transparent !important;
     border-color: transparent !important;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 #grpc-form button.delete {
@@ -297,7 +298,6 @@ button, input[type="checkbox"], input[type="radio"]{
     padding: 2px 4px;
     border-color: transparent !important;
     border-color: transparent !important;
-    border-radius: 4px;
     width: 34px;
     height: 30px;
 }
@@ -307,6 +307,10 @@ button, input[type="checkbox"], input[type="radio"]{
     border: transparent !important;
     width: 34px;
     height: 30px;
+}
+
+#grpc-container button{
+    border-radius: 6px !important;
 }
 
 #grpc-history-list button.load {
@@ -348,7 +352,7 @@ button, input[type="checkbox"], input[type="radio"]{
 
 #grpc-history-list > .ui-accordion:first-child {
     border: 1px solid #3F4949;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .history-item-time {
@@ -398,6 +402,18 @@ button, input[type="checkbox"], input[type="radio"]{
 
 #grpc-request-form div#root{
     margin-left: 0px !important;
+}
+
+#grpc-request-form #root table{
+    color: #fff !important;
+    font-size: 16px !important;
+    line-height: 22px !important;
+    letter-spacing: -0.7% !important;
+    font-family: var(--font-space-mono) !important;
+}
+
+#grpc-response-headers{
+    color: #fff !important;
 }
 
 #grpc-response-tab #grpc-response-headers td{
@@ -469,15 +485,19 @@ button, input[type="checkbox"], input[type="radio"]{
     color: #FFF;
 }
 
-#grpc-request-form td.name {
+#grpc-request-form td .name {
     font-size: 16px !important;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
 
 #grpc-request-form td input[type=checkbox] { 
-    color: #161D1D !important;
+    background-color: #161D1D !important;
     border: 1px solid #49454F !important;
+}
+
+#grpc-request-form #root table tr th{
+    font-family: var(--font-poppins) !important;
 }
 
 #grpc-request-metadata-form {
@@ -548,6 +568,7 @@ button, input[type="checkbox"], input[type="radio"]{
     border: 1pxsolid #434B58;
     text-align: left;
     padding: 4px 0px 4px 16px;
+    margin-left: 1px;
 }
 
 .seconds-text{
@@ -606,4 +627,3 @@ textarea, input[type="text"]{
 #grpc-request-form td.toggle_presence {
     width: max-content !important;
 }
-
