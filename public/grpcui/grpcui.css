@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+body{
+    width: 100%;
+    background-color: rgb(17, 17, 17);
+}
+
 .full-width-heading{
     display: none;
     background-color: rgba(31, 41, 55);
@@ -9,11 +14,44 @@
 
 #grpc-form{
     background-color: rgb(17, 17, 17);
+    padding: 24px 0px !important;
 }
 
 #grpc-descriptions{
     overflow: hidden;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #1f2929 !important;
+    border-radius: 16px;
+    padding: 24px;
 } 
+
+#grpc-descriptions pre{
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+}
+
+#grpc-request-raw-tab pre {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 24px 0px !important;
+}
+
+.grpc-tabcontent.ui-tabs-panel {
+    padding: 24px 0px !important;
+}
+
+.grpc-desc pre {
+    margin: 0px;
+    border-left: none !important;
+    padding-left: 0px;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    letter-spacing: -0.6%;
+}
 
 .grpc-form-label{
     color: #fff;
@@ -26,8 +64,9 @@
     background-color: rgb(17, 17, 17) !important;
     position: absolute;
     top: 75px !important;
-    left: 300px !important;
+    left: 305px !important;
     rotate: -90deg !important;
+    height: 15px !important;
 }
 
 #grpc-service{
@@ -57,7 +96,7 @@
 }
 
 .grpc-desc button#grpc-descriptions-toggle{
-    background-color: #rgb(17, 17, 17);
+    background-color: rgb(17, 17, 17);
     margin-top: 7px;
     color: #80D4D9;
     height: 20px;
@@ -77,8 +116,18 @@
     letter-spacing: -0.6%;
 }
 
+#grpc-service-description{
+    padding-top: 0px;
+}
+
 #grpc-method-description{
     color: #80D4D9;
+    padding: 16px 0px;
+}
+
+
+#grpc-service-description-end{
+    padding-bottom: 0px;
 }
 
 #grpc-request-response {
@@ -91,10 +140,10 @@
 }
 
 #grpc-request-response li.ui-state-default{
-    background-color: #80D4D9 !important;
-    color: #002021 !important;
-    border: none !important;
-    border-bottom: 2px solid #80D4D9 !important;
+    background-color: transparent !important;
+    color: #49454F !important;
+    border: transparent !important;
+    border-bottom: 2px solid none !important;
     border-radius: 0px;
     z-index: 1 !important;
 }
@@ -108,7 +157,7 @@
 }
 
 #grpc-request-response li.ui-tabs-active{
-    background-color: #0E1415 !important;
+    background-color: transparent !important;
     border: none !important;
     border-bottom: 2px solid #80D4D9 !important;
 }
@@ -120,10 +169,17 @@
 #grpc-request-raw-tab textarea,
 #grpc-request-raw-tab .grpc-curl-panel {
     background-color: #1f2929;
-    color: #ffffff;
     padding: 16px !important;
     border-radius: 4px;
     border-color: transparent;
+}
+
+#grpc-request-raw-tab textarea{
+    color: #4AB249;
+}
+
+#grpc-request-raw-tab .grpc-curl-panel{
+    /* !!!COLOR CODE!!! */
 }
 
 .grpc-invoke::after {
@@ -135,26 +191,31 @@
     color: white;
 }
 
-#grpc-form button {
-    background: linear-gradient(to right, #0891B0, #05966B);
+.grpc-invoke {
+    background: linear-gradient(to right, #0891B0, #05966B) !important;
     color: white;
     padding: 6px 12px;
-    border-color: transparent;
+    border-color: transparent !important;
     border-radius: 4px;
 }
 
 #grpc-form button.delete {
-    background: black;
-    color: white;
+    background-color: transparent !important;
     padding: 2px 4px;
-    border-color: transparent;
+    border-color: transparent !important;
     border-radius: 4px;
+}
+
+#grpc-form .grpc-request-table button.add {
+    background-color: transparent !important;
+    border: transparent !important;
 }
 
 #grpc-history-list button.load {
     background: #80D4D9 !important;
     color: #002021;
     font-weight: 500;
+    border: transparent !important;
 }
 
 #grpc-history-list .history-item-header {
@@ -163,9 +224,17 @@
 
 #grpc-history-list .history-item-panel {
     background-color: #1f2929;
-    color: white;
+    color: #4AB249 !important;
     border: none;
     padding: 16px;
+}
+
+#grpc-history-list .history-item-panel .history-detail-metadata th, #grpc-history-list .history-item-panel .history-detail-metadata td {
+    color: #4AB249 !important;
+}
+
+.history-detail-heading table{
+    color: #4AB249 !important;
 }
 
 #grpc-history-list > .ui-accordion:first-child {
@@ -195,8 +264,20 @@
     color: #80D4D9 !important;
 }
 
+.grpc-request-raw-container textarea {
+    margin-right: 0px !important;
+}
+
+table#grpc-request-metadata-form {
+    margin: 0px !important;
+}
+
 #grpc-request-response .grpc-tabcontent.ui-tabs-panel{
-    background-color: #0E1415 !important;
+    background-color: transparent !important;
+}
+
+#grpc-request-form div#root{
+    margin-left: 0px !important;
 }
 
 #grpc-response-tab h3 {
@@ -224,7 +305,7 @@
     background-color: #1f2929 !important;
     border: transparent;
     border-radius: 4px;
-    color: white;
+    color: #4AB249;
     padding: 16px;
 }
 
@@ -244,48 +325,70 @@
     background-color: #161D1D;
     border: none;
     border-radius: 4px;
+    width: 100%;
+}
+
+#grpc-request-form th {
+    color: #80D4D9;
+}
+
+.message_field .name{
+    text-align: left !important;
+}
+
+.message_field .name strong{
+    font-size: 20px !important;
+    line-height: 22px;
+    letter-spacing: -0.7%;
+}
+
+.message_field .name em{
+    font-size: 16px !important;
+    line-height: 22px;
+    letter-spacing: -0.7%;
+}
+
+#grpc-request-form td.name {
+    font-size: 16px !important;
+    line-height: 22px;
+    letter-spacing: -0.7%;
 }
 
 input[type="checkbox" i]{ 
     background-color: transparent !important;
     border: 1px solid #49454F !important;
 }
-#grpc-request-form div.input_container{
-    display: block;
-}
 
-#grpc-request-form th {
-    color: #80D4D9;
+#grpc-request-metadata-form {
+    width: 100% !important;
+    background-color: transparent;
+    color: #fff;
     font-size: 16px;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
 
-#grpc-request-metadata .grpc-request-table tbody tr:first-of-type {
-    width: 100%;
+#grpc-request-metadata .grpc-request-table .metadataRow td, #grpc-request-metadata .grpc-request-table .metadataRow th, #grpc-request-metadata .grpc-request-table tbody tr th{
     height: 48px;
-    background-color: #002B2B;
     color: #FEF7FF;
     font-size: 16px;
     line-height: 22px;
     letter-spacing: -0.7%;
+    border: 1px solid #434B58;
+    background-color: transparent;
 }
 
-#grpc-request-metadata .grpc-request-table tbody tr:first-of-type .name, #grpc-request-metadata .grpc-request-table tbody tr:first-of-type .value{
-    color: #80D4D9;
-    font-size: 16px;
-    line-height: 22px;
-    letter-spacing: -0.7%;
-    border-bottom: none;
+#grpc-request-metadata-form td {
+    padding: 0px !important;
 }
 
-#grpc-request-metadata .grpc-request-table tbody th{
+#grpc-request-metadata .grpc-request-table tbody td .name, #grpc-request-metadata .grpc-request-table tbody td .value{
     background-color: transparent;
     border: none;
-    color: #FFF;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.1%;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    text-align: center;
 }
 
 #grpc-request-metadata .grpc-request-table tbody .add-row-label{
@@ -295,19 +398,18 @@ input[type="checkbox" i]{
     letter-spacing: 0.1%;
 }
 
-#grpc-request-metadata .grpc-request-table tbody .name, #grpc-request-metadata .grpc-request-table tbody .value{
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #1F2632;
-    color: #FFF;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.1%;
+#grpc-request-metadata .grpc-request-table tbody tr td:first-child{
+    padding: 10px !important; 
+    width: 40px !important;
 }
 
-#grpc-request-form div table {
-    color: #fff;
+#grpc-curl-text{
+    color: #4AB249 !important;
 }
+
+/* #grpc-request-metadata .grpc-request-table tbody tr td:first-child button{
+
+} */
 
 #grpc-request-timeout{
     color: #fff ;
@@ -315,13 +417,14 @@ input[type="checkbox" i]{
 
 #grpc-request-timeout input{
     height: 48px;
-    width: 67px;
+    width: 81px;
     background-color: #1F2632;
     color: #fff;
     font-size: large;
     margin-right: 12px;
     border-radius: 4px;
     border: none;
+    text-align: center;
 }
 
 .grpc-file-button{
