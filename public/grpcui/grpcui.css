@@ -1,59 +1,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Space+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-  --font-poppins: 'Poppins', sans-serif;
-  --font-roboto: 'Roboto', sans-serif;
-  --font-space-mono: 'Space Mono', monospace;
+    --font-poppins: 'Poppins', sans-serif;
+    --font-roboto: 'Roboto', sans-serif;
+    --font-space-mono: 'Space Mono', monospace;
 }
-  
 
-*{
+
+* {
     box-sizing: border-box;
 }
 
-body{
+body {
     width: 100%;
     background-color: rgb(17, 17, 17);
     font-family: var(--font-poppins) !important;
 }
 
-.ui-widget{
+button,
+input[type="checkbox"],
+input[type="radio"] {
+    cursor: pointer;
+}
+
+.ui-widget {
     font-family: var(--font-poppins) !important;
 }
 
-#grpc-form{
+#grpc-form {
     font-family: var(--font-poppins) !important;
 }
 
-#grpc-form #grpc-service, #grpc-form #grpc-method{
+#grpc-form #grpc-service,
+#grpc-form #grpc-method {
     font-family: var(--font-roboto) !important;
 }
 
-#grpc-form textarea {
-    width: 95% !important;
-}
-
-.full-width-heading{
+.full-width-heading {
     display: none;
     background-color: rgba(31, 41, 55);
 }
 
-#grpc-form{
+#grpc-form {
     background-color: rgb(17, 17, 17);
     padding: 24px 0px !important;
     padding: 24px 0px !important;
 }
 
-#grpc-descriptions{
+#grpc-descriptions {
     overflow: hidden;
     width: 100%;
     margin-top: 20px;
     background-color: #1f2929 !important;
     border-radius: 16px;
     padding: 24px;
-} 
+}
 
-#grpc-descriptions pre{
+#grpc-descriptions pre {
     white-space: pre-wrap !important;
     word-break: break-word !important;
 }
@@ -80,7 +83,7 @@ body{
     letter-spacing: -0.6%;
 }
 
-#grpc-descriptions{
+#grpc-descriptions {
     overflow: hidden;
     width: 100%;
     margin-top: 20px;
@@ -89,7 +92,7 @@ body{
     padding: 24px;
 }
 
-#grpc-descriptions pre{
+#grpc-descriptions pre {
     white-space: pre-wrap !important;
     word-break: break-word !important;
 }
@@ -116,7 +119,7 @@ body{
     letter-spacing: -0.6%;
 }
 
-.grpc-form-label{
+.grpc-form-label {
     color: #fff;
     font-size: 16px;
     text-transform: capitalize;
@@ -125,19 +128,21 @@ body{
     text-align: left !important;
 }
 
-.grpc-desc{
+.grpc-desc {
     width: 95% !important;
 }
 
-.grpc-desc tr td{
+.grpc-desc tr td {
     width: 40%;
 }
 
-#grpc-desc-selects, #grpc-desc-selects tbody, #grpc-desc-selects tbody tr{
+#grpc-desc-selects,
+#grpc-desc-selects tbody,
+#grpc-desc-selects tbody tr {
     width: 100%;
 }
 
-#grpc-desc-selects tbody tr td:first-of-type{
+#grpc-desc-selects tbody tr td:first-of-type {
     width: 165px !important;
 }
 
@@ -146,15 +151,15 @@ body{
 }
 
 
-.grpc-desc button#grpc-descriptions-toggle{
+.grpc-desc button#grpc-descriptions-toggle {
     background-color: rgb(17, 17, 17) !important;
     position: absolute;
     top: 75px !important;
-    left: 320px !important;
+    left: 325px !important;
     height: 15px !important;
 }
 
-#grpc-service{
+#grpc-service {
     height: 32px;
     background-color: transparent;
     border-top: 1px 'solid' #fff !important;
@@ -167,7 +172,7 @@ body{
     padding: 6px 16px;
 }
 
-#grpc-method{
+#grpc-method {
     height: 32px;
     background-color: transparent;
     border-top: 1px 'solid' #fff !important;
@@ -180,7 +185,7 @@ body{
     padding: 6px 16px;
 }
 
-.grpc-desc button#grpc-descriptions-toggle{
+.grpc-desc button#grpc-descriptions-toggle {
     background-color: rgb(17, 17, 17);
     background-color: rgb(17, 17, 17);
     margin-top: 7px;
@@ -189,12 +194,13 @@ body{
     width: 25px;
 }
 
-.grpc-desc tbody tr{
+.grpc-desc tbody tr {
     display: flex !important;
     flex-wrap: wrap !important;
 }
 
-#grpc-service-description, #grpc-service-description-end{
+#grpc-service-description,
+#grpc-service-description-end {
     color: #fff;
     font-weight: semibold;
     font-size: 14px;
@@ -202,27 +208,27 @@ body{
     letter-spacing: -0.6%;
 }
 
-#grpc-service-description{
+#grpc-service-description {
     padding-top: 0px;
 }
 
-#grpc-service-description{
+#grpc-service-description {
     padding-top: 0px;
 }
 
-#grpc-method-description{
+#grpc-method-description {
     color: #80D4D9;
     padding: 16px 0px;
 }
 
 
-#grpc-service-description-end{
+#grpc-service-description-end {
     padding-bottom: 0px;
     padding: 16px 0px;
 }
 
 
-#grpc-service-description-end{
+#grpc-service-description-end {
     padding-bottom: 0px;
 }
 
@@ -231,12 +237,12 @@ body{
     border: none !important;
 }
 
-#grpc-request-response ul.ui-tabs-nav{
+#grpc-request-response ul.ui-tabs-nav {
     background-color: rgb(17, 17, 17) !important;
     border-bottom: 1px solid #24222D !important;
 }
 
-#grpc-request-response li.ui-state-default{
+#grpc-request-response li.ui-state-default {
     background-color: transparent !important;
     color: #49454F !important;
     border: transparent !important;
@@ -249,15 +255,15 @@ body{
     z-index: 1 !important;
 }
 
-#grpc-request-tab-button{
+#grpc-request-tab-button {
     border-top-left-radius: 8px !important;
 }
 
-#grpc-history-tab-button{
+#grpc-history-tab-button {
     border-top-right-radius: 8px !important;
 }
 
-#grpc-request-response li.ui-tabs-active{
+#grpc-request-response li.ui-tabs-active {
     background-color: transparent !important;
     background-color: transparent !important;
     border: none !important;
@@ -276,28 +282,32 @@ body{
     border-color: transparent;
     font-family: var(--font-space-mono) !important;
     width: 95% !important;
+    margin-left: 1px;
 }
 
-#grpc-request-raw-tab textarea{
+#grpc-request-raw-tab textarea {
     color: #4AB249;
 }
 
 .grpc-invoke::after {
-    content: ' ➜'; /* space before arrow */
-    background: linear-gradient(to right, #0891B0, #05966B);
+    content: ' ➜';
+    /* space before arrow */
+    background: #00696D;
     -webkit-background-clip: text;
     -webkit-text-fill-color: white;
     background-clip: text;
     color: white;
 }
 
-.grpc-invoke, .grpc-history-clear, .grpc-history-save{
-    background: linear-gradient(to right, #0891B0, #05966B) !important;
+.grpc-invoke,
+.grpc-history-clear,
+.grpc-history-save {
+    background: #00696D !important;
     color: white;
     padding: 6px 12px;
     border-color: transparent !important;
     border-color: transparent !important;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 #grpc-form button.delete {
@@ -306,7 +316,8 @@ body{
     padding: 2px 4px;
     border-color: transparent !important;
     border-color: transparent !important;
-    border-radius: 4px;
+    width: 34px;
+    height: 30px;
 }
 
 #grpc-form .grpc-request-table button.add {
@@ -314,6 +325,10 @@ body{
     border: transparent !important;
     width: 34px;
     height: 30px;
+}
+
+#grpc-container button {
+    border-radius: 6px !important;
 }
 
 #grpc-history-list button.load {
@@ -345,17 +360,18 @@ body{
     font-family: var(--font-space-mono);
 }
 
-#grpc-history-list .history-item-panel .history-detail-metadata th, #grpc-history-list .history-item-panel .history-detail-metadata td {
+#grpc-history-list .history-item-panel .history-detail-metadata th,
+#grpc-history-list .history-item-panel .history-detail-metadata td {
     color: #4AB249 !important;
 }
 
-.history-detail-heading table{
+.history-detail-heading table {
     color: #4AB249 !important;
 }
 
-#grpc-history-list > .ui-accordion:first-child {
+#grpc-history-list>.ui-accordion:first-child {
     border: 1px solid #3F4949;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .history-item-time {
@@ -369,7 +385,7 @@ body{
     font-family: var(--font-roboto);
 }
 
-.history-item-messages{
+.history-item-messages {
     padding: 0px !important;
 }
 
@@ -381,11 +397,16 @@ body{
     color: #FFB4AB;
 }
 
-.grpc-request-raw-container, #grpc-response-tab h3, #grpc-response-tab td  {
+#grpc-request-response .grpc-tabcontent.ui-tabs-panel h3 {
     color: #FFF !important;
+    font-size: 20px !important;
+    line-height: 22px;
+    letter-spacing: -0.7%;
+    margin-top: 40px;
+    margin-bottom: 24px;
 }
 
-.grpc-tabcontent hr{
+.grpc-tabcontent hr {
     border: 1px solid #24222D;
     margin: 24px 0px;
 }
@@ -394,19 +415,27 @@ body{
     margin-right: 0px !important;
 }
 
-table#grpc-request-metadata-form {
-    margin: 0px !important;
-}
-
-#grpc-request-response .grpc-tabcontent.ui-tabs-panel{
+#grpc-request-response .grpc-tabcontent.ui-tabs-panel {
     background-color: transparent !important;
 }
 
-#grpc-request-form div#root{
+#grpc-request-form div#root {
     margin-left: 0px !important;
 }
 
-#grpc-response-tab #grpc-response-headers td{
+#grpc-request-form #root table {
+    color: #fff !important;
+    font-size: 16px !important;
+    line-height: 22px !important;
+    letter-spacing: -0.7% !important;
+    font-family: var(--font-space-mono) !important;
+}
+
+#grpc-response-headers {
+    color: #fff !important;
+}
+
+#grpc-response-tab #grpc-response-headers td {
     border: 1px solid #24222D;
 }
 
@@ -415,26 +444,28 @@ table#grpc-request-metadata-form {
     border-radius: 4px !important;
 }
 
-#grpc-response-tab #grpc-response-trailers .none{
+#grpc-response-tab #grpc-response-trailers .none,
+#grpc-response-headers .none {
     border: transparent !important;
+    color: #fff !important;
 }
 
-#grpc-response-tab textarea {
+#grpc-response-tab .grpc-response-textarea {
     background-color: #1f2929 !important;
     border: transparent;
     border-radius: 4px;
     color: #4AB249;
-    color: #4AB249;
     padding: 16px;
     font-family: var(--font-space-mono);
+    width: 95% !important;
 }
 
-.grpc-tabcontent{
+.grpc-tabcontent {
     background-color: #0E1415 !important;
     border: #0E1415 !important;
 }
 
-.grpc-tabcontent h3{
+.grpc-tabcontent h3 {
     color: #FFF !important;
     font-size: 20px;
     line-height: 22px;
@@ -452,42 +483,41 @@ table#grpc-request-metadata-form {
     color: #80D4D9;
 }
 
-.message_field input[type=text]{
-    background-color: #1F2632;
-    border-radius: 4px;
-}
-
-.message_field .name{
+.message_field .name {
     text-align: left !important;
     color: #FFF;
     font-family: var(--font-space-mono) !important;
 }
 
-.message_field .name strong{
+.message_field .name strong {
     font-size: 20px !important;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
 
-.message_field .name em{
+.message_field .name em {
     font-size: 16px !important;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
 
-.add-row-label{
+.add-row-label {
     color: #FFF;
 }
 
-#grpc-request-form td.name {
+#grpc-request-form td .name {
     font-size: 16px !important;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
 
-#grpc-request-form td input[type=checkbox] { 
-    color: #161D1D !important;
+#grpc-request-form td input[type=checkbox] {
+    background-color: #161D1D !important;
     border: 1px solid #49454F !important;
+}
+
+#grpc-request-form #root table tr th {
+    font-family: var(--font-poppins) !important;
 }
 
 #grpc-request-metadata-form {
@@ -497,11 +527,13 @@ table#grpc-request-metadata-form {
     font-size: 16px;
     line-height: 22px;
     letter-spacing: -0.7%;
-    border: 1px solid #434B58;
     background-color: transparent;
+    margin: 0px !important;
 }
 
-#grpc-request-metadata .grpc-request-table .metadataRow td, #grpc-request-metadata .grpc-request-table .metadataRow th, #grpc-request-metadata .grpc-request-table tbody tr th{
+#grpc-request-metadata .grpc-request-table .metadataRow td,
+#grpc-request-metadata .grpc-request-table .metadataRow th,
+#grpc-request-metadata .grpc-request-table tbody tr th {
     height: 48px;
     color: #FEF7FF;
     font-size: 16px;
@@ -515,7 +547,8 @@ table#grpc-request-metadata-form {
     padding: 0px !important;
 }
 
-#grpc-request-metadata .grpc-request-table tbody td .name, #grpc-request-metadata .grpc-request-table tbody td .value{
+#grpc-request-metadata .grpc-request-table tbody td .name,
+#grpc-request-metadata .grpc-request-table tbody td .value {
     background-color: transparent;
     border: none;
     width: 100%;
@@ -525,49 +558,58 @@ table#grpc-request-metadata-form {
     font-family: var(--font-space-mono);
 }
 
-#grpc-request-metadata .grpc-request-table tbody .add-row-label{
+#grpc-request-metadata .grpc-request-table tbody .add-row-label {
     color: #fff;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.1%;
 }
 
-#grpc-request-metadata .grpc-request-table tbody tr td:first-child{
-    padding: 10px !important; 
+#grpc-request-metadata .grpc-request-table tbody tr td:first-child {
+    padding: 10px !important;
     width: 40px !important;
 }
 
-#grpc-curl-text{
+#grpc-curl-text {
     color: #4AB249 !important;
     font-family: var(--font-space-mono);
 }
 
-/* #grpc-request-metadata .grpc-request-table tbody tr td:first-child button{
-
-} */
-/* #grpc-request-metadata .grpc-request-table tbody tr td:first-child button{
-
-} */
-
-#grpc-request-timeout{
-    color: #fff ;
+#grpc-request-timeout {
+    color: #fff;
+    position: relative;
 }
 
-#grpc-request-timeout input{
-    height: 48px;
-    width: 81px;
-    width: 81px;
-    background-color: #1F2632;
-    color: #fff;
+#grpc-request-timeout input {
+    height: 56px;
+    width: 169px;
+    background-color: #111111;
+    color: #FFF;
     font-size: large;
     margin-right: 12px;
     border-radius: 4px;
-    border: none;
-    text-align: center;
-    text-align: center;
+    border: 1pxsolid #434B58;
+    text-align: left;
+    padding: 4px 0px 4px 16px;
+    margin-left: 1px;
 }
 
-.grpc-file-button{
+.seconds-text {
+    color: #fff;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.4%;
+    text-transform: capitalize;
+    background-color: #111111;
+    border-right: 5px solid #111111;
+    border-left: 5px solid #111111;
+    position: absolute;
+    top: -8px;
+    left: 16px
+}
+
+
+.grpc-file-button {
     background-color: #80D4D9 !important;
     color: #002021 !important;
     border: none !important;
@@ -578,13 +620,18 @@ table#grpc-request-metadata-form {
     letter-spacing: 0.1%;
 }
 
-textarea{
-    background-color: #1F2632;
-    color: #fff;
-    font-size: large;
-    margin-right: 16px;
+textarea,
+input[type="text"] {
+    height: 56px;
+    width: 169px !important;
+    background-color: #161F1F;
+    color: #FFF;
+    font-size: large !important;
+    margin-right: 12px;
     border-radius: 4px;
-    border: none !important;
+    border: 1pxsolid #434B58;
+    text-align: left;
+    padding: 4px 0px 4px 16px;
 }
 
 #grpc-request-response li.ui-tabs-tab:first-child {
