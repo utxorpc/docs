@@ -41,10 +41,44 @@ body{
 #grpc-form{
     background-color: rgb(17, 17, 17);
     padding: 24px 0px !important;
+    padding: 24px 0px !important;
 }
 
 #grpc-descriptions{
     overflow: hidden;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #1f2929 !important;
+    border-radius: 16px;
+    padding: 24px;
+} 
+
+#grpc-descriptions pre{
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+}
+
+#grpc-request-raw-tab pre {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 24px 0px !important;
+}
+
+.grpc-tabcontent.ui-tabs-panel {
+    padding: 24px 0px !important;
+}
+
+.grpc-desc pre {
+    margin: 0px;
+    border-left: none !important;
+    padding-left: 0px;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    letter-spacing: -0.6%;
+}
     width: 100%;
     margin-top: 20px;
     background-color: #1f2929 !important;
@@ -145,6 +179,7 @@ body{
 
 .grpc-desc button#grpc-descriptions-toggle{
     background-color: rgb(17, 17, 17);
+    background-color: rgb(17, 17, 17);
     margin-top: 7px;
     color: #80D4D9;
     height: 20px;
@@ -168,8 +203,18 @@ body{
     padding-top: 0px;
 }
 
+#grpc-service-description{
+    padding-top: 0px;
+}
+
 #grpc-method-description{
     color: #80D4D9;
+    padding: 16px 0px;
+}
+
+
+#grpc-service-description-end{
+    padding-bottom: 0px;
     padding: 16px 0px;
 }
 
@@ -193,6 +238,10 @@ body{
     color: #49454F !important;
     border: transparent !important;
     border-bottom: 2px solid none !important;
+    background-color: transparent !important;
+    color: #49454F !important;
+    border: transparent !important;
+    border-bottom: 2px solid none !important;
     border-radius: 0px;
     z-index: 1 !important;
 }
@@ -206,6 +255,7 @@ body{
 }
 
 #grpc-request-response li.ui-tabs-active{
+    background-color: transparent !important;
     background-color: transparent !important;
     border: none !important;
     border-bottom: 2px solid #80D4D9 !important;
@@ -243,12 +293,15 @@ body{
     color: white;
     padding: 6px 12px;
     border-color: transparent !important;
+    border-color: transparent !important;
     border-radius: 4px;
 }
 
 #grpc-form button.delete {
     background-color: transparent !important;
+    background-color: transparent !important;
     padding: 2px 4px;
+    border-color: transparent !important;
     border-color: transparent !important;
     border-radius: 4px;
 }
@@ -282,6 +335,7 @@ body{
 
 #grpc-history-list .history-item-panel {
     background-color: #1f2929;
+    color: #4AB249 !important;
     color: #4AB249 !important;
     border: none;
     padding: 16px;
@@ -367,6 +421,7 @@ table#grpc-request-metadata-form {
     border: transparent;
     border-radius: 4px;
     color: #4AB249;
+    color: #4AB249;
     padding: 16px;
     font-family: var(--font-space-mono);
 }
@@ -439,6 +494,8 @@ table#grpc-request-metadata-form {
     font-size: 16px;
     line-height: 22px;
     letter-spacing: -0.7%;
+    border: 1px solid #434B58;
+    background-color: transparent;
 }
 
 #grpc-request-metadata .grpc-request-table .metadataRow td, #grpc-request-metadata .grpc-request-table .metadataRow th, #grpc-request-metadata .grpc-request-table tbody tr th{
@@ -485,6 +542,9 @@ table#grpc-request-metadata-form {
 /* #grpc-request-metadata .grpc-request-table tbody tr td:first-child button{
 
 } */
+/* #grpc-request-metadata .grpc-request-table tbody tr td:first-child button{
+
+} */
 
 #grpc-request-timeout{
     color: #fff ;
@@ -493,12 +553,14 @@ table#grpc-request-metadata-form {
 #grpc-request-timeout input{
     height: 48px;
     width: 81px;
+    width: 81px;
     background-color: #1F2632;
     color: #fff;
     font-size: large;
     margin-right: 12px;
     border-radius: 4px;
     border: none;
+    text-align: center;
     text-align: center;
 }
 
