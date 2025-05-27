@@ -1,6 +1,6 @@
-body{
-    background-color: #1f2937;
-}    
+*{
+    box-sizing: border-box;
+}
 
 .full-width-heading{
     display: none;
@@ -8,7 +8,7 @@ body{
 }
 
 #grpc-form{
-    background-color: #1f2937;
+    background-color: rgb(17, 17, 17);
 }
 
 #grpc-descriptions{
@@ -17,82 +17,337 @@ body{
 
 .grpc-form-label{
     color: #fff;
-    font-weight: semibold !important;
+    font-size: 16px;
     text-transform: capitalize;
-}
-
-#grpc-service{
-    background-color: transparent;
-    border: 1px 'solid' #9ca3af;
-    border-radius: 5px;
-    color: #fff;
-    padding: 5px;
-}
-
-#grpc-method{
-    background-color: transparent;
-    border: 1px 'solid' #9ca3af;
-    border-radius: 5px;
-    color: #fff;
-    padding: 5px;
+    margin-right: 35px
 }
 
 .grpc-desc button#grpc-descriptions-toggle{
-    background-color: #1f2937;
-    margin-top: 7px;
-    color: #fff;
+    background-color: rgb(17, 17, 17) !important;
+    position: absolute;
+    top: 75px !important;
+    left: 300px !important;
+    rotate: -90deg !important;
 }
 
-#grpc-service-description{
+#grpc-service{
+    height: 32px;
+    background-color: transparent;
+    border-top: 1px 'solid' #fff !important;
+    border-right: 1px 'solid' #fff !important;
+    border-bottom: 1px 'solid' #fff !important;
+    border-left: 1px 'solid' #fff !important;
+    border-radius: 8px;
     color: #fff;
+    font-size: 14px;
+    padding: 6px 16px;
+}
+
+#grpc-method{
+    height: 32px;
+    background-color: transparent;
+    border-top: 1px 'solid' #fff !important;
+    border-right: 1px 'solid' #fff !important;
+    border-bottom: 1px 'solid' #fff !important;
+    border-left: 1px 'solid' #fff !important;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    padding: 6px 16px;
+}
+
+.grpc-desc button#grpc-descriptions-toggle{
+    background-color: #rgb(17, 17, 17);
+    margin-top: 7px;
+    color: #80D4D9;
+    height: 20px;
+    width: 25px;
+}
+
+.grpc-desc tbody tr{
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+#grpc-service-description, #grpc-service-description-end{
+    color: #fff;
+    font-weight: semibold;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.6%;
 }
 
 #grpc-method-description{
-    color: #00E6DE;
-}
-
-#grpc-service-description-end{
-    color: #fff;
+    color: #80D4D9;
 }
 
 #grpc-request-response {
-    background-color: #1f2937 !important;
+    background-color: rgb(17, 17, 17) !important;
     border: none !important;
 }
 
 #grpc-request-response ul.ui-tabs-nav{
-    background-color: #1f2937;
+    background-color: rgb(17, 17, 17) !important;
 }
 
-#grpc-request-response li.ui-tabs-active{
-    background-color: #bdc7d9;
-    border: #bdc7d9 !important;
-    border-bottom: 2px solid #bdc7d9 !important;
-}
-
-.grpc-tabcontent{
-    background-color: #bdc7d9 !important;
-    border: #bdc7d9 !important;
+#grpc-request-response li.ui-state-default{
+    background-color: #80D4D9 !important;
+    color: #002021 !important;
+    border: none !important;
+    border-bottom: 2px solid #80D4D9 !important;
+    border-radius: 0px;
+    z-index: 1 !important;
 }
 
 #grpc-request-tab-button{
-    background-color: #bdc7d9;
+    border-top-left-radius: 8px !important;
+}
+
+#grpc-history-tab-button{
+    border-top-right-radius: 8px !important;
+}
+
+#grpc-request-response li.ui-tabs-active{
+    background-color: #0E1415 !important;
+    border: none !important;
+    border-bottom: 2px solid #80D4D9 !important;
+}
+
+#grpc-request-response li.ui-tabs-active a {
+    color: #fff !important;
+}
+
+#grpc-request-raw-tab textarea,
+#grpc-request-raw-tab .grpc-curl-panel {
+    background-color: #1f2929;
+    color: #ffffff;
+    padding: 16px !important;
+    border-radius: 4px;
+    border-color: transparent;
+}
+
+.grpc-invoke::after {
+    content: ' ➜'; /* space before arrow */
+    background: linear-gradient(to right, #0891B0, #05966B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: white;
+    background-clip: text;
+    color: white;
+}
+
+#grpc-form button {
+    background: linear-gradient(to right, #0891B0, #05966B);
+    color: white;
+    padding: 6px 12px;
+    border-color: transparent;
+    border-radius: 4px;
+}
+
+#grpc-form button.delete {
+    background: black;
+    color: white;
+    padding: 2px 4px;
+    border-color: transparent;
+    border-radius: 4px;
+}
+
+#grpc-history-list button.load {
+    background: #80D4D9 !important;
+    color: #002021;
+    font-weight: 500;
+}
+
+#grpc-history-list .history-item-header {
+    border-bottom: 1px solid #3F4949;
+}
+
+#grpc-history-list .history-item-panel {
+    background-color: #1f2929;
+    color: white;
+    border: none;
+    padding: 16px;
+}
+
+#grpc-history-list > .ui-accordion:first-child {
+    border: 1px solid #3F4949;
+    border-radius: 4px;
+}
+
+.history-item-time {
+    color: white;
+    font-weight: 500;
+}
+
+.history-item-method,
+.history-item-duration {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.history-item-result {
+    color: #00CC00;
+}
+
+#grpc-history-list .history-item-header .history-item-result.error {
+    color: #FFB4AB;
+}
+
+.grpc-request-raw-container h3{
+    color: #80D4D9 !important;
+}
+
+#grpc-request-response .grpc-tabcontent.ui-tabs-panel{
+    background-color: #0E1415 !important;
+}
+
+#grpc-response-tab h3 {
+    color: #80D4D9;
+}
+
+#grpc-response-tab td {
+    color: white;
+}
+
+#grpc-response-tab #grpc-response-headers td{
+    border: 1px solid #3F4949;
+}
+
+#grpc-response-tab #grpc-response-trailers td {
+    border: 1px solid #3F4949;
+    border-radius: 4px !important;
+}
+
+#grpc-response-tab #grpc-response-trailers .none{
+    border: transparent !important;
+}
+
+#grpc-response-tab textarea {
+    background-color: #1f2929 !important;
+    border: transparent;
+    border-radius: 4px;
+    color: white;
+    padding: 16px;
+}
+
+.grpc-tabcontent{
+    background-color: #0E1415 !important;
+    border: #0E1415 !important;
+}
+
+.grpc-tabcontent h3{
+    color: #80D4D9 !important;
+    font-size: 20px;
+    line-height: 22px;
+    letter-spacing: -0.7%;
 }
 
 #grpc-request-form div.one-of-3 {
-    background-color: #1f2937;
+    background-color: #161D1D;
     border: none;
-    border-radius: 12px;
+    border-radius: 4px;
 }
 
+input[type="checkbox" i]{ 
+    background-color: transparent !important;
+    border: 1px solid #49454F !important;
+}
 #grpc-request-form div.input_container{
     display: block;
 }
 
 #grpc-request-form th {
-    color: #00E6DE;
+    color: #80D4D9;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.7%;
+}
+
+#grpc-request-metadata .grpc-request-table tbody tr:first-of-type {
+    width: 100%;
+    height: 48px;
+    background-color: #002B2B;
+    color: #FEF7FF;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.7%;
+}
+
+#grpc-request-metadata .grpc-request-table tbody tr:first-of-type .name, #grpc-request-metadata .grpc-request-table tbody tr:first-of-type .value{
+    color: #80D4D9;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.7%;
+    border-bottom: none;
+}
+
+#grpc-request-metadata .grpc-request-table tbody th{
+    background-color: transparent;
+    border: none;
+    color: #FFF;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.1%;
+}
+
+#grpc-request-metadata .grpc-request-table tbody .add-row-label{
+    color: #fff;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.1%;
+}
+
+#grpc-request-metadata .grpc-request-table tbody .name, #grpc-request-metadata .grpc-request-table tbody .value{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #1F2632;
+    color: #FFF;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.1%;
 }
 
 #grpc-request-form div table {
     color: #fff;
+}
+
+#grpc-request-timeout{
+    color: #fff ;
+}
+
+#grpc-request-timeout input{
+    height: 48px;
+    width: 67px;
+    background-color: #1F2632;
+    color: #fff;
+    font-size: large;
+    margin-right: 12px;
+    border-radius: 4px;
+    border: none;
+}
+
+.grpc-file-button{
+    background-color: #80D4D9 !important;
+    color: #002021 !important;
+    border: none !important;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.1%;
+}
+
+textarea{
+    background-color: #1F2632;
+    color: #fff;
+    font-size: large;
+    margin-right: 16px;
+    border-radius: 4px;
+    border: none !important;
+}
+
+#grpc-request-response li.ui-tabs-tab:first-child {
+    border-top-left-radius: 8px;
+}
+
+#grpc-request-response li.ui-tabs-tab:last-child {
+    border-top-right-radius: 8px;
 }
