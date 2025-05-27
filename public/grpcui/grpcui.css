@@ -29,6 +29,10 @@ body{
     font-family: var(--font-roboto) !important;
 }
 
+#grpc-form textarea {
+    width: 95% !important;
+}
+
 .full-width-heading{
     display: none;
     background-color: rgba(31, 41, 55);
@@ -109,7 +113,7 @@ body{
     background-color: rgb(17, 17, 17) !important;
     position: absolute;
     top: 75px !important;
-    left: 305px !important;
+    left: 315px !important;
     height: 15px !important;
 }
 
@@ -218,6 +222,7 @@ body{
     border-radius: 4px;
     border-color: transparent;
     font-family: var(--font-space-mono) !important;
+    width: 95% !important;
 }
 
 #grpc-request-raw-tab textarea{
@@ -268,14 +273,12 @@ body{
     display: flex;
     align-items: center;
     height: max-content;
-    gap: 7px
+    gap: 8px
 }
 
 #grpc-history-list .history-item-header span {
     width: max-content !important;
 }
-
-
 
 #grpc-history-list .history-item-panel {
     background-color: #1f2929;
@@ -307,6 +310,10 @@ body{
 .history-item-duration {
     color: #FFF;
     font-family: var(--font-roboto);
+}
+
+.history-item-messages{
+    padding: 0px !important;
 }
 
 .history-item-result {
@@ -380,7 +387,7 @@ table#grpc-request-metadata-form {
     background-color: #161D1D;
     border: none;
     border-radius: 4px;
-    width: 100%;
+    width: 95%;
 }
 
 #grpc-request-form th {
@@ -426,7 +433,7 @@ table#grpc-request-metadata-form {
 }
 
 #grpc-request-metadata-form {
-    width: 100% !important;
+    width: 95% !important;
     background-color: transparent;
     color: #fff;
     font-size: 16px;
@@ -455,6 +462,7 @@ table#grpc-request-metadata-form {
     height: 100%;
     padding: 0px;
     text-align: center;
+    font-family: var(--font-space-mono);
 }
 
 #grpc-request-metadata .grpc-request-table tbody .add-row-label{

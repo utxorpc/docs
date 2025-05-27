@@ -46,7 +46,7 @@ export default function PlaygroundRunner() {
   if (!isReady) return null;
 
   return (
-    <div className="relative h-[80vh] rounded-lg overflow-hidden">
+    <div className="relative h-[150vh] rounded-lg overflow-hidden">
       {!loaded && (
         <div className="absolute inset-0 bg-white dark:bg-[#111111] pt-6">
           <div className="flex flex-col gap-4">

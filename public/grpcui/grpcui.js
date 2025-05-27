@@ -50,11 +50,9 @@ window.addEventListener('message', (event) => {
 })
 
 $(document).ready(() => {
-  $(".grpc-request-table button").each(function() {
+  $(".grpc-history-list button").each(function() {
     const buttonText = $(this).text().trim();
-    if (buttonText === "+") {
-        $(this).html('<img src="/grpcui/img/add.svg" alt="+" style="width:24px;height:24px;">');
-    } else if (buttonText.toUpperCase() === "X" || buttonText === "×") {
+    if (buttonText.toUpperCase() === "X" || buttonText === "×") {
         $(this).html('<img src="/grpcui/img/delete.svg" alt="×" style="width:24px;height:24px;">');
     }
   });
