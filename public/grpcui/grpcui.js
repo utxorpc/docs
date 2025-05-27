@@ -48,38 +48,6 @@ window.addEventListener('message', (event) => {
     observer?.disconnect()  
   }
 })
-$(document).ready(() => {
-  const $toggleButton = $("#grpc-descriptions-toggle");
-  const $descriptions = $("#grpc-descriptions");
-
-  let descriptionsShown = ($toggleButton.text().trim() === "«");
-
-  $toggleButton.off("click").click(() => {
-      if (descriptionsShown) {
-          $descriptions.css({
-              "background-color": "transparent",
-              "padding": "0",
-              "border": "none"
-          });
-          $("#grpc-descriptions pre").hide();
-          $toggleButton.text("»");
-      } else {
-          $descriptions.css({
-              "background-color": "",
-              "padding": "",
-              "border": ""
-          });
-          $("#grpc-descriptions pre").show();
-          $toggleButton.text("«");
-      }
-
-      descriptionsShown = !descriptionsShown;
-
-      if (typeof expandDescStorageKey !== 'undefined') {
-          localStorage.setItem(expandDescStorageKey, descriptionsShown + "");
-      }
-  });
-});
 
 $(document).ready(() => {
   $('button, div, span').each(function() {
@@ -87,17 +55,69 @@ $(document).ready(() => {
       const text = $this.text().trim();
 
       if (text.toUpperCase() === "X" || text === "×") {
-          $this.html('<img src="/grpcui/img/delete.svg" alt="x" style="width:24px;height:24px;">');
+        $this.html('<img src="/grpcui/img/delete.svg" alt="x" style="width:24px;height:24px;">');
+      } else if (text === "+"){
+        $this.html('<img src="/grpcui/img/add.svg" alt="x" style="width:24px;height:24px;">');
       }
   });
 });
 
 $(document).ready(() => {
-    $("button.add").each(function() {
-        if ($(this).text().trim() === "+") {
-            $(this).html('<img src="/grpcui/img/add.svg" alt="+" style="width:24px;height:24px;">');
-        }
-    });
+  $(".grpc-request-table button").each(function() {
+      if ($(this).text().trim() === "+") {
+          $(this).html('<img src="/grpcui/img/add.svg" alt="+" style="width:24px;height:24px;">');
+      } else if ($(this).text().trim().toUpperCase() === "X" || $(this).text().trim() === "×") {
+          $(this).html('<img src="/grpcui/img/delete.svg" alt="×" style="width:24px;height:24px;">');
+      }
+  });
 });
+
+
+$(document).ready(() => {
+  const $toggleButton = $("#grpc-descriptions-toggle");
+  const $descriptions = $("#grpc-descriptions");
+
+  function setIcon(expanded) {
+      if (expanded) {
+          $toggleButton.html('<img src="/grpcui/img/arrow-up.svg" alt="collapse" style="width:20px;height:20px;">');
+      } else {
+          $toggleButton.html('<img src="/grpcui/img/arrow-up.svg" alt="expand" style="width:20px;height:20px;transform: rotate(180deg);">');
+      }
+  }
+
+  let descriptionsShown = false;
+
+  setIcon(descriptionsShown);
+
+  $descriptions.css({
+      "background-color": "transparent",
+      "padding": "0",
+      "border": "none"
+  });
+  $("#grpc-descriptions pre").hide();
+
+  $toggleButton.off("click").click(() => {
+      descriptionsShown = !descriptionsShown; 
+      
+      setIcon(descriptionsShown); 
+
+      if (descriptionsShown) {
+          $descriptions.css({
+              "background-color": "",
+              "padding": "",
+              "border": ""
+          });
+          $("#grpc-descriptions pre").show();
+      } else {
+          $descriptions.css({
+              "background-color": "transparent",
+              "padding": "0",
+              "border": "none"
+          });
+          $("#grpc-descriptions pre").hide();
+      }
+  });
+});
+
 
 
