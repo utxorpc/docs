@@ -11,7 +11,7 @@ export default function PlaygroundRunner(props: {}) {
     const src = service && method ? `/grpcui?service=${encodeURIComponent(service)}&method=${encodeURIComponent(method)}` : '/grpcui';
 
     return (
-        <div style={{ height: '80vh', borderRadius: '0.75rem', overflow: 'hidden', marginTop: '60px' }}>
+        <div className="w-[45vw] lg:!w-[672px]" style={{ height: '120vh', borderRadius: '0.75rem', overflow: 'hidden', marginTop: '0px' }}>
             <iframe
                 src={src}
                 title={`gRPC Playground — ${service}.${method}`}
