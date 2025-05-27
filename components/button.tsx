@@ -9,7 +9,7 @@ export function Button(props: { service: string; method: string }) {
                     pathname: "/playground",
                     query: { service: props.service, method: props.method },
                 }}
-                className="inline-flex items-center text-center gap-2 bg-gradient-to-tl from-emerald-600 to-cyan-600 hover:from-emerald-300 hover:to-cyan-500 text-white text-sm font-medium rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 py-1.5 px-2"
+                className="inline-flex items-center text-center gap-2 bg-[#00696D] hover:bg-[#27A0A1] active:bg-[#004C4E] transition-bg duration-150 text-white text-sm font-medium rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 py-1.5 px-2"
             >
 
                 Try it out
