@@ -36,6 +36,7 @@ body{
 
 #grpc-form{
     background-color: rgb(17, 17, 17);
+    padding: 24px 0px !important;
 }
 
 #grpc-descriptions{
@@ -46,6 +47,24 @@ body{
     border-radius: 16px;
     padding: 24px;
 } 
+
+#grpc-descriptions pre{
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+}
+
+#grpc-request-raw-tab pre {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 24px 0px !important;
+}
+
+.grpc-tabcontent.ui-tabs-panel {
+    padding: 24px 0px !important;
+}
 
 .grpc-desc pre {
     margin: 0px;
@@ -280,8 +299,20 @@ body{
     color: #80D4D9 !important;
 }
 
+.grpc-request-raw-container textarea {
+    margin-right: 0px !important;
+}
+
+table#grpc-request-metadata-form {
+    margin: 0px !important;
+}
+
 #grpc-request-response .grpc-tabcontent.ui-tabs-panel{
     background-color: transparent !important;
+}
+
+#grpc-request-form div#root{
+    margin-left: 0px !important;
 }
 
 #grpc-response-tab h3 {
@@ -407,15 +438,13 @@ input[type="checkbox" i]{
     width: 40px !important;
 }
 
+#grpc-curl-text{
+    color: #4AB249 !important;
+}
 
 /* #grpc-request-metadata .grpc-request-table tbody tr td:first-child button{
 
 } */
-
-
-#grpc-request-form div table {
-    color: #fff;
-}
 
 #grpc-request-timeout{
     color: #fff ;

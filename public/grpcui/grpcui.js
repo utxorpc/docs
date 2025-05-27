@@ -1,26 +1,53 @@
-window.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(location.search);
-  const svc = params.get("service");
-  const mtd = params.get("method");
+console.log('[dompatch] loaded')
 
-  if (!svc || !mtd) return;
+window.parent.postMessage(
+  { type: 'grpcui-ready' },
+  window.location.origin
+);
 
-  const svcEl = document.getElementById("grpc-service");
-  const mtdEl = document.getElementById("grpc-method");
+window.addEventListener('message', (event) => {
+  const { type, service: svc, method: mtd } = event.data || {}
+  if (type !== 'grpc-select') return
+  console.log('[dompatch] received grpc-select', svc, mtd)
 
-  if (!svcEl || !mtdEl) return;
+  const svcEl = document.getElementById('grpc-service')
+  const mtdEl = document.getElementById('grpc-method')
+  if (!svcEl || !mtdEl) {
+    console.error('[dompatch] grpcui elements not found!')
+    return
+  }
 
-  const observer = new MutationObserver(() => {
-    mtdEl.value = mtd;
-    mtdEl.dispatchEvent(new Event("change", { bubbles: true }));
-    observer.disconnect();
-  });
-  observer.observe(mtdEl, { childList: true });
+  let observer
+  if (mtd) {
+    observer = new MutationObserver((mutations, obs) => {
+      if ([...mtdEl.options].some(o => o.value === mtd)) {
+        mtdEl.value = mtd
+        mtdEl.dispatchEvent(new Event('change', { bubbles: true }))
+        obs.disconnect()
+      }
+    })
+    observer.observe(mtdEl, { childList: true })
+  }
 
-  svcEl.value = svc;
-  svcEl.dispatchEvent(new Event("change", { bubbles: true }));
-});
+  if (svc) {
+    if (![...svcEl.options].some(o => o.value === svc)) {
+      console.warn(`[dompatch] Service "${svc}" not found; using default.`)
+    } else {
+      svcEl.value = svc
+      svcEl.dispatchEvent(new Event('change', { bubbles: true }))
+    }
+  }
 
+  if (mtd && !svc) {
+    if ([...mtdEl.options].some(o => o.value === mtd)) {
+      mtdEl.value = mtd
+      mtdEl.dispatchEvent(new Event('change', { bubbles: true }))
+    } else {
+      console.warn(`[dompatch] Method "${mtd}" not found; using default.`)
+    }
+    observer?.disconnect()  
+  }
+})
 $(document).ready(() => {
   const $toggleButton = $("#grpc-descriptions-toggle");
   const $descriptions = $("#grpc-descriptions");
@@ -72,6 +99,5 @@ $(document).ready(() => {
         }
     });
 });
-
 
 
