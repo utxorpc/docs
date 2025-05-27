@@ -414,14 +414,14 @@ button, input[type="checkbox"], input[type="radio"]{
     color: #fff !important;
 }
 
-#grpc-response-tab textarea {
+#grpc-response-tab .grpc-response-textarea {
     background-color: #1f2929 !important;
     border: transparent;
     border-radius: 4px;
     color: #4AB249;
-    color: #4AB249;
     padding: 16px;
     font-family: var(--font-space-mono);
+    width: 95% !important;
 }
 
 .grpc-tabcontent{
@@ -579,7 +579,7 @@ button, input[type="checkbox"], input[type="radio"]{
 textarea, input[type="text"]{
     height: 56px;
     width: 169px !important;
-    background-color: #111111;
+    background-color: #161F1F;
     color: #FFF;
     font-size: large !important;
     margin-right: 12px;
