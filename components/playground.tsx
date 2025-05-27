@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
-// import { read } from "fs";
+import React from "react";
 
 export default function PlaygroundRunner() {
   const { query, isReady } = useRouter();
-  const [loaded, setLoaded] = useState(false);
-  const [ready, setReady] = useState(false);
+  const [ready,   setReady]   = useState(false);
+  const [loaded,  setLoaded]  = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const service = query.service as string | undefined;
-  const method = query.method as string | undefined;
+  const method  = query.method  as string | undefined;
 
   useEffect(() => {
     function onMessage(e: MessageEvent) {
@@ -27,6 +27,7 @@ export default function PlaygroundRunner() {
 
   useEffect(() => {
     if (!isReady || !ready || !service || !method) return;
+
     const win = iframeRef.current?.contentWindow;
     if (!win) return;
 
@@ -38,9 +39,7 @@ export default function PlaygroundRunner() {
   }, [isReady, ready, service, method]);
 
   useEffect(() => {
-    if (!isReady || !ready) {
-      setLoaded(false);
-    }
+    if (isReady && ready) setLoaded(true);
   }, [isReady, ready]);
 
   if (!isReady) return null;
@@ -66,17 +65,13 @@ export default function PlaygroundRunner() {
           </div>
         </div>
       )}
+
       <iframe
         ref={iframeRef}
         src="/grpcui/"
-        title={`gRPC Playground — ${service}.${method}`}
+        title={`gRPC Playground — ${service ?? "-"}.${method ?? "-"}`}
         className="w-full h-full border-0"
-        onLoad={() => {
-          console.log("[host] iframe loaded");
-          if (ready) {
-            setLoaded(true);
-          }
-        }}
+        onLoad={() => console.log("[host] iframe element loaded")}
       />
     </div>
   );

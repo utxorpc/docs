@@ -1,51 +1,67 @@
-console.log('[dompatch] loaded')
+console.log("[dompatch] script injected");
 
-window.parent.postMessage(
-  { type: 'grpcui-ready' },
-  window.location.origin
-);
+(function signalWhenReady() {
+  const svcEl = document.getElementById("grpc-service");
+  const mtdEl = document.getElementById("grpc-method");
+  if (svcEl && mtdEl) {
+    console.log("[dompatch] UI ready – signalling parent");
+    window.parent.postMessage({ type: "grpcui-ready" }, window.location.origin);
+  } else {
+    requestAnimationFrame(signalWhenReady);
+  }
+})();
 
-window.addEventListener('message', (event) => {
-  const { type, service: svc, method: mtd } = event.data || {}
-  if (type !== 'grpc-select') return
-  console.log('[dompatch] received grpc-select', svc, mtd)
+function selectMethodIfPresent(mtdEl, targetValue) {
+  if ([...mtdEl.options].some((o) => o.value === targetValue)) {
+    mtdEl.value = targetValue;
+    mtdEl.dispatchEvent(new Event("change", { bubbles: true }));
+    return true;
+  }
+  return false;
+}
 
-  const svcEl = document.getElementById('grpc-service')
-  const mtdEl = document.getElementById('grpc-method')
-  if (!svcEl || !mtdEl) {
-    console.error('[dompatch] grpcui elements not found!')
-    return
+function afterMethodSelected(formPanel) {
+  const hasInputs = formPanel.querySelector(
+    "input, textarea, .input_container"
+  );
+  if (!hasInputs) {
+    console.log("[dompatch] empty RPC detected – clearing #grpc-form");
+    formPanel.innerHTML = "";
   }
 
-  let observer
-  if (mtd) {
-    observer = new MutationObserver((mutations, obs) => {
-      if ([...mtdEl.options].some(o => o.value === mtd)) {
-        mtdEl.value = mtd
-        mtdEl.dispatchEvent(new Event('change', { bubbles: true }))
-        obs.disconnect()
-      }
-    })
-    observer.observe(mtdEl, { childList: true })
-  }
-
-  if (svc) {
-    if (![...svcEl.options].some(o => o.value === svc)) {
-      console.warn(`[dompatch] Service "${svc}" not found; using default.`)
-    } else {
-      svcEl.value = svc
-      svcEl.dispatchEvent(new Event('change', { bubbles: true }))
+  requestAnimationFrame(() => {
+    const tabs = document.querySelectorAll(
+      "#grpc-request-examples-container ~ div.ui-tabs .ui-tabs-nav li a"
+    );
+    const [reqTab, rawTab] = tabs;
+    if (rawTab && reqTab) {
+      rawTab.click();
+      requestAnimationFrame(() => reqTab.click());
     }
+  });
+}
+
+window.addEventListener("message", (event) => {
+  const { type, service: svc, method: mtd } = event.data || {};
+  if (type !== "grpc-select") return;
+
+  console.log("[dompatch] received grpc-select", svc, mtd);
+
+  const svcEl     = document.getElementById("grpc-service");
+  const mtdEl     = document.getElementById("grpc-method");
+  const formPanel = document.getElementById("grpc-form");
+  if (!svcEl || !mtdEl || !formPanel) {
+    console.error("[dompatch] missing elements!");
+    return;
   }
 
-  if (mtd && !svc) {
-    if ([...mtdEl.options].some(o => o.value === mtd)) {
-      mtdEl.value = mtd
-      mtdEl.dispatchEvent(new Event('change', { bubbles: true }))
-    } else {
-      console.warn(`[dompatch] Method "${mtd}" not found; using default.`)
-    }
-    observer?.disconnect()  
+  const serviceChanged = svcEl.value !== svc;
+  svcEl.value = svc;
+  svcEl.dispatchEvent(new Event("change", { bubbles: true }));
+
+  if (selectMethodIfPresent(mtdEl, mtd)) {
+    afterMethodSelected(formPanel);
+    return;                         // done
   }
 })
 
