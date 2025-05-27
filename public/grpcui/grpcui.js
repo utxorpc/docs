@@ -50,22 +50,48 @@ window.addEventListener('message', (event) => {
 })
 
 $(document).ready(() => {
-  $(".grpc-history-list button").each(function() {
-    const buttonText = $(this).text().trim();
-    if (buttonText.toUpperCase() === "X" || buttonText === "×") {
-        $(this).html('<img src="/grpcui/img/delete.svg" alt="×" style="width:24px;height:24px;">');
-    }
+
+  function replaceDeleteButtons() {
+    $(".grpc-history-list button").each(function() {
+      const buttonText = $(this).text().trim();
+      if (buttonText.toUpperCase() === "X" || buttonText === "×") {
+        $(this).html('<img src="/grpcui/img/delete.svg" alt="×" style="width:16px;height:16px;">');
+      }
+    });
+  }
+
+  replaceDeleteButtons();
+
+  const observer = new MutationObserver(() => {
+    replaceDeleteButtons();
   });
-})
+
+  const targetNode = document.querySelector(".grpc-history-list");
+  if (targetNode) {
+    observer.observe(targetNode, { childList: true, subtree: true });
+  }
+});
+
+
+$(document).ready(() => {
+  const $timeoutDiv = $("#grpc-request-timeout");
+
+  $timeoutDiv.contents().filter(function() {
+      return this.nodeType === Node.TEXT_NODE && this.nodeValue.trim() === 'seconds';
+  }).wrap('<span class="seconds-text"></span>');
+
+  $timeoutDiv.find("input").attr("placeholder", "Input");
+});
+
 
 $(document).ready(() => {
   function replaceButtons() {
       $(".grpc-request-table button").each(function() {
           const buttonText = $(this).text().trim();
           if (buttonText === "+") {
-              $(this).html('<img src="/grpcui/img/add.svg" alt="+" style="width:24px;height:24px;">');
+              $(this).html('<img src="/grpcui/img/add.svg" alt="+" style="width:16px;height:16px;">');
           } else if (buttonText.toUpperCase() === "X" || buttonText === "×") {
-              $(this).html('<img src="/grpcui/img/delete.svg" alt="×" style="width:24px;height:24px;">');
+              $(this).html('<img src="/grpcui/img/delete.svg" alt="×" style="width:16px;height:16px;">');
           }
       });
   }
@@ -92,9 +118,9 @@ $(document).ready(() => {
 
   function setIcon(expanded) {
       if (expanded) {
-          $toggleButton.html('<img src="/grpcui/img/arrow-up.svg" alt="collapse" style="width:20px;height:20px;">');
+          $toggleButton.html('<img src="/grpcui/img/arrow-up.svg" alt="collapse" style="width:16px;height:16px;">');
       } else {
-          $toggleButton.html('<img src="/grpcui/img/arrow-up.svg" alt="expand" style="width:20px;height:20px;transform: rotate(180deg);">');
+          $toggleButton.html('<img src="/grpcui/img/arrow-up.svg" alt="expand" style="width:16px;height:16px;transform: rotate(180deg);">');
       }
   }
 

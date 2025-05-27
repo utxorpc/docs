@@ -17,6 +17,10 @@ body{
     font-family: var(--font-poppins) !important;
 }
 
+button, input[type="checkbox"], input[type="radio"]{
+    cursor: pointer;
+}
+
 .ui-widget{
     font-family: var(--font-poppins) !important;
 }
@@ -27,10 +31,6 @@ body{
 
 #grpc-form #grpc-service, #grpc-form #grpc-method{
     font-family: var(--font-roboto) !important;
-}
-
-#grpc-form textarea {
-    width: 95% !important;
 }
 
 .full-width-heading{
@@ -275,7 +275,7 @@ body{
 
 .grpc-invoke::after {
     content: ' ➜'; /* space before arrow */
-    background: linear-gradient(to right, #0891B0, #05966B);
+    background: #00696D;
     -webkit-background-clip: text;
     -webkit-text-fill-color: white;
     background-clip: text;
@@ -283,7 +283,7 @@ body{
 }
 
 .grpc-invoke, .grpc-history-clear, .grpc-history-save{
-    background: linear-gradient(to right, #0891B0, #05966B) !important;
+    background: #00696D !important;
     color: white;
     padding: 6px 12px;
     border-color: transparent !important;
@@ -298,6 +298,8 @@ body{
     border-color: transparent !important;
     border-color: transparent !important;
     border-radius: 4px;
+    width: 34px;
+    height: 30px;
 }
 
 #grpc-form .grpc-request-table button.add {
@@ -372,8 +374,13 @@ body{
     color: #FFB4AB;
 }
 
-.grpc-request-raw-container, #grpc-response-tab h3, #grpc-response-tab td  {
+#grpc-request-response .grpc-tabcontent.ui-tabs-panel h3   {
     color: #FFF !important;
+    font-size: 20px !important;
+    line-height: 22px;
+    letter-spacing: -0.7%;
+    margin-top: 40px;
+    margin-bottom: 24px;
 }
 
 .grpc-tabcontent hr{
@@ -383,10 +390,6 @@ body{
 
 .grpc-request-raw-container textarea {
     margin-right: 0px !important;
-}
-
-table#grpc-request-metadata-form {
-    margin: 0px !important;
 }
 
 #grpc-request-response .grpc-tabcontent.ui-tabs-panel{
@@ -406,8 +409,9 @@ table#grpc-request-metadata-form {
     border-radius: 4px !important;
 }
 
-#grpc-response-tab #grpc-response-trailers .none{
+#grpc-response-tab #grpc-response-trailers .none, #grpc-response-headers .none {
     border: transparent !important;
+    color: #fff !important;
 }
 
 #grpc-response-tab textarea {
@@ -441,11 +445,6 @@ table#grpc-request-metadata-form {
 
 #grpc-request-form th {
     color: #80D4D9;
-}
-
-.message_field input[type=text]{
-    background-color: #1F2632;
-    border-radius: 4px;
 }
 
 .message_field .name{
@@ -488,8 +487,8 @@ table#grpc-request-metadata-form {
     font-size: 16px;
     line-height: 22px;
     letter-spacing: -0.7%;
-    border: 1px solid #434B58;
     background-color: transparent;
+    margin: 0px !important;
 }
 
 #grpc-request-metadata .grpc-request-table .metadataRow td, #grpc-request-metadata .grpc-request-table .metadataRow th, #grpc-request-metadata .grpc-request-table tbody tr th{
@@ -533,30 +532,38 @@ table#grpc-request-metadata-form {
     font-family: var(--font-space-mono);
 }
 
-/* #grpc-request-metadata .grpc-request-table tbody tr td:first-child button{
-
-} */
-/* #grpc-request-metadata .grpc-request-table tbody tr td:first-child button{
-
-} */
-
 #grpc-request-timeout{
     color: #fff ;
+    position: relative;
 }
 
 #grpc-request-timeout input{
-    height: 48px;
-    width: 81px;
-    width: 81px;
-    background-color: #1F2632;
-    color: #fff;
+    height: 56px;
+    width: 169px;
+    background-color: #111111;
+    color: #FFF;
     font-size: large;
     margin-right: 12px;
     border-radius: 4px;
-    border: none;
-    text-align: center;
-    text-align: center;
+    border: 1pxsolid #434B58;
+    text-align: left;
+    padding: 4px 0px 4px 16px;
 }
+
+.seconds-text{
+    color: #fff;
+    font-size: 12px;
+    line-height:16px;
+    letter-spacing: 0.4%;
+    text-transform: capitalize;
+    background-color: #111111;
+    border-right: 5px solid #111111;
+    border-left: 5px solid #111111;
+    position: absolute;
+    top: -8px;
+    left: 16px
+}
+    
 
 .grpc-file-button{
     background-color: #80D4D9 !important;
@@ -569,13 +576,17 @@ table#grpc-request-metadata-form {
     letter-spacing: 0.1%;
 }
 
-textarea{
-    background-color: #1F2632;
-    color: #fff;
-    font-size: large;
-    margin-right: 16px;
+textarea, input[type="text"]{
+    height: 56px;
+    width: 169px !important;
+    background-color: #111111;
+    color: #FFF;
+    font-size: large !important;
+    margin-right: 12px;
     border-radius: 4px;
-    border: none !important;
+    border: 1pxsolid #434B58;
+    text-align: left;
+    padding: 4px 0px 4px 16px;
 }
 
 #grpc-request-response li.ui-tabs-tab:first-child {
