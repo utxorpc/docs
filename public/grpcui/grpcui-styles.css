@@ -79,12 +79,6 @@ body{
     line-height: 24px !important;
     letter-spacing: -0.6%;
 }
-    width: 100%;
-    margin-top: 20px;
-    background-color: #1f2929 !important;
-    border-radius: 16px;
-    padding: 24px;
-} 
 
 #grpc-descriptions pre{
     white-space: pre-wrap !important;
@@ -147,7 +141,7 @@ body{
     background-color: rgb(17, 17, 17) !important;
     position: absolute;
     top: 75px !important;
-    left: 315px !important;
+    left: 320px !important;
     height: 15px !important;
 }
 
@@ -601,3 +595,4 @@ textarea{
 #grpc-request-form td.toggle_presence {
     width: max-content !important;
 }
+
