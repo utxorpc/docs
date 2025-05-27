@@ -521,3 +521,13 @@ textarea{
 #grpc-request-response li.ui-tabs-tab:last-child {
     border-top-right-radius: 8px;
 }
+
+.input_container table tr.message_field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#grpc-request-form td.toggle_presence {
+    width: max-content !important;
+}
