@@ -50,28 +50,43 @@ window.addEventListener('message', (event) => {
 })
 
 $(document).ready(() => {
-  $('button, div, span').each(function() {
-      const $this = $(this);
-      const text = $this.text().trim();
-
-      if (text.toUpperCase() === "X" || text === "×") {
-        $this.html('<img src="/grpcui/img/delete.svg" alt="x" style="width:24px;height:24px;">');
-      } else if (text === "+"){
-        $this.html('<img src="/grpcui/img/add.svg" alt="x" style="width:24px;height:24px;">');
-      }
+  $(".grpc-request-table button").each(function() {
+    const buttonText = $(this).text().trim();
+    if (buttonText === "+") {
+        $(this).html('<img src="/grpcui/img/add.svg" alt="+" style="width:24px;height:24px;">');
+    } else if (buttonText.toUpperCase() === "X" || buttonText === "×") {
+        $(this).html('<img src="/grpcui/img/delete.svg" alt="×" style="width:24px;height:24px;">');
+    }
   });
-});
+})
 
 $(document).ready(() => {
-  $(".grpc-request-table button").each(function() {
-      if ($(this).text().trim() === "+") {
-          $(this).html('<img src="/grpcui/img/add.svg" alt="+" style="width:24px;height:24px;">');
-      } else if ($(this).text().trim().toUpperCase() === "X" || $(this).text().trim() === "×") {
-          $(this).html('<img src="/grpcui/img/delete.svg" alt="×" style="width:24px;height:24px;">');
+  function replaceButtons() {
+      $(".grpc-request-table button").each(function() {
+          const buttonText = $(this).text().trim();
+          if (buttonText === "+") {
+              $(this).html('<img src="/grpcui/img/add.svg" alt="+" style="width:24px;height:24px;">');
+          } else if (buttonText.toUpperCase() === "X" || buttonText === "×") {
+              $(this).html('<img src="/grpcui/img/delete.svg" alt="×" style="width:24px;height:24px;">');
+          }
+      });
+  }
+
+  replaceButtons();
+
+  const observer = new MutationObserver((mutationsList, observer) => {
+      for (const mutation of mutationsList) {
+          if (mutation.addedNodes.length) {
+              replaceButtons();
+          }
       }
   });
-});
 
+  observer.observe(document.body, {
+      childList: true,
+      subtree: true
+  });
+});
 
 $(document).ready(() => {
   const $toggleButton = $("#grpc-descriptions-toggle");

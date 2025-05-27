@@ -181,6 +181,7 @@ body{
 
 #grpc-request-response ul.ui-tabs-nav{
     background-color: rgb(17, 17, 17) !important;
+    border-bottom: 1px solid #24222D !important;
 }
 
 #grpc-request-response li.ui-state-default{
@@ -198,10 +199,6 @@ body{
 
 #grpc-history-tab-button{
     border-top-right-radius: 8px !important;
-}
-
-.history-item-method {
-    color: #fff;
 }
 
 #grpc-request-response li.ui-tabs-active{
@@ -254,6 +251,8 @@ body{
 #grpc-form .grpc-request-table button.add {
     background-color: transparent !important;
     border: transparent !important;
+    width: 34px;
+    height: 30px;
 }
 
 #grpc-history-list button.load {
@@ -261,11 +260,22 @@ body{
     color: #002021;
     font-weight: 500;
     border: transparent !important;
+    margin: 0 12px;
 }
 
 #grpc-history-list .history-item-header {
     border-bottom: 1px solid #3F4949;
+    display: flex;
+    align-items: center;
+    height: max-content;
+    gap: 7px
 }
+
+#grpc-history-list .history-item-header span {
+    width: max-content !important;
+}
+
+
 
 #grpc-history-list .history-item-panel {
     background-color: #1f2929;
@@ -295,7 +305,8 @@ body{
 
 .history-item-method,
 .history-item-duration {
-    color: rgba(255, 255, 255, 0.6);
+    color: #FFF;
+    font-family: var(--font-roboto);
 }
 
 .history-item-result {
@@ -308,6 +319,11 @@ body{
 
 .grpc-request-raw-container, #grpc-response-tab h3, #grpc-response-tab td  {
     color: #FFF !important;
+}
+
+.grpc-tabcontent hr{
+    border: 1px solid #24222D;
+    margin: 24px 0px;
 }
 
 .grpc-request-raw-container textarea {
@@ -327,11 +343,11 @@ table#grpc-request-metadata-form {
 }
 
 #grpc-response-tab #grpc-response-headers td{
-    border: 1px solid #3F4949;
+    border: 1px solid #24222D;
 }
 
 #grpc-response-tab #grpc-response-trailers td {
-    border: 1px solid #3F4949;
+    border: 1px solid #24222D;
     border-radius: 4px !important;
 }
 
@@ -371,6 +387,11 @@ table#grpc-request-metadata-form {
     color: #80D4D9;
 }
 
+.message_field input[type=text]{
+    background-color: #1F2632;
+    border-radius: 4px;
+}
+
 .message_field .name{
     text-align: left !important;
     color: #FFF;
@@ -389,14 +410,18 @@ table#grpc-request-metadata-form {
     letter-spacing: -0.7%;
 }
 
+.add-row-label{
+    color: #FFF;
+}
+
 #grpc-request-form td.name {
     font-size: 16px !important;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
 
-input[type="checkbox" i]{ 
-    background-color: transparent !important;
+#grpc-request-form td input[type=checkbox] { 
+    color: #161D1D !important;
     border: 1px solid #49454F !important;
 }
 
