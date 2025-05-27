@@ -46,10 +46,24 @@ export default function PlaygroundRunner() {
   if (!isReady) return null;
 
   return (
-    <div className="relative h-[80vh] rounded-lg overflow-hidden mt-16">
+    <div className="relative h-[80vh] rounded-lg overflow-hidden">
       {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-900">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-gray-200 dark:border-gray-700" />
+        <div className="absolute inset-0 bg-white dark:bg-[#111111] pt-6">
+          <div className="flex flex-col gap-4">
+            <div className="w-[400px] h-10 animate-pulse rounded-full bg-[#1F2929]"/>
+            <div className="w-[400px] h-10 animate-pulse rounded-full bg-[#1F2929]"/>
+            <div className="w-full h-56 rounded-xl animate-pulse rounded-2xl bg-[#1F2929]"/>
+          </div>
+          <div className="mt-4">
+            <div className="flex gap-2">
+              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse"/>
+              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse"/>
+              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse"/>
+              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse"/>
+            </div>
+            <div className="bg-[#1F2929] w-full h-[147px] rounded-2xl animate-pulse mt-2"/>
+            <div className="bg-[#1F2929] w-full h-[200px] rounded-2xl animate-pulse mt-10"/>
+          </div>
         </div>
       )}
       <iframe
