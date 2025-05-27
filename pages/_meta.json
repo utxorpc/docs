@@ -20,7 +20,7 @@
   "submit": "Submit Module",
   "sync": "Sync Module",
   "watch": "Watch Module",
-  "playground": "Playground",
+  "playground":  { "display": "hidden" },
   "-- Ledgers --": {
     "type": "separator",
     "title": "Ledgers"
