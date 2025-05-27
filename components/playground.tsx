@@ -1,46 +1,52 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import React from "react";
 
 export default function PlaygroundRunner() {
   const { query, isReady } = useRouter();
-  const [ready,   setReady]   = useState(false);
-  const [loaded,  setLoaded]  = useState(false);
+  const [grpcuiIsReady, setGrpcuiIsReady] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const readyRef = useRef(false);
 
   const service = query.service as string | undefined;
-  const method  = query.method  as string | undefined;
+  const method = query.method as string | undefined;
 
   useEffect(() => {
     function onMessage(e: MessageEvent) {
-      if (
-        e.origin === window.location.origin &&
-        e.data?.type === "grpcui-ready"
-      ) {
-        console.log("[host] iframe says READY");
-        setReady(true);
+      if (e.origin !== window.location.origin) return;
+      if (e.data?.type === "grpcui-ready") {
+        readyRef.current = true;
+        setGrpcuiIsReady(true);
       }
     }
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
   }, []);
 
+  const handleLoad = () => {
+    if (readyRef.current) return;
+    iframeRef.current?.contentWindow?.postMessage(
+      { type: "are-you-ready" },
+      window.location.origin
+    );
+  };
+
   useEffect(() => {
-    if (!isReady || !ready || !service || !method) return;
+    if (!isReady || !grpcuiIsReady || !service || !method) return;
 
-    const win = iframeRef.current?.contentWindow;
-    if (!win) return;
+    const iframeContentWindow = iframeRef.current?.contentWindow;
+    if (!iframeContentWindow) return;
 
-    console.log("[host] sending grpc-select", service, method);
-    win.postMessage(
+    iframeContentWindow.postMessage(
       { type: "grpc-select", service, method },
       window.location.origin
     );
-  }, [isReady, ready, service, method]);
+  }, [isReady, grpcuiIsReady, service, method]);
 
   useEffect(() => {
-    if (isReady && ready) setLoaded(true);
-  }, [isReady, ready]);
+    if (isReady && grpcuiIsReady) setLoaded(true);
+  }, [isReady, grpcuiIsReady]);
 
   if (!isReady) return null;
 
@@ -49,19 +55,19 @@ export default function PlaygroundRunner() {
       {!loaded && (
         <div className="absolute inset-0 bg-white dark:bg-[#111111] pt-6">
           <div className="flex flex-col gap-4">
-            <div className="w-[400px] h-10 animate-pulse rounded-full bg-[#1F2929]"/>
-            <div className="w-[400px] h-10 animate-pulse rounded-full bg-[#1F2929]"/>
-            <div className="w-full h-56 rounded-xl animate-pulse rounded-2xl bg-[#1F2929]"/>
+            <div className="w-[400px] h-10 animate-pulse rounded-full bg-[#1F2929]" />
+            <div className="w-[400px] h-10 animate-pulse rounded-full bg-[#1F2929]" />
+            <div className="w-full h-56 rounded-xl animate-pulse rounded-2xl bg-[#1F2929]" />
           </div>
           <div className="mt-4">
             <div className="flex gap-2">
-              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse"/>
-              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse"/>
-              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse"/>
-              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse"/>
+              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse" />
+              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse" />
+              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse" />
+              <div className="bg-[#1F2929] w-20 h-7 rounded-full animate-pulse" />
             </div>
-            <div className="bg-[#1F2929] w-full h-[147px] rounded-2xl animate-pulse mt-2"/>
-            <div className="bg-[#1F2929] w-full h-[200px] rounded-2xl animate-pulse mt-10"/>
+            <div className="bg-[#1F2929] w-full h-[147px] rounded-2xl animate-pulse mt-2" />
+            <div className="bg-[#1F2929] w-full h-[200px] rounded-2xl animate-pulse mt-10" />
           </div>
         </div>
       )}
@@ -71,7 +77,7 @@ export default function PlaygroundRunner() {
         src="/grpcui/"
         title={`gRPC Playground — ${service ?? "-"}.${method ?? "-"}`}
         className="w-full h-full border-0"
-        onLoad={() => console.log("[host] iframe element loaded")}
+        onLoad={handleLoad}
       />
     </div>
   );
