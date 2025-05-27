@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Space+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-poppins: 'Poppins', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+  --font-space-mono: 'Space Mono', monospace;
+}
+  
+
 *{
     box-sizing: border-box;
 }
@@ -5,6 +14,19 @@
 body{
     width: 100%;
     background-color: rgb(17, 17, 17);
+    font-family: var(--font-poppins) !important;
+}
+
+.ui-widget{
+    font-family: var(--font-poppins) !important;
+}
+
+#grpc-form{
+    font-family: var(--font-poppins) !important;
+}
+
+#grpc-form #grpc-service, #grpc-form #grpc-method{
+    font-family: var(--font-roboto) !important;
 }
 
 .full-width-heading{
@@ -25,7 +47,6 @@ body{
     padding: 24px;
 } 
 
-
 .grpc-desc pre {
     margin: 0px;
     border-left: none !important;
@@ -41,6 +62,19 @@ body{
     text-transform: capitalize;
     margin-right: 35px
 }
+
+.grpc-desc, .grpc-desc tr{
+    width: 100% !important;
+}
+
+.grpc-desc tr td{
+    width: 50%;
+}
+
+#grpc-desc-selects, #grpc-desc-selects tbody, #grpc-desc-selects tbody tr, grpc-desc-selects tbody tr .grpc-form-label {
+    width: 100%;
+}
+
 
 .grpc-desc button#grpc-descriptions-toggle{
     background-color: rgb(17, 17, 17) !important;
@@ -173,7 +207,7 @@ body{
     color: white;
 }
 
-.grpc-invoke {
+.grpc-invoke, .grpc-history-clear, .grpc-history-save{
     background: linear-gradient(to right, #0891B0, #05966B) !important;
     color: white;
     padding: 6px 12px;
