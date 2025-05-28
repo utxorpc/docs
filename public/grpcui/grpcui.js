@@ -2,7 +2,7 @@ document.addEventListener("readystatechange", () => {
   if (document.readyState === "complete") {
     setupHistoryDeleteIcons();
     addPlaceholders();
-    replaceRequestDeleteButtons();
+    replaceButtonContent();
     prepareDescriptionToggle();
   }
 });
@@ -69,7 +69,7 @@ function rebuildForm(service, method) {
 
   setupHistoryDeleteIcons();
   addPlaceholders();
-  replaceRequestDeleteButtons();
+  replaceButtonContent();
   prepareDescriptionToggle();
 }
 
@@ -132,7 +132,7 @@ function setupHistoryDeleteIcons() {
   });
 }
 
-function replaceRequestDeleteButtons() {
+function replaceButtonContent() {
   function replaceButtons() {
     $(".grpc-request-table button").each(function () {
       const buttonText = $(this).text().trim();
@@ -146,7 +146,7 @@ function replaceRequestDeleteButtons() {
 
   replaceButtons();
 
-  const requestTable = document.querySelector("#grpc-request-form");
+  const requestTable = document.querySelector("#grpc-form");
 
   initObserver("requestButtonsObserver", requestTable, (mutationsList) => {
     mutationsList.forEach(mutation => {

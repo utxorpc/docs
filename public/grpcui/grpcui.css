@@ -156,6 +156,7 @@ button, input[type="checkbox"], input[type="radio"]{
     color: #fff;
     font-size: 14px;
     padding: 6px 16px;
+    cursor: pointer;
 }
 
 #grpc-method{
@@ -169,6 +170,7 @@ button, input[type="checkbox"], input[type="radio"]{
     color: #fff;
     font-size: 14px;
     padding: 6px 16px;
+    cursor: pointer;
 }
 
 .grpc-desc button#grpc-descriptions-toggle{
@@ -197,24 +199,14 @@ button, input[type="checkbox"], input[type="radio"]{
     padding-top: 0px;
 }
 
-#grpc-service-description{
-    padding-top: 0px;
-}
-
 #grpc-method-description{
     color: #80D4D9;
     padding: 16px 0px;
 }
 
-
 #grpc-service-description-end{
     padding-bottom: 0px;
     padding: 16px 0px;
-}
-
-
-#grpc-service-description-end{
-    padding-bottom: 0px;
 }
 
 #grpc-request-response {
@@ -276,7 +268,7 @@ button, input[type="checkbox"], input[type="radio"]{
 }
 
 .grpc-invoke::after {
-    content: ' ➜'; /* space before arrow */
+    content: ' ➜';
     background: #00696D;
     -webkit-background-clip: text;
     -webkit-text-fill-color: white;
@@ -308,6 +300,7 @@ button, input[type="checkbox"], input[type="radio"]{
     border: transparent !important;
     width: 34px;
     height: 30px;
+    padding-left: 0px;
 }
 
 #grpc-container button{
@@ -419,6 +412,14 @@ button, input[type="checkbox"], input[type="radio"]{
     font-family: var(--font-space-mono) !important;
 }
 
+#grpc-request-form #root .input_container{
+    padding: 4px;
+}
+
+#grpc-request-form .grpc-request-table td.array_button + td{
+    padding-left: 0px;
+}
+
 #grpc-response-headers{
     color: #fff !important;
 }
@@ -466,6 +467,14 @@ button, input[type="checkbox"], input[type="radio"]{
     width: 95%;
 }
 
+#grpc-request-form div.two-of-3 {
+    border: none;
+}
+
+#grpc-request-form div.three-of-3 {
+    border: none
+}
+
 #grpc-request-form th {
     color: #80D4D9;
 }
@@ -481,13 +490,13 @@ button, input[type="checkbox"], input[type="radio"]{
 }
 
 .message_field .name strong{
-    font-size: 20px !important;
+    font-size: 16px !important;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
 
 .message_field .name em{
-    font-size: 16px !important;
+    font-size: 14px !important;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
@@ -496,8 +505,8 @@ button, input[type="checkbox"], input[type="radio"]{
     color: #FFF;
 }
 
-#grpc-request-form td .name {
-    font-size: 16px !important;
+#grpc-request-form td.name {
+    font-size: 14px !important;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
@@ -612,6 +621,7 @@ textarea{
 
 input[type="text"]{
     width: 163.5px;
+    border: 1px solid #434B58;
 }
 
 textarea, input[type="text"]{
@@ -624,6 +634,7 @@ textarea, input[type="text"]{
     border: 1px solid #434B58;
     text-align: left;
     padding: 4px 0px 4px 16px;
+    font-size: 14px !important;
 }
 
 #grpc-request-response li.ui-tabs-tab:first-child {
@@ -632,6 +643,10 @@ textarea, input[type="text"]{
 
 #grpc-request-response li.ui-tabs-tab:last-child {
     border-top-right-radius: 8px;
+}
+
+#grpc-response-trailers {
+    color: #fff !important;
 }
 
 .input_container table tr.message_field {
