@@ -365,6 +365,11 @@ input[type="radio"] {
     color: #4AB249 !important;
 }
 
+#grpc-history-list .ui-accordion .history-item-header:nth-child(4n-1) {
+    background-color: #1a1a1a;
+
+}
+
 .history-detail-heading table {
     color: #4AB249 !important;
 }
