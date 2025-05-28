@@ -1,8 +1,8 @@
 document.addEventListener("readystatechange", () => {
   if (document.readyState === "complete") {
     setupHistoryDeleteIcons();
-    prepareTimeoutInput();
-    replaceRequestButtons();
+    addPlaceholders();
+    replaceRequestDeleteButtons();
     prepareDescriptionToggle();
   }
 });
@@ -68,13 +68,51 @@ function rebuildForm(service, method) {
   mtdSel.dispatchEvent(new Event("change", { bubbles: true }));
 
   setupHistoryDeleteIcons();
-  prepareTimeoutInput();
-  replaceRequestButtons();
+  addPlaceholders();
+  replaceRequestDeleteButtons();
   prepareDescriptionToggle();
 }
 
-function setupHistoryDeleteIcons() {
+const observers = {};
 
+function initObserver(name, targetNode, callback, config) {
+  if (observers[name]) observers[name].disconnect();
+
+  if (targetNode) {
+    observers[name] = new MutationObserver(callback);
+    observers[name].observe(targetNode, config);
+  } else {
+    console.warn(`Observer "${name}" target node not found.`);
+  }
+}
+
+function addPlaceholders() {
+  const $timeoutDiv = $("#grpc-request-timeout");
+  const $metadataTable = $("#grpc-request-metadata-form");
+
+  $timeoutDiv.contents().filter(function () {
+    return this.nodeType === Node.TEXT_NODE && this.nodeValue.trim() === 'seconds';
+  }).wrap('<span class="seconds-text"></span>');
+
+  $timeoutDiv.find("input").attr("placeholder", "Input");
+  $metadataTable.find("input.name").attr("placeholder", "Enter Name");
+  $metadataTable.find("input.value").attr("placeholder", "Enter Value");
+
+  const observeMetadataTable = document.querySelector("#grpc-request-metadata-form tbody");
+
+  initObserver("placeholdersObserver", observeMetadataTable, (mutationsList) => {
+    mutationsList.forEach((mutation) => {
+      if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+        $(mutation.addedNodes).find("input.name").attr("placeholder", "Enter Name");
+        $(mutation.addedNodes).find("input.value").attr("placeholder", "Enter Value");
+      }
+    });
+  }, { childList: true });
+  console.log('Observing node:', observeMetadataTable);
+
+}
+
+function setupHistoryDeleteIcons() {
   function replaceDeleteButtons() {
     $(".grpc-history-list button").each(function () {
       const buttonText = $(this).text().trim();
@@ -86,29 +124,15 @@ function setupHistoryDeleteIcons() {
 
   replaceDeleteButtons();
 
-  const observer = new MutationObserver(() => {
-    replaceDeleteButtons();
+  const historyList = document.querySelector(".grpc-history-list");
+
+  initObserver("historyDeleteObserver", historyList, replaceDeleteButtons, {
+    childList: true,
+    subtree: true
   });
+}
 
-  const targetNode = document.querySelector(".grpc-history-list");
-  if (targetNode) {
-    observer.observe(targetNode, { childList: true, subtree: true });
-  }
-};
-
-
-function prepareTimeoutInput() {
-  const $timeoutDiv = $("#grpc-request-timeout");
-
-  $timeoutDiv.contents().filter(function () {
-    return this.nodeType === Node.TEXT_NODE && this.nodeValue.trim() === 'seconds';
-  }).wrap('<span class="seconds-text"></span>');
-
-  $timeoutDiv.find("input").attr("placeholder", "Input");
-};
-
-
-function replaceRequestButtons() {
+function replaceRequestDeleteButtons() {
   function replaceButtons() {
     $(".grpc-request-table button").each(function () {
       const buttonText = $(this).text().trim();
@@ -122,19 +146,16 @@ function replaceRequestButtons() {
 
   replaceButtons();
 
-  const observer = new MutationObserver((mutationsList, observer) => {
-    for (const mutation of mutationsList) {
-      if (mutation.addedNodes.length) {
+  const requestTable = document.querySelector("#grpc-request-form");
+
+  initObserver("requestButtonsObserver", requestTable, (mutationsList) => {
+    mutationsList.forEach(mutation => {
+      if (mutation.addedNodes.length > 0) {
         replaceButtons();
       }
-    }
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-};
+    });
+  }, { childList: true, subtree: true });
+}
 
 function prepareDescriptionToggle() {
   const $toggleButton = $("#grpc-descriptions-toggle");

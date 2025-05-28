@@ -1,62 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Space+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-    --font-poppins: 'Poppins', sans-serif;
-    --font-roboto: 'Roboto', sans-serif;
-    --font-space-mono: 'Space Mono', monospace;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+  --font-space-mono: 'Space Mono', monospace;
 }
+  
 
-
-* {
+*{
     box-sizing: border-box;
 }
 
-body {
+body{
     width: 100%;
     background-color: rgb(17, 17, 17);
     font-family: var(--font-poppins) !important;
 }
 
-button,
-input[type="checkbox"],
-input[type="radio"] {
+button, input[type="checkbox"], input[type="radio"]{
     cursor: pointer;
 }
 
-.ui-widget {
+.ui-widget{
     font-family: var(--font-poppins) !important;
 }
 
-#grpc-form {
+#grpc-form{
     font-family: var(--font-poppins) !important;
 }
 
-#grpc-form #grpc-service,
-#grpc-form #grpc-method {
+#grpc-form #grpc-service, #grpc-form #grpc-method{
     font-family: var(--font-roboto) !important;
 }
 
-.full-width-heading {
+.full-width-heading{
     display: none;
     background-color: rgba(31, 41, 55);
 }
 
-#grpc-form {
+#grpc-form{
     background-color: rgb(17, 17, 17);
     padding: 24px 0px !important;
     padding: 24px 0px !important;
 }
 
-#grpc-descriptions {
+#grpc-descriptions{
     overflow: hidden;
     width: 100%;
     margin-top: 20px;
     background-color: #1f2929 !important;
     border-radius: 16px;
     padding: 24px;
-}
+} 
 
-#grpc-descriptions pre {
+#grpc-descriptions pre{
     white-space: pre-wrap !important;
     word-break: break-word !important;
 }
@@ -83,16 +80,7 @@ input[type="radio"] {
     letter-spacing: -0.6%;
 }
 
-#grpc-descriptions {
-    overflow: hidden;
-    width: 100%;
-    margin-top: 20px;
-    background-color: #1f2929 !important;
-    border-radius: 16px;
-    padding: 24px;
-}
-
-#grpc-descriptions pre {
+#grpc-descriptions pre{
     white-space: pre-wrap !important;
     word-break: break-word !important;
 }
@@ -119,7 +107,7 @@ input[type="radio"] {
     letter-spacing: -0.6%;
 }
 
-.grpc-form-label {
+.grpc-form-label{
     color: #fff;
     font-size: 16px;
     text-transform: capitalize;
@@ -128,21 +116,19 @@ input[type="radio"] {
     text-align: left !important;
 }
 
-.grpc-desc {
+.grpc-desc{
     width: 95% !important;
 }
 
-.grpc-desc tr td {
+.grpc-desc tr td{
     width: 40%;
 }
 
-#grpc-desc-selects,
-#grpc-desc-selects tbody,
-#grpc-desc-selects tbody tr {
+#grpc-desc-selects, #grpc-desc-selects tbody, #grpc-desc-selects tbody tr{
     width: 100%;
 }
 
-#grpc-desc-selects tbody tr td:first-of-type {
+#grpc-desc-selects tbody tr td:first-of-type{
     width: 165px !important;
 }
 
@@ -151,7 +137,7 @@ input[type="radio"] {
 }
 
 
-.grpc-desc button#grpc-descriptions-toggle {
+.grpc-desc button#grpc-descriptions-toggle{
     background-color: rgb(17, 17, 17) !important;
     position: absolute;
     top: 75px !important;
@@ -159,7 +145,7 @@ input[type="radio"] {
     height: 15px !important;
 }
 
-#grpc-service {
+#grpc-service{
     height: 32px;
     background-color: transparent;
     border-top: 1px 'solid' #fff !important;
@@ -172,7 +158,7 @@ input[type="radio"] {
     padding: 6px 16px;
 }
 
-#grpc-method {
+#grpc-method{
     height: 32px;
     background-color: transparent;
     border-top: 1px 'solid' #fff !important;
@@ -185,7 +171,7 @@ input[type="radio"] {
     padding: 6px 16px;
 }
 
-.grpc-desc button#grpc-descriptions-toggle {
+.grpc-desc button#grpc-descriptions-toggle{
     background-color: rgb(17, 17, 17);
     background-color: rgb(17, 17, 17);
     margin-top: 7px;
@@ -194,13 +180,12 @@ input[type="radio"] {
     width: 25px;
 }
 
-.grpc-desc tbody tr {
+.grpc-desc tbody tr{
     display: flex !important;
     flex-wrap: wrap !important;
 }
 
-#grpc-service-description,
-#grpc-service-description-end {
+#grpc-service-description, #grpc-service-description-end{
     color: #fff;
     font-weight: semibold;
     font-size: 14px;
@@ -208,27 +193,27 @@ input[type="radio"] {
     letter-spacing: -0.6%;
 }
 
-#grpc-service-description {
+#grpc-service-description{
     padding-top: 0px;
 }
 
-#grpc-service-description {
+#grpc-service-description{
     padding-top: 0px;
 }
 
-#grpc-method-description {
+#grpc-method-description{
     color: #80D4D9;
     padding: 16px 0px;
 }
 
 
-#grpc-service-description-end {
+#grpc-service-description-end{
     padding-bottom: 0px;
     padding: 16px 0px;
 }
 
 
-#grpc-service-description-end {
+#grpc-service-description-end{
     padding-bottom: 0px;
 }
 
@@ -237,12 +222,12 @@ input[type="radio"] {
     border: none !important;
 }
 
-#grpc-request-response ul.ui-tabs-nav {
+#grpc-request-response ul.ui-tabs-nav{
     background-color: rgb(17, 17, 17) !important;
     border-bottom: 1px solid #24222D !important;
 }
 
-#grpc-request-response li.ui-state-default {
+#grpc-request-response li.ui-state-default{
     background-color: transparent !important;
     color: #49454F !important;
     border: transparent !important;
@@ -255,15 +240,15 @@ input[type="radio"] {
     z-index: 1 !important;
 }
 
-#grpc-request-tab-button {
+#grpc-request-tab-button{
     border-top-left-radius: 8px !important;
 }
 
-#grpc-history-tab-button {
+#grpc-history-tab-button{
     border-top-right-radius: 8px !important;
 }
 
-#grpc-request-response li.ui-tabs-active {
+#grpc-request-response li.ui-tabs-active{
     background-color: transparent !important;
     background-color: transparent !important;
     border: none !important;
@@ -280,18 +265,18 @@ input[type="radio"] {
     padding: 16px !important;
     border-radius: 4px;
     border-color: transparent;
+    font-size: 14px !important;
     font-family: var(--font-space-mono) !important;
     width: 95% !important;
     margin-left: 1px;
 }
 
-#grpc-request-raw-tab textarea {
+#grpc-request-raw-tab textarea{
     color: #4AB249;
 }
 
 .grpc-invoke::after {
-    content: ' ➜';
-    /* space before arrow */
+    content: ' ➜'; /* space before arrow */
     background: #00696D;
     -webkit-background-clip: text;
     -webkit-text-fill-color: white;
@@ -299,9 +284,7 @@ input[type="radio"] {
     color: white;
 }
 
-.grpc-invoke,
-.grpc-history-clear,
-.grpc-history-save {
+.grpc-invoke, .grpc-history-clear, .grpc-history-save{
     background: #00696D !important;
     color: white;
     padding: 6px 12px;
@@ -327,7 +310,7 @@ input[type="radio"] {
     height: 30px;
 }
 
-#grpc-container button {
+#grpc-container button{
     border-radius: 6px !important;
 }
 
@@ -360,16 +343,15 @@ input[type="radio"] {
     font-family: var(--font-space-mono);
 }
 
-#grpc-history-list .history-item-panel .history-detail-metadata th,
-#grpc-history-list .history-item-panel .history-detail-metadata td {
+#grpc-history-list .history-item-panel .history-detail-metadata th, #grpc-history-list .history-item-panel .history-detail-metadata td {
     color: #4AB249 !important;
 }
 
-.history-detail-heading table {
+.history-detail-heading table{
     color: #4AB249 !important;
 }
 
-#grpc-history-list>.ui-accordion:first-child {
+#grpc-history-list > .ui-accordion:first-child {
     border: 1px solid #3F4949;
     border-radius: 6px;
 }
@@ -385,7 +367,7 @@ input[type="radio"] {
     font-family: var(--font-roboto);
 }
 
-.history-item-messages {
+.history-item-messages{
     padding: 0px !important;
 }
 
@@ -397,7 +379,7 @@ input[type="radio"] {
     color: #FFB4AB;
 }
 
-#grpc-request-response .grpc-tabcontent.ui-tabs-panel h3 {
+#grpc-request-response .grpc-tabcontent.ui-tabs-panel h3   {
     color: #FFF !important;
     font-size: 20px !important;
     line-height: 22px;
@@ -406,7 +388,7 @@ input[type="radio"] {
     margin-bottom: 24px;
 }
 
-.grpc-tabcontent hr {
+.grpc-tabcontent hr{
     border: 1px solid #24222D;
     margin: 24px 0px;
 }
@@ -415,15 +397,16 @@ input[type="radio"] {
     margin-right: 0px !important;
 }
 
-#grpc-request-response .grpc-tabcontent.ui-tabs-panel {
+#grpc-request-response .grpc-tabcontent.ui-tabs-panel{
     background-color: transparent !important;
 }
 
-#grpc-request-form div#root {
+#grpc-request-form div#root{
     margin-left: 0px !important;
 }
 
-#grpc-request-form #root table {
+#grpc-request-form #root table{
+    width: 100%;
     color: #fff !important;
     font-size: 16px !important;
     line-height: 22px !important;
@@ -431,11 +414,11 @@ input[type="radio"] {
     font-family: var(--font-space-mono) !important;
 }
 
-#grpc-response-headers {
+#grpc-response-headers{
     color: #fff !important;
 }
 
-#grpc-response-tab #grpc-response-headers td {
+#grpc-response-tab #grpc-response-headers td{
     border: 1px solid #24222D;
 }
 
@@ -444,8 +427,7 @@ input[type="radio"] {
     border-radius: 4px !important;
 }
 
-#grpc-response-tab #grpc-response-trailers .none,
-#grpc-response-headers .none {
+#grpc-response-tab #grpc-response-trailers .none, #grpc-response-headers .none {
     border: transparent !important;
     color: #fff !important;
 }
@@ -460,12 +442,12 @@ input[type="radio"] {
     width: 95% !important;
 }
 
-.grpc-tabcontent {
+.grpc-tabcontent{
     background-color: #0E1415 !important;
     border: #0E1415 !important;
 }
 
-.grpc-tabcontent h3 {
+.grpc-tabcontent h3{
     color: #FFF !important;
     font-size: 20px;
     line-height: 22px;
@@ -483,25 +465,29 @@ input[type="radio"] {
     color: #80D4D9;
 }
 
-.message_field .name {
+#grpc-request-form textarea {
+    width: 100% !important;
+}
+
+.message_field .name{
     text-align: left !important;
     color: #FFF;
     font-family: var(--font-space-mono) !important;
 }
 
-.message_field .name strong {
+.message_field .name strong{
     font-size: 20px !important;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
 
-.message_field .name em {
+.message_field .name em{
     font-size: 16px !important;
     line-height: 22px;
     letter-spacing: -0.7%;
 }
 
-.add-row-label {
+.add-row-label{
     color: #FFF;
 }
 
@@ -511,12 +497,12 @@ input[type="radio"] {
     letter-spacing: -0.7%;
 }
 
-#grpc-request-form td input[type=checkbox] {
+#grpc-request-form td input[type=checkbox] { 
     background-color: #161D1D !important;
     border: 1px solid #49454F !important;
 }
 
-#grpc-request-form #root table tr th {
+#grpc-request-form #root table tr th{
     font-family: var(--font-poppins) !important;
 }
 
@@ -531,9 +517,7 @@ input[type="radio"] {
     margin: 0px !important;
 }
 
-#grpc-request-metadata .grpc-request-table .metadataRow td,
-#grpc-request-metadata .grpc-request-table .metadataRow th,
-#grpc-request-metadata .grpc-request-table tbody tr th {
+#grpc-request-metadata .grpc-request-table .metadataRow td, #grpc-request-metadata .grpc-request-table .metadataRow th, #grpc-request-metadata .grpc-request-table tbody tr th{
     height: 48px;
     color: #FEF7FF;
     font-size: 16px;
@@ -547,8 +531,7 @@ input[type="radio"] {
     padding: 0px !important;
 }
 
-#grpc-request-metadata .grpc-request-table tbody td .name,
-#grpc-request-metadata .grpc-request-table tbody td .value {
+#grpc-request-metadata .grpc-request-table tbody td .name, #grpc-request-metadata .grpc-request-table tbody td .value{
     background-color: transparent;
     border: none;
     width: 100%;
@@ -558,46 +541,43 @@ input[type="radio"] {
     font-family: var(--font-space-mono);
 }
 
-#grpc-request-metadata .grpc-request-table tbody .add-row-label {
+#grpc-request-metadata .grpc-request-table tbody .add-row-label{
     color: #fff;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.1%;
 }
 
-#grpc-request-metadata .grpc-request-table tbody tr td:first-child {
-    padding: 10px !important;
+#grpc-request-metadata .grpc-request-table tbody tr td:first-child{
+    padding: 10px !important; 
     width: 40px !important;
 }
 
-#grpc-curl-text {
+#grpc-curl-text{
     color: #4AB249 !important;
     font-family: var(--font-space-mono);
 }
 
-#grpc-request-timeout {
-    color: #fff;
+#grpc-request-timeout{
+    color: #fff ;
     position: relative;
 }
 
-#grpc-request-timeout input {
-    height: 56px;
-    width: 169px;
+#grpc-request-timeout input{
     background-color: #111111;
     color: #FFF;
-    font-size: large;
     margin-right: 12px;
     border-radius: 4px;
-    border: 1pxsolid #434B58;
+    border: 1px solid #434B58;
     text-align: left;
-    padding: 4px 0px 4px 16px;
+    padding: 6px 0px 4px 16px;
     margin-left: 1px;
 }
 
-.seconds-text {
+.seconds-text{
     color: #fff;
     font-size: 12px;
-    line-height: 16px;
+    line-height:16px;
     letter-spacing: 0.4%;
     text-transform: capitalize;
     background-color: #111111;
@@ -607,29 +587,36 @@ input[type="radio"] {
     top: -8px;
     left: 16px
 }
-
+    
 
 .grpc-file-button {
     background-color: #80D4D9 !important;
     color: #002021 !important;
     border: none !important;
-    border-radius: 4px;
-    padding: 6px 12px;
-    font-size: 14px;
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
     line-height: 20px;
     letter-spacing: 0.1%;
+    width: fit-content !important;
 }
 
-textarea,
-input[type="text"] {
-    height: 56px;
-    width: 169px !important;
+textarea{
+    width: 95% !important;
+}
+
+input[type="text"]{
+    width: 163.5px;
+}
+
+textarea, input[type="text"]{
     background-color: #161F1F;
     color: #FFF;
     font-size: large !important;
+    font-family: var(--font-space-mono) !important;
     margin-right: 12px;
     border-radius: 4px;
-    border: 1pxsolid #434B58;
+    border: 1px solid #434B58;
     text-align: left;
     padding: 4px 0px 4px 16px;
 }
@@ -646,6 +633,15 @@ input[type="text"] {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    width: 100% !important;
+}
+
+#root .input_container .grpc-request-table {
+    width: 100% !important;
+}
+
+.input_container table tr.message_field td:last-child {
+    flex: 1;
 }
 
 #grpc-request-form td.toggle_presence {
