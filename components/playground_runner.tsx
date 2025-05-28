@@ -49,8 +49,13 @@ export default function PlaygroundRunner() {
       window.location.origin
     );
     // Remove the loading UI
-    setLoaded(true);
   }, [grpcUiIsReady, service, method]);
+
+  useEffect(() => {
+    if (grpcUiIsReady) {
+      setLoaded(true);
+    }
+  }, [grpcUiIsReady]);
 
   return (
     <div className="relative h-[160vh] rounded-lg overflow-hidden">

@@ -11,10 +11,11 @@ const withNextra = nextra({
 export default withNextra({
   trailingSlash: true,
   async rewrites() {
+    const grpcuiUrl = process.env.GRPCUI_URL || 'http://127.0.0.1:8081';
     return [
       {
         source: '/grpcui/:path*',
-        destination: 'http://127.0.0.1:8081/:path*'
+        destination: `${grpcuiUrl}/:path*`
       },
     ]
   }
