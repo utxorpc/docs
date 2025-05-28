@@ -58,14 +58,14 @@ function rebuildForm(service, method) {
   if (!svcSel || !mtdSel) return;
 
   svcSel.value = service;
+  svcSel.dispatchEvent(new Event("change", { bubbles:true })); 
 
   mtdSel.innerHTML = "";
   for (const m of methodList) mtdSel.append(new Option(m, m));
   mtdSel.value = method;
+  mtdSel.dispatchEvent(new Event("change", { bubbles: true }));
 
   $("#grpc-request-metadata-form tr").not(":first,:last").remove();
-
-  mtdSel.dispatchEvent(new Event("change", { bubbles: true }));
 
   setupHistoryDeleteIcons();
   prepareTimeoutInput();
