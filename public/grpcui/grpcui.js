@@ -1,19 +1,17 @@
 document.addEventListener("readystatechange", () => {
   if (document.readyState === "complete") {
-    broadcastReady();
     setupHistoryDeleteIcons();
     prepareTimeoutInput();
     replaceRequestButtons();
     prepareDescriptionToggle();
   }
-})
+});
 
 let targetService = null;
 let targetMethod = null;
 
 window.addEventListener("message", (e) => {
-  if (e.origin !== window.location.origin) return;
-  if (e.data?.type === "are-you-ready") broadcastReady();
+  if (e.data?.type === "grpc-is-ready") broadcastReady();
   if (e.data?.type === "grpc-select") rebuildForm(e.data.service, e.data.method);
 });
 

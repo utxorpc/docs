@@ -2,38 +2,44 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import React from "react";
 
+type GrpcUiMessageData = {
+  type: "grpcui-ready" | "grpc-is-ready";
+};
+
 export default function PlaygroundRunner() {
-  const { query, isReady } = useRouter();
-  const [grpcuiIsReady, setGrpcuiIsReady] = useState(false);
+  const { query } = useRouter();
+  const [grpcUiIsReady, setGrpcUiIsReady] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const readyRef = useRef(false);
 
   const service = query.service as string | undefined;
   const method = query.method as string | undefined;
 
+  // On Component Initialize
   useEffect(() => {
-    function onMessage(e: MessageEvent) {
-      if (e.origin !== window.location.origin) return;
-      if (e.data?.type === "grpcui-ready") {
-        readyRef.current = true;
-        setGrpcuiIsReady(true);
+    function onMessage(e: MessageEvent<GrpcUiMessageData>) {
+      if (e.data.type === "grpcui-ready") {
+        setGrpcUiIsReady(true);
+        clearInterval(intervalId);
       }
     }
     window.addEventListener("message", onMessage);
+
+    // Send a message to the iframe to check if it's ready
+    const intervalId = setInterval(() => {
+      if (grpcUiIsReady) return;
+      iframeRef.current?.contentWindow?.postMessage(
+        { type: "grpc-is-ready" } as GrpcUiMessageData,
+        window.location.origin
+      );
+    }, 100);
+
+    // Cleanup
     return () => window.removeEventListener("message", onMessage);
   }, []);
 
-  const handleLoad = () => {
-    if (readyRef.current) return;
-    iframeRef.current?.contentWindow?.postMessage(
-      { type: "are-you-ready" },
-      window.location.origin
-    );
-  };
-
   useEffect(() => {
-    if (!isReady || !grpcuiIsReady || !service || !method) return;
+    if (!grpcUiIsReady || service == undefined || method == undefined) return;
 
     const iframeContentWindow = iframeRef.current?.contentWindow;
     if (!iframeContentWindow) return;
@@ -42,13 +48,9 @@ export default function PlaygroundRunner() {
       { type: "grpc-select", service, method },
       window.location.origin
     );
-  }, [isReady, grpcuiIsReady, service, method]);
-
-  useEffect(() => {
-    if (isReady && grpcuiIsReady) setLoaded(true);
-  }, [isReady, grpcuiIsReady]);
-
-  if (!isReady) return null;
+    // Remove the loading UI
+    setLoaded(true);
+  }, [grpcUiIsReady, service, method]);
 
   return (
     <div className="relative h-[160vh] rounded-lg overflow-hidden">
@@ -77,7 +79,6 @@ export default function PlaygroundRunner() {
         src="/grpcui/"
         title={`gRPC Playground — ${service ?? "-"}.${method ?? "-"}`}
         className="w-full h-full border-0"
-        onLoad={handleLoad}
       />
     </div>
   );
