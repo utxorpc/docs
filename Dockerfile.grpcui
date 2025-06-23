@@ -1,0 +1,41 @@
+# Build grpcui from source
+FROM golang:1.24-alpine AS grpcui-build
+
+RUN apk add --no-cache git make
+
+RUN go install github.com/fullstorydev/grpcui/cmd/grpcui@aa3edefac370a32da4524893ffdca9c591ba0aeb
+
+# Final runtime image
+FROM alpine:3.21
+
+RUN apk add --no-cache ca-certificates
+
+COPY --from=grpcui-build /go/bin/grpcui /usr/local/bin/grpcui
+COPY ./public/grpcui /app/static/
+
+WORKDIR /app
+
+ENV GRPC_TARGET=localhost:50051
+ENV GRPC_PORT=8081
+ENV USE_PLAINTEXT=false
+ENV API_KEY=""
+ENV API_KEY_HEADER="dmtr-api-key"
+ENV STATIC_DIR=/app/static
+ENV CSS_FILE=/app/static/grpcui.css
+ENV JS_FILE=/app/static/grpcui.js
+
+EXPOSE 8081
+
+CMD if [ "$USE_PLAINTEXT" = "true" ]; then \
+      if [ -n "$API_KEY" ]; then \
+        grpcui -plaintext -bind 0.0.0.0 -port $GRPC_PORT -also-serve $STATIC_DIR -extra-css $CSS_FILE -extra-js $JS_FILE -rpc-header "$API_KEY_HEADER:$API_KEY" $GRPC_TARGET; \
+      else \
+        grpcui -plaintext -bind 0.0.0.0 -port $GRPC_PORT -also-serve $STATIC_DIR -extra-css $CSS_FILE -extra-js $JS_FILE $GRPC_TARGET; \
+      fi; \
+    else \
+      if [ -n "$API_KEY" ]; then \
+        grpcui -bind 0.0.0.0 -port $GRPC_PORT -also-serve $STATIC_DIR -extra-css $CSS_FILE -extra-js $JS_FILE -rpc-header "$API_KEY_HEADER:$API_KEY" $GRPC_TARGET; \
+      else \
+        grpcui -bind 0.0.0.0 -port $GRPC_PORT -also-serve $STATIC_DIR -extra-css $CSS_FILE -extra-js $JS_FILE $GRPC_TARGET; \
+      fi; \
+    fi

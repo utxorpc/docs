@@ -1,5 +1,6 @@
 import { Callout } from "nextra-theme-docs";
 import { Tabs, Tab } from 'nextra-theme-docs'
+import { Button } from "../../components/button";
 
 # Submit Module
 
@@ -40,7 +41,15 @@ sequenceDiagram
     
     For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
 </Callout>
-### SubmitTx
+
+<div className="flex items-center justify-between">
+  ### SubmitTx
+  <Button
+    service="utxorpc.v1alpha.submit.SubmitService" 
+    method="SubmitTx"
+  />
+</div>
+
 Submit transactions to the blockchain. Fire-and-forget operation that returns immediately after transaction acknowledgment.
 
 <Tabs items={['grpcurl']}>
@@ -58,7 +67,15 @@ Submit transactions to the blockchain. Fire-and-forget operation that returns im
   </Tab>
 </Tabs>
 
-### WatchMempool
+
+<div className="flex items-center justify-between">
+  ### WatchMempool
+  <Button
+    service="utxorpc.v1alpha.submit.SubmitService" 
+    method="WatchMempool"
+  />
+</div>
+
 Streams real-time updates about transactions in the mempool that match specified patterns. Useful for monitoring pending transactions matching certain criteria.
 
 #### By Address
@@ -181,7 +198,14 @@ Watch mempool for UTxOs containing a specific token, identified by both policy I
   </Tab>
 </Tabs>
 
-### WaitForTx
+<div className="flex items-center justify-between">
+  ### WaitForTx
+  <Button
+    service="utxorpc.v1alpha.submit.SubmitService" 
+    method="WaitForTx"
+  />
+</div>
+
 Wait for transactions to reach specific stages and receive asynchronous updates.
 
 <Tabs items={['grpcurl']}>
@@ -197,7 +221,14 @@ Wait for transactions to reach specific stages and receive asynchronous updates.
   </Tab>
 </Tabs>
 
-### EvalTx
+<div className="flex items-center justify-between">
+  ### EvalTx
+  <Button
+    service="utxorpc.v1alpha.submit.SubmitService" 
+    method="EvalTx"
+  />
+</div>
+
 Evaluate transactions before submission to verify their validity and estimate execution costs.
 <Callout type="warning">
   This operation is still unstable and is still undergoing further testing.
@@ -221,7 +252,14 @@ Evaluate transactions before submission to verify their validity and estimate ex
   </Tab>
 </Tabs>
 
-### ReadMempool
+<div className="flex items-center justify-between">
+  ### ReadMempool
+  <Button
+    service="utxorpc.v1alpha.submit.SubmitService" 
+    method="ReadMempool"
+  />
+</div>
+
 Query the current state of the mempool to check status of pending transactions.
 
 <Callout type="warning">

@@ -1,5 +1,8 @@
 FROM node:19-alpine AS build
 
+ARG GRPCUI_URL=http://127.0.0.1:8081
+ENV GRPCUI_URL=$GRPCUI_URL
+
 WORKDIR /code
 
 COPY ./package.json ./package.json

@@ -1,5 +1,6 @@
 import { Callout } from "nextra-theme-docs";
 import { Tabs, Tab } from 'nextra-theme-docs'
+import { Button } from "../../components/button";
 
 # Watch Module
 
@@ -60,7 +61,15 @@ sequenceDiagram
     
     For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
 </Callout>
-### WatchTx
+
+<div className="flex items-center justify-between">
+  ### WatchTx
+  <Button
+    service="utxorpc.v1alpha.watch.WatchService" 
+    method="WatchTx"
+  />
+</div>
+
 Watch transactions based on different patterns.
 
 #### By Address

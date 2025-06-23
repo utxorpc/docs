@@ -1,0 +1,26 @@
+services:
+  nextra:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - GRPCUI_URL=http://grpcui:8081
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+    container_name: utxorpc-docs
+
+  grpcui:
+    build:
+      context: .
+      dockerfile: Dockerfile.grpcui
+    ports:
+      - "8081:8081"
+    environment:
+      - USE_PLAINTEXT=false
+      - GRPC_TARGET=mainnet.utxorpc-v0.demeter.run:443
+      - GRPC_PORT=8081
+      - API_KEY=utxorpc13rfqzhrntg93wh7uwg8
+      - API_KEY_HEADER=dmtr-api-key
+    container_name: utxorpc-grpcui
