@@ -9,7 +9,7 @@ Represents a transaction from any supported blockchain.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| cardano | [utxorpc.v1alpha.cardano.Tx](#utxorpc-v1alpha-cardano-Tx) |  | A Cardano transaction. |
+| cardano | [utxorpc.v1alpha.cardano.Tx](/cardano#utxorpc-v1alpha-cardano-Tx) |  | A Cardano transaction. |
 
 
 
@@ -24,7 +24,7 @@ Represents a tx pattern from any supported blockchain.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| cardano | [utxorpc.v1alpha.cardano.TxPattern](#utxorpc-v1alpha-cardano-TxPattern) |  | A Cardano tx pattern. |
+| cardano | [utxorpc.v1alpha.cardano.TxPattern](/cardano#utxorpc-v1alpha-cardano-TxPattern) |  | A Cardano tx pattern. |
 
 
 
@@ -74,7 +74,7 @@ Request to watch transactions from the chain based on a set of predicates.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | predicate | [TxPredicate](#utxorpc-v1alpha-watch-TxPredicate) |  | Predicate to filter transactions by. |
-| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields. |
+| field_mask | [google.protobuf.FieldMask](https://protobuf.dev/reference/protobuf/google.protobuf/#fieldmask) |  | Field mask to selectively return fields. |
 | intersect | [BlockRef](#utxorpc-v1alpha-watch-BlockRef) | repeated | List of block references to find the intersection. |
 
 

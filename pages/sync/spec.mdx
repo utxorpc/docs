@@ -10,7 +10,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | native_bytes | [bytes](#bytes) |  | Original bytes as defined by the chain |
-| cardano | [utxorpc.v1alpha.cardano.Block](#utxorpc-v1alpha-cardano-Block) |  | A parsed Cardano block. |
+| cardano | [utxorpc.v1alpha.cardano.Block](/cardano#utxorpc-v1alpha-cardano-Block) |  | A parsed Cardano block. |
 
 
 
@@ -43,7 +43,7 @@ Request to dump the block history.
 | ----- | ---- | ----- | ----------- |
 | start_token | [BlockRef](#utxorpc-v1alpha-sync-BlockRef) |  | Starting point for the block history dump. |
 | max_items | [uint32](#uint32) |  | Maximum number of items to return. |
-| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields. |
+| field_mask | [google.protobuf.FieldMask](https://protobuf.dev/reference/protobuf/google.protobuf/#fieldmask) |  | Field mask to selectively return fields. |
 
 
 
@@ -75,7 +75,7 @@ Request to fetch a block by its reference.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | ref | [BlockRef](#utxorpc-v1alpha-sync-BlockRef) | repeated | List of block references. |
-| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields. |
+| field_mask | [google.protobuf.FieldMask](https://protobuf.dev/reference/protobuf/google.protobuf/#fieldmask) |  | Field mask to selectively return fields. |
 
 
 
@@ -106,7 +106,7 @@ Request to follow the tip of the blockchain.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | intersect | [BlockRef](#utxorpc-v1alpha-sync-BlockRef) | repeated | List of block references to find the intersection. |
-| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields. |
+| field_mask | [google.protobuf.FieldMask](https://protobuf.dev/reference/protobuf/google.protobuf/#fieldmask) |  | Field mask to selectively return fields. |
 
 
 

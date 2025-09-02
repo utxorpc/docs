@@ -1,5 +1,205 @@
 # Cardano Module
 
+<a name="utxorpc-v1alpha-cardano-TxEval"></a>
+
+## TxEval
+
+Represents a transaction evaluation report in the Cardano blockchain.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| fee | [uint64](#uint64) |  | Transaction fee in ADA. |
+| ex_units | [ExUnits](#utxorpc-v1alpha-cardano-ExUnits) |  | Execution units (steps and memory) consumed. |
+| errors | [EvalError](#utxorpc-v1alpha-cardano-EvalError) | repeated | List of evaluation errors. |
+| traces | [EvalTrace](#utxorpc-v1alpha-cardano-EvalTrace) | repeated | List of evaluation traces. |
+| redeemers | [Redeemer](#utxorpc-cardano-v1-Redeemer) | repeated | List of redeemers used in evaluation. |
+
+<a name="utxorpc-v1alpha-cardano-ExUnits"></a>
+
+## ExUnits
+
+Represents execution units for Plutus script evaluation.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| steps | [uint64](#uint64) |  | Number of execution steps. |
+| memory | [uint64](#uint64) |  | Amount of memory used. |
+
+<a name="utxorpc-v1alpha-cardano-EvalError"></a>
+
+## EvalError
+
+Represents an evaluation error during transaction evaluation.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| msg | [string](#string) |  | Error message. |
+
+<a name="utxorpc-v1alpha-cardano-EvalTrace"></a>
+
+## EvalTrace
+
+Represents an evaluation trace during transaction evaluation.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| msg | [string](#string) |  | Trace message. |
+
+<a name="utxorpc-v1alpha-cardano-TxPattern"></a>
+
+## TxPattern
+
+Represents a transaction pattern for matching in the Cardano blockchain.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| consumes | [TxOutputPattern](#utxorpc-v1alpha-cardano-TxOutputPattern) |  | Pattern for outputs consumed by the transaction. |
+| produces | [TxOutputPattern](#utxorpc-v1alpha-cardano-TxOutputPattern) |  | Pattern for outputs produced by the transaction. |
+| has_address | [AddressPattern](#utxorpc-v1alpha-cardano-AddressPattern) |  | Pattern for addresses involved in the transaction. |
+| moves_asset | [AssetPattern](#utxorpc-v1alpha-cardano-AssetPattern) |  | Pattern for assets moved by the transaction. |
+| mints_asset | [AssetPattern](#utxorpc-v1alpha-cardano-AssetPattern) |  | Pattern for assets minted by the transaction. |
+
+<a name="utxorpc-v1alpha-cardano-TxOutputPattern"></a>
+
+## TxOutputPattern
+
+Represents a pattern for matching transaction outputs.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| address | [AddressPattern](#utxorpc-v1alpha-cardano-AddressPattern) |  | Match any address in the output that exhibits this pattern. |
+| asset | [AssetPattern](#utxorpc-v1alpha-cardano-AssetPattern) |  | Match any asset in the output that exhibits this pattern. |
+
+<a name="utxorpc-v1alpha-cardano-AddressPattern"></a>
+
+## AddressPattern
+
+Represents a pattern for matching addresses.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| exact_address | [bytes](#bytes) |  | The address should match this exact address value. |
+| payment_part | [bytes](#bytes) |  | The payment part of the address should match this value. |
+| delegation_part | [bytes](#bytes) |  | The delegation part of the address should match this value. |
+
+<a name="utxorpc-v1alpha-cardano-AssetPattern"></a>
+
+## AssetPattern
+
+Represents a pattern for matching assets.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| policy_id | [bytes](#bytes) |  | The asset should belong to this policy id. |
+| asset_name | [bytes](#bytes) |  | The asset should present this name. |
+
+<a name="utxorpc-v1alpha-cardano-Block"></a>
+
+## Block
+
+Represents a block in the Cardano blockchain.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| header | [BlockHeader](#utxorpc-v1alpha-cardano-BlockHeader) |  | Block header information. |
+| body | [BlockBody](#utxorpc-v1alpha-cardano-BlockBody) |  | Block body containing transactions. |
+| timestamp | [uint64](#uint64) |  | Block timestamp. |
+
+<a name="utxorpc-v1alpha-cardano-BlockHeader"></a>
+
+## BlockHeader
+
+Represents a block header in the Cardano blockchain.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| slot | [uint64](#uint64) |  | Slot number. |
+| hash | [bytes](#bytes) |  | Block hash. |
+| height | [uint64](#uint64) |  | Block height. |
+
+<a name="utxorpc-v1alpha-cardano-BlockBody"></a>
+
+## BlockBody
+
+Represents a block body containing transactions.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| tx | [Tx](#utxorpc-cardano-v1-Tx) | repeated | List of transactions. |
+
+<a name="utxorpc-v1alpha-cardano-PParams"></a>
+
+## PParams
+
+Represents protocol parameters in the Cardano blockchain.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| coins_per_utxo_byte | [uint64](#uint64) |  | Cost per UTxO byte in ADA. |
+| max_tx_size | [uint64](#uint64) |  | Maximum transaction size in bytes. |
+| min_fee_coefficient | [uint64](#uint64) |  | Minimum fee coefficient. |
+| min_fee_constant | [uint64](#uint64) |  | Minimum fee constant. |
+| max_block_body_size | [uint64](#uint64) |  | Maximum block body size. |
+| max_block_header_size | [uint64](#uint64) |  | Maximum block header size. |
+| stake_key_deposit | [uint64](#uint64) |  | Stake key deposit amount. |
+| pool_deposit | [uint64](#uint64) |  | Pool registration deposit. |
+| pool_retirement_epoch_bound | [uint64](#uint64) |  | Pool retirement epoch bound. |
+| desired_number_of_pools | [uint64](#uint64) |  | Desired number of stake pools. |
+| pool_influence | [RationalNumber](#utxorpc-v1alpha-cardano-RationalNumber) |  | Pool influence parameter. |
+| monetary_expansion | [RationalNumber](#utxorpc-v1alpha-cardano-RationalNumber) |  | Monetary expansion rate. |
+| treasury_expansion | [RationalNumber](#utxorpc-v1alpha-cardano-RationalNumber) |  | Treasury expansion rate. |
+| min_pool_cost | [uint64](#uint64) |  | Minimum pool cost. |
+| protocol_version | [ProtocolVersion](#utxorpc-v1alpha-cardano-ProtocolVersion) |  | Protocol version. |
+| max_value_size | [uint64](#uint64) |  | Maximum value size. |
+| collateral_percentage | [uint64](#uint64) |  | Collateral percentage. |
+| max_collateral_inputs | [uint64](#uint64) |  | Maximum collateral inputs. |
+| cost_models | [CostModels](#utxorpc-v1alpha-cardano-CostModels) |  | Plutus cost models. |
+| prices | [ExPrices](#utxorpc-v1alpha-cardano-ExPrices) |  | Execution unit prices. |
+
+<a name="utxorpc-v1alpha-cardano-RationalNumber"></a>
+
+## RationalNumber
+
+Represents a rational number (fraction).
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| numerator | [int32](#int32) |  | Numerator of the fraction. |
+| denominator | [uint32](#uint32) |  | Denominator of the fraction. |
+
+<a name="utxorpc-v1alpha-cardano-ProtocolVersion"></a>
+
+## ProtocolVersion
+
+Represents a protocol version.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| major | [uint32](#uint32) |  | Major version number. |
+| minor | [uint32](#uint32) |  | Minor version number. |
+
+<a name="utxorpc-v1alpha-cardano-CostModels"></a>
+
+## CostModels
+
+Represents Plutus cost models for script execution.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| plutus_v1 | [bytes](#bytes) |  | Cost model for Plutus V1 scripts. |
+| plutus_v2 | [bytes](#bytes) |  | Cost model for Plutus V2 scripts. |
+
+<a name="utxorpc-v1alpha-cardano-ExPrices"></a>
+
+## ExPrices
+
+Represents execution unit prices.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| steps | [RationalNumber](#utxorpc-v1alpha-cardano-RationalNumber) |  | Price per execution step. |
+| memory | [RationalNumber](#utxorpc-v1alpha-cardano-RationalNumber) |  | Price per memory unit. |
+
 <a name="utxorpc-cardano-v1-Asset"></a>
 
 ## Asset
@@ -176,6 +376,8 @@ Represents a list of native scripts.
 | ----- | ------------------------------------------------ | -------- | ----------------------- |
 | items | [NativeScript](#utxorpc-cardano-v1-NativeScript) | repeated | List of native scripts. |
 
+<a name="utxorpc-v1alpha-cardano-PlutusData"></a>
+
 <a name="utxorpc-cardano-v1-PlutusData"></a>
 
 ## PlutusData
@@ -322,6 +524,8 @@ Represents a stake delegation certificate in Cardano.
 | stake_credential | [StakeCredential](#utxorpc-cardano-v1-StakeCredential) |       | Stake credential. |
 | pool_keyhash     | [bytes](#bytes)                                        |       | Pool key hash.    |
 
+<a name="utxorpc-v1alpha-cardano-Tx"></a>
+
 <a name="utxorpc-cardano-v1-Tx"></a>
 
 ## Tx
@@ -354,6 +558,8 @@ Represents a transaction input in the Cardano blockchain.
 | tx_hash      | [bytes](#bytes)                          |       | Hash of the previous transaction.                                     |
 | output_index | [uint32](#uint32)                        |       | Index of the output in the previous transaction.                      |
 | as_output    | [TxOutput](#utxorpc-cardano-v1-TxOutput) |       | Content of the input represented as output of the related transaction |
+
+<a name="utxorpc-v1alpha-cardano-TxOutput"></a>
 
 <a name="utxorpc-cardano-v1-TxOutput"></a>
 
