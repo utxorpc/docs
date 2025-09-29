@@ -9,7 +9,7 @@ Report containing the result of evaluating a particular transaction
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| cardano | [utxorpc.v1alpha.cardano.TxEval](#utxorpc-v1alpha-cardano-TxEval) |  | A Cardano tx evaluation report. |
+| cardano | [utxorpc.v1alpha.cardano.TxEval](/cardano#utxorpc-v1alpha-cardano-TxEval) |  | A Cardano tx evaluation report. |
 
 
 
@@ -39,7 +39,7 @@ Represents a tx pattern from any supported blockchain.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| cardano | [utxorpc.v1alpha.cardano.TxPattern](#utxorpc-v1alpha-cardano-TxPattern) |  | A Cardano tx pattern. |
+| cardano | [utxorpc.v1alpha.cardano.TxPattern](/cardano#utxorpc-v1alpha-cardano-TxPattern) |  | A Cardano tx pattern. |
 
 
 
@@ -142,7 +142,7 @@ Response containing references to the submitted transactions.
 | ref | [bytes](#bytes) |  | The transaction reference. |
 | native_bytes | [bytes](#bytes) |  | Original bytes as defined by the chain |
 | stage | [Stage](#utxorpc-v1alpha-submit-Stage) |  | The current stage of the tx |
-| cardano | [utxorpc.v1alpha.cardano.Tx](#utxorpc-v1alpha-cardano-Tx) |  | A Cardano transaction. |
+| cardano | [utxorpc.v1alpha.cardano.Tx](/cardano#utxorpc-v1alpha-cardano-Tx) |  | A Cardano transaction. |
 
 
 
@@ -207,7 +207,7 @@ Request to watch changes of specific mempool txs.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | predicate | [TxPredicate](#utxorpc-v1alpha-submit-TxPredicate) |  | A predicate to filter transactions by. |
-| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields. |
+| field_mask | [google.protobuf.FieldMask](https://protobuf.dev/reference/protobuf/google.protobuf/#fieldmask) |  | Field mask to selectively return fields. |
 
 
 
