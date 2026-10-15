@@ -38,3 +38,15 @@ Demeter is a PaaS (Platform-as-a-Service) that provides managed Cardano infrastr
 | Submit  | 🛠️ development |
 | Watch   | 🛠️ development |
 | Cardano | ✅ supported   |
+
+## Cardano node by IntersectMBO
+
+Cardano node, the reference implementation of the Cardano blockchain, includes a built-in gRPC interface that implements the UTxO RPC specification. It is enabled with a configuration flag, so you don't need to run an extra service: the node serves live chain data such as the chain tip, UTxO queries, protocol parameters, and transaction evaluation and submission. It is developed by [IntersectMBO](https://github.com/IntersectMBO) as the [cardano-rpc](https://github.com/IntersectMBO/cardano-api/tree/master/cardano-rpc) Haskell package, built and released together with [cardano-node](https://github.com/IntersectMBO/cardano-node). See the [UTxO RPC specification coverage](https://github.com/IntersectMBO/cardano-api/tree/master/cardano-rpc#utxo-rpc-spec-coverage) table for the per-method status.
+
+| Module  | Status        |
+| ------- | ------------- |
+| Sync    | ✅ supported   |
+| Query   | ✅ supported   |
+| Submit  | 🛠️ development |
+| Watch   | 🛠️ development |
+| Cardano | ✅ supported   |

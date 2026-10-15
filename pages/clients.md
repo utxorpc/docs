@@ -26,3 +26,14 @@ Scrolls is a data indexer for Cardano. It's a tool that reads blocks from the Ca
 | Watch   | ⏺️ not required |
 | Cardano | ✅ supported    |
 
+## cardano-rpc by BlockPQR
+
+`cardano-rpc` is a Haskell package that provides client modules for calling UTxO RPC services from Haskell code. The same client code works against `cardano-node`'s built-in gRPC interface and any other server implementing the specification, such as Dolos. It's an open-source project developed by [BlockPQR](https://blockpqr.io). The source code can be found in [IntersectMBO](https://github.com/IntersectMBO)'s [cardano-api GitHub repository](https://github.com/IntersectMBO/cardano-api/tree/master/cardano-rpc).
+
+| Module  | Status        |
+| ------- | ------------- |
+| Sync    | ✅ supported   |
+| Query   | ✅ supported   |
+| Submit  | ✅ supported   |
+| Watch   | 🛠️ development |
+| Cardano | ✅ supported   |
