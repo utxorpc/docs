@@ -1,4 +1,4 @@
-FROM node:19-alpine AS build
+FROM node:26-alpine AS build
 
 ARG GRPCUI_URL=http://127.0.0.1:8081
 ENV GRPCUI_URL=$GRPCUI_URL
