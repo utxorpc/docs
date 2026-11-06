@@ -1,0 +1,11 @@
+apiVersion: v2
+name: utxorpc-docs
+description: The UTxO RPC documentation site and its gRPC UI playground
+type: application
+# Chart version: this chart. appVersion: not tracked; each component's image
+# is pinned in the instance values.
+version: 0.1.0
+home: https://github.com/utxorpc/docs
+keywords:
+  - utxorpc
+  - docs

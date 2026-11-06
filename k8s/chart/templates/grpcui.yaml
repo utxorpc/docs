@@ -1,0 +1,11 @@
+{{- if .Values.grpcui.enabled }}
+{{- $values := .Values.grpcui }}
+{{- $env := dict
+  "GRPC_TARGET" (required "grpcui.target is required" $values.target)
+  "GRPC_PORT" $values.port
+  "USE_PLAINTEXT" $values.plaintext
+}}
+{{- $probe := dict "tcpSocket" (dict "port" "http") }}
+---
+{{ include "utxorpc-docs.workload" (dict "root" . "component" "grpcui" "values" $values "env" $env "probe" $probe) }}
+{{- end }}

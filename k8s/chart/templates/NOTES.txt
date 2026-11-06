@@ -1,0 +1,14 @@
+{{ .Chart.Name }} {{ .Chart.Version }}
+
+Site ({{ .Values.site.image.tag }}):
+  in-cluster: http://{{ include "utxorpc-docs.componentName" (dict "root" . "component" "site") }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.site.service.port }}
+{{- if .Values.site.ingress.enabled }}
+  public:     https://{{ .Values.site.ingress.host }}{{ .Values.site.ingress.path }}
+{{- end }}
+{{ if .Values.grpcui.enabled }}
+gRPC UI ({{ .Values.grpcui.image.tag }}):
+  in-cluster: http://{{ include "utxorpc-docs.componentName" (dict "root" . "component" "grpcui") }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.grpcui.service.port }}
+{{- if .Values.grpcui.ingress.enabled }}
+  public:     https://{{ .Values.grpcui.ingress.host }}{{ .Values.grpcui.ingress.path }}/
+{{- end }}
+{{- end }}
