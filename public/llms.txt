@@ -1,0 +1,34 @@
+# UTxO RPC
+
+> UTxO RPC (u5c) is a gRPC interface for interacting with UTxO-based blockchains. It is defined in protobuf, with Sync, Query, Submit and Watch modules and generated SDKs in several languages.
+
+Packages follow `utxorpc.{version}.{module}`: `v1alpha` and `v1beta` are published, and `v1` isn't released yet. The Cardano types live in `cardano`.
+
+## Start here
+
+- [Introduction](https://utxorpc.org/introduction): what the interface is and why it exists
+- [Clients](https://utxorpc.org/clients): client libraries and tools
+- [Servers](https://utxorpc.org/servers): implementations that serve the interface
+- [Playground](https://utxorpc.org/playground): try requests in the browser
+
+## Modules
+
+- [Sync](https://utxorpc.org/sync/intro): follow and fetch blocks ([schema](https://utxorpc.org/sync/spec))
+- [Query](https://utxorpc.org/query/intro): read chain and ledger state ([schema](https://utxorpc.org/query/spec))
+- [Submit](https://utxorpc.org/submit/intro): evaluate and submit transactions ([schema](https://utxorpc.org/submit/spec))
+- [Watch](https://utxorpc.org/watch/intro): react to matching transactions ([schema](https://utxorpc.org/watch/spec))
+- [Cardano types](https://utxorpc.org/cardano): the `cardano` message schema
+
+## SDKs
+
+- [Rust](https://utxorpc.org/rust): crate `utxorpc`, source https://github.com/utxorpc/rust-sdk
+- [Go](https://utxorpc.org/go): `github.com/utxorpc/go-sdk`
+- [Node.js](https://utxorpc.org/nodejs): npm `@utxorpc/sdk`, source https://github.com/utxorpc/node-sdk
+- [Python](https://utxorpc.org/python): PyPI `utxorpc`, source https://github.com/utxorpc/python-sdk
+- [.NET](https://utxorpc.org/dotnet): NuGet `Utxorpc.Sdk`, source https://github.com/utxorpc/dotnet-sdk
+- Haskell: https://github.com/utxorpc/haskell-sdk
+
+## Source
+
+- [Specification](https://github.com/utxorpc/spec): the proto files, the source of truth
+- [SDK reference](https://github.com/utxorpc/u5c-factory/tree/main/reference): API surface and parity across SDKs
