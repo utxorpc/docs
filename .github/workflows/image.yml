@@ -30,3 +30,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/utxorpc/docs,ghcr.io/utxorpc/docs:${{ github.sha }}
+          build-args: |
+            GRPCUI_URL=http://port-8001-grpcui-unx989.prj-txpipe-773981.svc.cluster.local:8001
