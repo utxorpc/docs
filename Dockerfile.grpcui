@@ -6,7 +6,7 @@ RUN apk add --no-cache git make
 RUN go install github.com/fullstorydev/grpcui/cmd/grpcui@aa3edefac370a32da4524893ffdca9c591ba0aeb
 
 # Final runtime image
-FROM alpine:3.21
+FROM alpine:3.24
 
 RUN apk add --no-cache ca-certificates
 
