@@ -1,0 +1,102 @@
+# Handshake Module
+
+This reference covers `v1beta`, generated from spec v0.19.2.
+
+<a name="utxorpc-v1beta-handshake-Block"></a>
+
+### Block
+Represents a block in the Handshake blockchain.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| version | uint32 |  | Block version number |
+| previous_blockhash | bytes | optional | Hash of the previous block |
+| merkle_root | bytes |  | Merkle root of base transaction data |
+| witness_root | bytes |  | Merkle root of transaction witness data |
+| tree_root | bytes |  | Root of the name-resource urkel tree |
+| reserved_root | bytes |  | Reserved root for future layer 2 expansion |
+| time | uint32 |  | Time when the block was created |
+| bits | uint32 |  | Target difficulty value |
+| nonce | bytes |  | Nonce used for Proof-of-Work |
+| extra_nonce | bytes |  | Extra nonce for expanded mining search space |
+| mask | bytes |  | Mask for committed block hash |
+| tx | [Transaction](#utxorpc-v1beta-handshake-Transaction) | repeated | List of transactions included in the block |
+
+<a name="utxorpc-v1beta-handshake-Covenant"></a>
+
+### Covenant
+Represents a covenant attached to a transaction output.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| action | [CovenantAction](#utxorpc-v1beta-handshake-CovenantAction) |  | The covenant action type |
+| items | bytes | repeated | Covenant data items (name hash, resource data, etc.) |
+
+<a name="utxorpc-v1beta-handshake-Transaction"></a>
+
+### Transaction
+Represents a transaction in the Handshake network.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| version | uint32 |  | Transaction version number |
+| vin | [TxInput](#utxorpc-v1beta-handshake-TxInput) | repeated | List of transaction inputs |
+| vout | [TxOutput](#utxorpc-v1beta-handshake-TxOutput) | repeated | List of transaction outputs |
+| locktime | uint32 |  | Block height or timestamp when transaction is final |
+| hash | bytes |  | Hash of the transaction |
+| witness_hash | bytes | optional | Witness-committed hash |
+| blockhash | bytes | optional | Hash of the containing block |
+| time | uint32 | optional | Timestamp of the transaction |
+
+<a name="utxorpc-v1beta-handshake-TxInput"></a>
+
+### TxInput
+Represents an input in a Handshake transaction.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| txid | bytes | optional | Hash of the previous transaction being spent |
+| output_index | uint32 |  | Index of the output in the previous transaction |
+| sequence | uint32 |  | Sequence number, used for relative timelocks |
+| witness | bytes | repeated | Witness stack items (Handshake is SegWit-only) |
+
+<a name="utxorpc-v1beta-handshake-TxOutput"></a>
+
+### TxOutput
+Represents an output in a Handshake transaction.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| value | uint64 |  | Amount in dollarydoos (smallest HNS unit, 1 HNS = 1,000,000 dollarydoos) |
+| address | bytes |  | Witness program address |
+| covenant | [Covenant](#utxorpc-v1beta-handshake-Covenant) |  | Covenant restricting future use of this output |
+
+ 
+
+<a name="utxorpc-v1beta-handshake-CovenantAction"></a>
+
+### CovenantAction
+Covenant action types for the Handshake naming system.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| COVENANT_ACTION_UNSPECIFIED | 0 | No covenant (regular transfer) |
+| COVENANT_ACTION_CLAIM | 1 | Claim a reserved legacy DNS name |
+| COVENANT_ACTION_OPEN | 2 | Open a name auction |
+| COVENANT_ACTION_BID | 3 | Submit a blinded bid |
+| COVENANT_ACTION_REVEAL | 4 | Reveal a bid amount |
+| COVENANT_ACTION_REDEEM | 5 | Recover a losing bid |
+| COVENANT_ACTION_REGISTER | 6 | Finalize name ownership after winning auction |
+| COVENANT_ACTION_UPDATE | 7 | Update DNS resource data for a name |
+| COVENANT_ACTION_RENEW | 8 | Renew name ownership |
+| COVENANT_ACTION_TRANSFER | 9 | Initiate ownership transfer |
+| COVENANT_ACTION_FINALIZE | 10 | Confirm ownership transfer |
+| COVENANT_ACTION_REVOKE | 11 | Revoke a name permanently |
+
+ 
+
+ 
+
+ 
+
+<a name="utxorpc_v1beta_query_query-proto"></a>

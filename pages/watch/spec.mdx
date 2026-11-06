@@ -1,101 +1,79 @@
-# Watch Module
+# Watch Module Spec
 
+This reference covers `v1beta`, generated from spec v0.19.2.
 
-<a name="utxorpc-v1alpha-watch-AnyChainTx"></a>
+<a name="utxorpc-v1beta-watch-AnyChainBlock"></a>
+
+### AnyChainBlock
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| native_bytes | bytes |  | Original bytes as defined by the chain |
+| cardano | [utxorpc.v1beta.cardano.Block](/cardano#utxorpc-v1beta-cardano-Block) |  | A parsed Cardano block. |
+
+<a name="utxorpc-v1beta-watch-AnyChainTx"></a>
 
 ### AnyChainTx
 Represents a transaction from any supported blockchain.
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| cardano | [utxorpc.v1alpha.cardano.Tx](#utxorpc-v1alpha-cardano-Tx) |  | A Cardano transaction. |
+| cardano | [utxorpc.v1beta.cardano.Tx](/cardano#utxorpc-v1beta-cardano-Tx) |  | A Cardano transaction. |
+| block | [AnyChainBlock](#utxorpc-v1beta-watch-AnyChainBlock) |  | Block containing the transaction |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-watch-AnyChainTxPattern"></a>
+<a name="utxorpc-v1beta-watch-AnyChainTxPattern"></a>
 
 ### AnyChainTxPattern
 Represents a tx pattern from any supported blockchain.
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| cardano | [utxorpc.v1alpha.cardano.TxPattern](#utxorpc-v1alpha-cardano-TxPattern) |  | A Cardano tx pattern. |
+| cardano | [utxorpc.v1beta.cardano.TxPattern](/cardano#utxorpc-v1beta-cardano-TxPattern) |  | A Cardano tx pattern. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-watch-BlockRef"></a>
+<a name="utxorpc-v1beta-watch-BlockRef"></a>
 
 ### BlockRef
-Represents a reference to a specific block
-
+Represents a reference to a specific block by a chosen combination of fields
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| index | [uint64](#uint64) |  | Height or slot number (depending on the blockchain) |
-| hash | [bytes](#bytes) |  | Hash of the content of the block |
+| slot | uint64 |  | Height or slot number (depending on the blockchain) |
+| hash | bytes |  | Hash of the content of the block |
+| height | uint64 |  | Block height |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-watch-TxPredicate"></a>
+<a name="utxorpc-v1beta-watch-TxPredicate"></a>
 
 ### TxPredicate
 Represents a simple tx predicate that can composed to create more complex ones
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| match | [AnyChainTxPattern](#utxorpc-v1alpha-watch-AnyChainTxPattern) |  | Predicate is true if tx exhibits pattern. |
-| not | [TxPredicate](#utxorpc-v1alpha-watch-TxPredicate) | repeated | Predicate is true if tx doesn&#39;t exhibit pattern. |
-| all_of | [TxPredicate](#utxorpc-v1alpha-watch-TxPredicate) | repeated | Predicate is true if tx exhibits all of the patterns. |
-| any_of | [TxPredicate](#utxorpc-v1alpha-watch-TxPredicate) | repeated | Predicate is true if tx exhibits any of the patterns. |
+| match | [AnyChainTxPattern](#utxorpc-v1beta-watch-AnyChainTxPattern) |  | Predicate is true if tx exhibits pattern. |
+| not | [TxPredicate](#utxorpc-v1beta-watch-TxPredicate) | repeated | Predicate is true if tx doesn&#39;t exhibit pattern. |
+| all_of | [TxPredicate](#utxorpc-v1beta-watch-TxPredicate) | repeated | Predicate is true if tx exhibits all of the patterns. |
+| any_of | [TxPredicate](#utxorpc-v1beta-watch-TxPredicate) | repeated | Predicate is true if tx exhibits any of the patterns. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-watch-WatchTxRequest"></a>
+<a name="utxorpc-v1beta-watch-WatchTxRequest"></a>
 
 ### WatchTxRequest
 Request to watch transactions from the chain based on a set of predicates.
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| predicate | [TxPredicate](#utxorpc-v1alpha-watch-TxPredicate) |  | Predicate to filter transactions by. |
-| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields. |
-| intersect | [BlockRef](#utxorpc-v1alpha-watch-BlockRef) | repeated | List of block references to find the intersection. |
+| predicate | [TxPredicate](#utxorpc-v1beta-watch-TxPredicate) |  | Predicate to filter transactions by. |
+| field_mask | google.protobuf.FieldMask |  | Field mask to selectively return fields. |
+| intersect | [BlockRef](#utxorpc-v1beta-watch-BlockRef) | repeated | List of block references to find the intersection. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-watch-WatchTxResponse"></a>
+<a name="utxorpc-v1beta-watch-WatchTxResponse"></a>
 
 ### WatchTxResponse
-Response containing the matching chain transactions.
-
+Response containing the matching chain transactions or block progress signals.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| apply | [AnyChainTx](#utxorpc-v1alpha-watch-AnyChainTx) |  | Apply this transaction. |
-| undo | [AnyChainTx](#utxorpc-v1alpha-watch-AnyChainTx) |  | Undo this transaction. |
-
-
-
-
+| apply | [AnyChainTx](#utxorpc-v1beta-watch-AnyChainTx) |  | Apply this transaction. |
+| undo | [AnyChainTx](#utxorpc-v1beta-watch-AnyChainTx) |  | Undo this transaction. |
+| idle | [BlockRef](#utxorpc-v1beta-watch-BlockRef) |  | No-match signal for a block. |
 
  
 
@@ -103,12 +81,11 @@ Response containing the matching chain transactions.
 
  
 
-
-<a name="utxorpc-v1alpha-watch-WatchService"></a>
+<a name="utxorpc-v1beta-watch-WatchService"></a>
 
 ### WatchService
 Service definition for watching transactions based on predicates.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| WatchTx | [WatchTxRequest](#utxorpc-v1alpha-watch-WatchTxRequest) | [WatchTxResponse](#utxorpc-v1alpha-watch-WatchTxResponse) stream | Stream transactions from the chain matching the specified predicates. |
+| WatchTx | [WatchTxRequest](#utxorpc-v1beta-watch-WatchTxRequest) | [WatchTxResponse](#utxorpc-v1beta-watch-WatchTxResponse) stream | Stream transactions from the chain matching the specified predicates. |

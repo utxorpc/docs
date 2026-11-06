@@ -1,439 +1,1376 @@
 # Cardano Module
 
-<a name="utxorpc-cardano-v1-Asset"></a>
+This reference covers `v1beta`, generated from spec v0.19.2.
 
-## Asset
+<a name="utxorpc-v1beta-cardano-AddressPattern"></a>
 
+### AddressPattern
+Pattern of an address that can be used to evaluate matching predicates.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| exact_address | bytes | optional | The address should match this exact address value. |
+| payment_part | bytes | optional | The payment part of the address should match this value. |
+| delegation_part | bytes | optional | The delegation part of the address should match this value. |
+
+<a name="utxorpc-v1beta-cardano-Anchor"></a>
+
+### Anchor
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| url | string |  |  |
+| content_hash | bytes |  |  |
+
+<a name="utxorpc-v1beta-cardano-Asset"></a>
+
+### Asset
 Represents a custom asset in the Cardano blockchain.
 
-| Field    | Type              | Label | Description                   |
-| -------- | ----------------- | ----- | ----------------------------- |
-| name     | [bytes](#bytes)   |       | Name of the custom asset.     |
-| quantity | [uint64](#uint64) |       | Quantity of the custom asset. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | bytes |  | Name of the custom asset. |
+| quantity | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | Quantity of the custom asset. This can be negative only if it is in a `Tx.mint` field and the transaction is burning tokens. |
 
-<a name="utxorpc-cardano-v1-AuxData"></a>
+<a name="utxorpc-v1beta-cardano-AssetPattern"></a>
 
-## AuxData
+### AssetPattern
+Pattern of a native asset that can be used to evaluate matching predicates.
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| policy_id | bytes | optional | The asset should belong to this policy id |
+| asset_name | bytes | optional | The asset should present this name |
+
+<a name="utxorpc-v1beta-cardano-AuthCommitteeHotCert"></a>
+
+### AuthCommitteeHotCert
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| committee_cold_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| committee_hot_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+
+<a name="utxorpc-v1beta-cardano-AuxData"></a>
+
+### AuxData
 Auxiliary data not directly tied to the validation process
 
-| Field    | Type                                     | Label    | Description                          |
-| -------- | ---------------------------------------- | -------- | ------------------------------------ |
-| metadata | [Metadata](#utxorpc-cardano-v1-Metadata) | repeated | List of auxiliary metadata elements. |
-| scripts  | [Script](#utxorpc-cardano-v1-Script)     | repeated | List of auxiliary scripts.           |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| metadata | [Metadata](#utxorpc-v1beta-cardano-Metadata) | repeated | List of auxiliary metadata elements. |
+| scripts | [Script](#utxorpc-v1beta-cardano-Script) | repeated | List of auxiliary scripts. |
 
-<a name="utxorpc-cardano-v1-BigInt"></a>
+<a name="utxorpc-v1beta-cardano-BigInt"></a>
 
-## BigInt
-
+### BigInt
 Represents a big integer for Plutus data in Cardano.
+The representation here follows CBOR specification for bignums:
+https://www.rfc-editor.org/rfc/rfc8949.html#name-bignums section 3.4.3.
 
-Define the fields of BigInt based on your original Rust code
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| int | int64 |  | Stores value fitting within int64 range |
+| big_u_int | bytes |  | Stores unsigned value exceeding int64 range |
+| big_n_int | bytes |  | Stores negative value `n` exceeding int64 range as `-1 - n` |
 
-<a name="utxorpc-cardano-v1-BoundedBytes"></a>
+<a name="utxorpc-v1beta-cardano-Block"></a>
 
-## BoundedBytes
+### Block
+Represents a complete block, including header and body.
 
-Represents a bounded bytes for Plutus data in Cardano.
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| header | [BlockHeader](#utxorpc-v1beta-cardano-BlockHeader) |  | Block header. |
+| body | [BlockBody](#utxorpc-v1beta-cardano-BlockBody) |  | Block body. |
+| timestamp | uint64 |  | Block ms timestamp |
 
-Define the fields of BoundedBytes based on your original Rust code
+<a name="utxorpc-v1beta-cardano-BlockBody"></a>
 
-<a name="utxorpc-cardano-v1-Certificate"></a>
+### BlockBody
+Contains the transaction data for a block.
 
-## Certificate
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| tx | [Tx](#utxorpc-v1beta-cardano-Tx) | repeated | List of transactions. |
 
+<a name="utxorpc-v1beta-cardano-BlockHeader"></a>
+
+### BlockHeader
+Contains the header information for a block.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| slot | uint64 |  | Slot number. |
+| hash | bytes |  | Block hash. |
+| height | uint64 |  | Block height. |
+
+<a name="utxorpc-v1beta-cardano-BlockVersionData"></a>
+
+### BlockVersionData
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| script_version | uint32 |  |  |
+| slot_duration | string |  |  |
+| max_block_size | string |  |  |
+| max_header_size | string |  |  |
+| max_tx_size | string |  |  |
+| max_proposal_size | string |  |  |
+| mpc_thd | string |  |  |
+| heavy_del_thd | string |  |  |
+| update_vote_thd | string |  |  |
+| update_proposal_thd | string |  |  |
+| update_implicit | string |  |  |
+| softfork_rule | [SoftforkRule](#utxorpc-v1beta-cardano-SoftforkRule) |  |  |
+| tx_fee_policy | [TxFeePolicy](#utxorpc-v1beta-cardano-TxFeePolicy) |  |  |
+| unlock_stake_epoch | string |  |  |
+
+<a name="utxorpc-v1beta-cardano-BootstrapWitness"></a>
+
+### BootstrapWitness
+Represents bootstrap keys from Byron era
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| vkey | bytes |  | Verification key. |
+| signature | bytes |  | Signature generated using the associated private key. |
+| chain_code | bytes |  | 32 bytes of chain code |
+| attributes | bytes |  | key attributes |
+
+<a name="utxorpc-v1beta-cardano-Certificate"></a>
+
+### Certificate
 Represents a certificate in Cardano.
 
-| Field                           | Type                                                                           | Label | Description                             |
-| ------------------------------- | ------------------------------------------------------------------------------ | ----- | --------------------------------------- |
-| stake_registration              | [StakeCredential](#utxorpc-cardano-v1-StakeCredential)                         |       | Stake registration certificate.         |
-| stake_deregistration            | [StakeCredential](#utxorpc-cardano-v1-StakeCredential)                         |       | Stake deregistration certificate.       |
-| stake_delegation                | [StakeDelegationCert](#utxorpc-cardano-v1-StakeDelegationCert)                 |       | Stake delegation certificate.           |
-| pool_registration               | [PoolRegistrationCert](#utxorpc-cardano-v1-PoolRegistrationCert)               |       | Pool registration certificate.          |
-| pool_retirement                 | [PoolRetirementCert](#utxorpc-cardano-v1-PoolRetirementCert)                   |       | Pool retirement certificate.            |
-| genesis_key_delegation          | [GenesisKeyDelegationCert](#utxorpc-cardano-v1-GenesisKeyDelegationCert)       |       | Genesis key delegation certificate.     |
-| move_instantaneous_rewards_cert | [MoveInstantaneousRewardCert](#utxorpc-cardano-v1-MoveInstantaneousRewardCert) |       | Move instantaneous rewards certificate. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_registration | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  | Stake registration certificate. |
+| stake_deregistration | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  | Stake deregistration certificate. |
+| stake_delegation | [StakeDelegationCert](#utxorpc-v1beta-cardano-StakeDelegationCert) |  | Stake delegation certificate. |
+| pool_registration | [PoolRegistrationCert](#utxorpc-v1beta-cardano-PoolRegistrationCert) |  | Pool registration certificate. |
+| pool_retirement | [PoolRetirementCert](#utxorpc-v1beta-cardano-PoolRetirementCert) |  | Pool retirement certificate. |
+| genesis_key_delegation | [GenesisKeyDelegationCert](#utxorpc-v1beta-cardano-GenesisKeyDelegationCert) |  | Genesis key delegation certificate. |
+| mir_cert | [MirCert](#utxorpc-v1beta-cardano-MirCert) |  | Move instantaneous rewards certificate. |
+| reg_cert | [RegCert](#utxorpc-v1beta-cardano-RegCert) |  | Registration certificate. |
+| unreg_cert | [UnRegCert](#utxorpc-v1beta-cardano-UnRegCert) |  | Unregistration certificate. |
+| vote_deleg_cert | [VoteDelegCert](#utxorpc-v1beta-cardano-VoteDelegCert) |  | Vote delegation certificate. |
+| stake_vote_deleg_cert | [StakeVoteDelegCert](#utxorpc-v1beta-cardano-StakeVoteDelegCert) |  | Stake and vote delegation certificate. |
+| stake_reg_deleg_cert | [StakeRegDelegCert](#utxorpc-v1beta-cardano-StakeRegDelegCert) |  | Stake registration and delegation certificate. |
+| vote_reg_deleg_cert | [VoteRegDelegCert](#utxorpc-v1beta-cardano-VoteRegDelegCert) |  | Vote registration and delegation certificate. |
+| stake_vote_reg_deleg_cert | [StakeVoteRegDelegCert](#utxorpc-v1beta-cardano-StakeVoteRegDelegCert) |  | Stake and vote registration and delegation certificate. |
+| auth_committee_hot_cert | [AuthCommitteeHotCert](#utxorpc-v1beta-cardano-AuthCommitteeHotCert) |  | Authorize committee hot key certificate. |
+| resign_committee_cold_cert | [ResignCommitteeColdCert](#utxorpc-v1beta-cardano-ResignCommitteeColdCert) |  | Resign committee cold key certificate. |
+| reg_drep_cert | [RegDRepCert](#utxorpc-v1beta-cardano-RegDRepCert) |  | Register DRep certificate. |
+| unreg_drep_cert | [UnRegDRepCert](#utxorpc-v1beta-cardano-UnRegDRepCert) |  | Unregister DRep certificate. |
+| update_drep_cert | [UpdateDRepCert](#utxorpc-v1beta-cardano-UpdateDRepCert) |  | Update DRep certificate. |
+| redeemer | [Redeemer](#utxorpc-v1beta-cardano-Redeemer) |  | Redeemer for the Plutus script. |
 
-<a name="utxorpc-cardano-v1-Collateral"></a>
+<a name="utxorpc-v1beta-cardano-CertificatePattern"></a>
 
-## Collateral
+### CertificatePattern
+Pattern of a certificate that can be used to evaluate matching predicates.
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_registration | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  | Match stake registration for this credential |
+| stake_deregistration | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  | Match stake deregistration for this credential |
+| stake_delegation | [StakeDelegationPattern](#utxorpc-v1beta-cardano-StakeDelegationPattern) |  | Match stake delegation pattern |
+| pool_registration | [PoolRegistrationPattern](#utxorpc-v1beta-cardano-PoolRegistrationPattern) |  | Match pool registration pattern |
+| pool_retirement | [PoolRetirementPattern](#utxorpc-v1beta-cardano-PoolRetirementPattern) |  | Match pool retirement pattern |
+| any_stake_credential | bytes |  | Match any certificate involving this stake credential |
+| any_pool_keyhash | bytes |  | Match any certificate involving this pool |
+| any_drep | bytes |  | Match any certificate involving this DRep |
+
+<a name="utxorpc-v1beta-cardano-Collateral"></a>
+
+### Collateral
 Represents the collateral information for a transaction.
 
-| Field             | Type                                     | Label    | Description                                  |
-| ----------------- | ---------------------------------------- | -------- | -------------------------------------------- |
-| collateral        | [TxInput](#utxorpc-cardano-v1-TxInput)   | repeated | Collateral inputs for the transaction.       |
-| collateral_return | [TxOutput](#utxorpc-cardano-v1-TxOutput) |          | Collateral return in case of script failure. |
-| total_collateral  | [uint64](#uint64)                        |          | Total amount of collateral.                  |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| collateral | [TxInput](#utxorpc-v1beta-cardano-TxInput) | repeated | Collateral inputs for the transaction. |
+| collateral_return | [TxOutput](#utxorpc-v1beta-cardano-TxOutput) |  | Collateral return in case of script failure. |
+| total_collateral | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | Total amount of collateral. |
 
-<a name="utxorpc-cardano-v1-Constr"></a>
+<a name="utxorpc-v1beta-cardano-Committee"></a>
 
-## Constr
+### Committee
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| members | [Committee.MembersEntry](#utxorpc-v1beta-cardano-Committee-MembersEntry) | repeated |  |
+| threshold | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+
+<a name="utxorpc-v1beta-cardano-Committee-MembersEntry"></a>
+
+### Committee.MembersEntry
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | string |  |  |
+| value | uint64 |  |  |
+
+<a name="utxorpc-v1beta-cardano-Constitution"></a>
+
+### Constitution
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| anchor | [Anchor](#utxorpc-v1beta-cardano-Anchor) |  | Anchor to the new document |
+| hash | bytes |  | Hash of the document |
+
+<a name="utxorpc-v1beta-cardano-Constr"></a>
+
+### Constr
 Represents a constructor for Plutus data in Cardano.
 
-Define the fields of Constr based on your original Rust code
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| tag | uint32 |  |  |
+| any_constructor | uint64 |  |  |
+| fields | [PlutusData](#utxorpc-v1beta-cardano-PlutusData) | repeated |  |
 
-<a name="utxorpc-cardano-v1-GenesisKeyDelegationCert"></a>
+<a name="utxorpc-v1beta-cardano-CostModel"></a>
 
-## GenesisKeyDelegationCert
+### CostModel
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| values | int64 | repeated |  |
+
+<a name="utxorpc-v1beta-cardano-CostModelMap"></a>
+
+### CostModelMap
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| plutus_v1 | [CostModel](#utxorpc-v1beta-cardano-CostModel) |  |  |
+| plutus_v2 | [CostModel](#utxorpc-v1beta-cardano-CostModel) |  |  |
+| plutus_v3 | [CostModel](#utxorpc-v1beta-cardano-CostModel) |  |  |
+| plutus_v4 | [CostModel](#utxorpc-v1beta-cardano-CostModel) |  |  |
+
+<a name="utxorpc-v1beta-cardano-CostModels"></a>
+
+### CostModels
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| plutus_v1 | [CostModel](#utxorpc-v1beta-cardano-CostModel) |  |  |
+| plutus_v2 | [CostModel](#utxorpc-v1beta-cardano-CostModel) |  |  |
+| plutus_v3 | [CostModel](#utxorpc-v1beta-cardano-CostModel) |  |  |
+| plutus_v4 | [CostModel](#utxorpc-v1beta-cardano-CostModel) |  |  |
+
+<a name="utxorpc-v1beta-cardano-DRep"></a>
+
+### DRep
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| addr_key_hash | bytes |  | Address key hash |
+| script_hash | bytes |  | Script hash |
+| abstain | bool |  | Abstain |
+| no_confidence | bool |  | No confidence |
+
+<a name="utxorpc-v1beta-cardano-DRepVotingThresholds"></a>
+
+### DRepVotingThresholds
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| motion_no_confidence | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| committee_normal | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| committee_no_confidence | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| update_to_constitution | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| hard_fork_initiation | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| pp_network_group | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| pp_economic_group | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| pp_technical_group | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| pp_gov_group | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| treasury_withdrawal | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+
+<a name="utxorpc-v1beta-cardano-Datum"></a>
+
+### Datum
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| hash | bytes |  | Hash of this datum as seen on-chain |
+| payload | [PlutusData](#utxorpc-v1beta-cardano-PlutusData) | optional | Parsed Plutus data payload |
+| original_cbor | bytes | optional | Original cbor-encoded data as seen on-chain |
+
+<a name="utxorpc-v1beta-cardano-EraBoundary"></a>
+
+### EraBoundary
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| time | uint64 |  | ms timestamp |
+| slot | uint64 |  | absolute slot number of the first block of this era |
+| epoch | uint64 |  | first epoch for this era |
+
+<a name="utxorpc-v1beta-cardano-EraSummaries"></a>
+
+### EraSummaries
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| summaries | [EraSummary](#utxorpc-v1beta-cardano-EraSummary) | repeated |  |
+
+<a name="utxorpc-v1beta-cardano-EraSummary"></a>
+
+### EraSummary
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | string |  | name of the era (ex: &#34;shelley&#34;) |
+| start | [EraBoundary](#utxorpc-v1beta-cardano-EraBoundary) |  | start of this era |
+| end | [EraBoundary](#utxorpc-v1beta-cardano-EraBoundary) |  | end of this era (if the era has a well-defined ending) |
+| protocol_params | [PParams](#utxorpc-v1beta-cardano-PParams) |  | protocol parameters for this era |
+
+<a name="utxorpc-v1beta-cardano-EvalReport"></a>
+
+### EvalReport
+A single evaluation report entry, used for both script errors and execution
+traces. The purpose and index fields identify which redeemer produced the
+entry, allowing the client to correlate errors and traces with specific
+script executions.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| msg | string |  | Human-readable message. |
+| purpose | [RedeemerPurpose](#utxorpc-v1beta-cardano-RedeemerPurpose) |  | Purpose of the redeemer that produced this entry. |
+| index | uint32 |  | 0-based index of the redeemer within its purpose. |
+
+<a name="utxorpc-v1beta-cardano-ExPrices"></a>
+
+### ExPrices
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| steps | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| memory | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+
+<a name="utxorpc-v1beta-cardano-ExUnits"></a>
+
+### ExUnits
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| steps | uint64 |  |  |
+| memory | uint64 |  |  |
+
+<a name="utxorpc-v1beta-cardano-ExtraEntropy"></a>
+
+### ExtraEntropy
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| tag | string |  |  |
+
+<a name="utxorpc-v1beta-cardano-GenDelegs"></a>
+
+### GenDelegs
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| delegate | string |  |  |
+| vrf | string |  |  |
+
+<a name="utxorpc-v1beta-cardano-Genesis"></a>
+
+### Genesis
+Unified Genesis configuration containing all parameters from all eras
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| avvm_distr | [Genesis.AvvmDistrEntry](#utxorpc-v1beta-cardano-Genesis-AvvmDistrEntry) | repeated | ============ Byron Era Fields ============ |
+| block_version_data | [BlockVersionData](#utxorpc-v1beta-cardano-BlockVersionData) |  |  |
+| fts_seed | string |  |  |
+| protocol_consts | [ProtocolConsts](#utxorpc-v1beta-cardano-ProtocolConsts) |  |  |
+| start_time | uint64 |  |  |
+| boot_stakeholders | [Genesis.BootStakeholdersEntry](#utxorpc-v1beta-cardano-Genesis-BootStakeholdersEntry) | repeated |  |
+| heavy_delegation | [Genesis.HeavyDelegationEntry](#utxorpc-v1beta-cardano-Genesis-HeavyDelegationEntry) | repeated |  |
+| non_avvm_balances | [Genesis.NonAvvmBalancesEntry](#utxorpc-v1beta-cardano-Genesis-NonAvvmBalancesEntry) | repeated |  |
+| vss_certs | [Genesis.VssCertsEntry](#utxorpc-v1beta-cardano-Genesis-VssCertsEntry) | repeated |  |
+| active_slots_coeff | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  | ============ Shelley Era Fields ============ |
+| epoch_length | uint32 |  |  |
+| gen_delegs | [Genesis.GenDelegsEntry](#utxorpc-v1beta-cardano-Genesis-GenDelegsEntry) | repeated |  |
+| initial_funds | [Genesis.InitialFundsEntry](#utxorpc-v1beta-cardano-Genesis-InitialFundsEntry) | repeated |  |
+| max_kes_evolutions | uint32 |  |  |
+| max_lovelace_supply | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+| network_id | string |  |  |
+| network_magic | uint32 |  |  |
+| protocol_params | [PParams](#utxorpc-v1beta-cardano-PParams) |  | Using PParams as it&#39;s a superset of all protocol parameters |
+| security_param | uint32 |  |  |
+| slot_length | uint32 |  |  |
+| slots_per_kes_period | uint32 |  |  |
+| system_start | string |  |  |
+| update_quorum | uint32 |  |  |
+| lovelace_per_utxo_word | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | ============ Alonzo Era Fields ============ |
+| execution_prices | [ExPrices](#utxorpc-v1beta-cardano-ExPrices) |  |  |
+| max_tx_ex_units | [ExUnits](#utxorpc-v1beta-cardano-ExUnits) |  |  |
+| max_block_ex_units | [ExUnits](#utxorpc-v1beta-cardano-ExUnits) |  |  |
+| max_value_size | uint32 |  |  |
+| collateral_percentage | uint32 |  |  |
+| max_collateral_inputs | uint32 |  |  |
+| cost_models | [CostModelMap](#utxorpc-v1beta-cardano-CostModelMap) |  |  |
+| committee | [Committee](#utxorpc-v1beta-cardano-Committee) |  | ============ Conway Era Fields ============ |
+| constitution | [Constitution](#utxorpc-v1beta-cardano-Constitution) |  |  |
+| committee_min_size | uint64 |  |  |
+| committee_max_term_length | uint64 |  |  |
+| gov_action_lifetime | uint64 |  |  |
+| gov_action_deposit | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+| drep_deposit | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+| drep_activity | uint64 |  |  |
+| min_fee_ref_script_cost_per_byte | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| drep_voting_thresholds | [DRepVotingThresholds](#utxorpc-v1beta-cardano-DRepVotingThresholds) |  |  |
+| pool_voting_thresholds | [PoolVotingThresholds](#utxorpc-v1beta-cardano-PoolVotingThresholds) |  |  |
+
+<a name="utxorpc-v1beta-cardano-Genesis-AvvmDistrEntry"></a>
+
+### Genesis.AvvmDistrEntry
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | string |  |  |
+| value | string |  |  |
+
+<a name="utxorpc-v1beta-cardano-Genesis-BootStakeholdersEntry"></a>
+
+### Genesis.BootStakeholdersEntry
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | string |  |  |
+| value | uint64 |  |  |
+
+<a name="utxorpc-v1beta-cardano-Genesis-GenDelegsEntry"></a>
+
+### Genesis.GenDelegsEntry
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | string |  |  |
+| value | [GenDelegs](#utxorpc-v1beta-cardano-GenDelegs) |  |  |
+
+<a name="utxorpc-v1beta-cardano-Genesis-HeavyDelegationEntry"></a>
+
+### Genesis.HeavyDelegationEntry
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | string |  |  |
+| value | [HeavyDelegation](#utxorpc-v1beta-cardano-HeavyDelegation) |  |  |
+
+<a name="utxorpc-v1beta-cardano-Genesis-InitialFundsEntry"></a>
+
+### Genesis.InitialFundsEntry
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | string |  |  |
+| value | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+
+<a name="utxorpc-v1beta-cardano-Genesis-NonAvvmBalancesEntry"></a>
+
+### Genesis.NonAvvmBalancesEntry
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | string |  |  |
+| value | string |  |  |
+
+<a name="utxorpc-v1beta-cardano-Genesis-VssCertsEntry"></a>
+
+### Genesis.VssCertsEntry
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | string |  |  |
+| value | [VssCert](#utxorpc-v1beta-cardano-VssCert) |  |  |
+
+<a name="utxorpc-v1beta-cardano-GenesisKeyDelegationCert"></a>
+
+### GenesisKeyDelegationCert
 Represents a genesis key delegation certificate in Cardano.
 
-| Field                 | Type            | Label | Description            |
-| --------------------- | --------------- | ----- | ---------------------- |
-| genesis_hash          | [bytes](#bytes) |       | Genesis hash.          |
-| genesis_delegate_hash | [bytes](#bytes) |       | Genesis delegate hash. |
-| vrf_keyhash           | [bytes](#bytes) |       | VRF key hash.          |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| genesis_hash | bytes |  | Genesis hash. |
+| genesis_delegate_hash | bytes |  | Genesis delegate hash. |
+| vrf_keyhash | bytes |  | VRF key hash. |
 
-<a name="utxorpc-cardano-v1-Metadata"></a>
+<a name="utxorpc-v1beta-cardano-GetStakePoolDistribution"></a>
 
-## Metadata
+### GetStakePoolDistribution
+Stake pool distribution query. Mirrors Ouroboros GetPoolDistr / GetFilteredPoolDistr.
 
-| Field | Type                                       | Label | Description |
-| ----- | ------------------------------------------ | ----- | ----------- |
-| label | [uint64](#uint64)                          |       |             |
-| value | [Metadatum](#utxorpc-cardano-v1-Metadatum) |       |             |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pool_keyhashes | bytes | repeated | If non-empty, restrict the result to the listed pool key hashes. If empty, return the distribution for every pool. |
 
-<a name="utxorpc-cardano-v1-Metadatum"></a>
+<a name="utxorpc-v1beta-cardano-GovernanceAction"></a>
 
-## Metadatum
+### GovernanceAction
+Define a Governance Action
 
-| Field | Type                                                 | Label | Description |
-| ----- | ---------------------------------------------------- | ----- | ----------- |
-| int   | [int64](#int64)                                      |       |             |
-| bytes | [bytes](#bytes)                                      |       |             |
-| text  | [string](#string)                                    |       |             |
-| array | [MetadatumArray](#utxorpc-cardano-v1-MetadatumArray) |       |             |
-| map   | [MetadatumMap](#utxorpc-cardano-v1-MetadatumMap)     |       |             |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| parameter_change_action | [ParameterChangeAction](#utxorpc-v1beta-cardano-ParameterChangeAction) |  | Change on-chain parameters |
+| hard_fork_initiation_action | [HardForkInitiationAction](#utxorpc-v1beta-cardano-HardForkInitiationAction) |  | Initiate a Hard Fork |
+| treasury_withdrawals_action | [TreasuryWithdrawalsAction](#utxorpc-v1beta-cardano-TreasuryWithdrawalsAction) |  | Withdraw from the Treasury |
+| no_confidence_action | [NoConfidenceAction](#utxorpc-v1beta-cardano-NoConfidenceAction) |  |  |
+| update_committee_action | [UpdateCommitteeAction](#utxorpc-v1beta-cardano-UpdateCommitteeAction) |  | Update the Constitution Committee |
+| new_constitution_action | [NewConstitutionAction](#utxorpc-v1beta-cardano-NewConstitutionAction) |  | Replace the Constitution |
+| info_action | [InfoAction](#utxorpc-v1beta-cardano-InfoAction) |  | Info action |
 
-<a name="utxorpc-cardano-v1-MetadatumArray"></a>
+<a name="utxorpc-v1beta-cardano-GovernanceActionId"></a>
 
-## MetadatumArray
+### GovernanceActionId
 
-| Field | Type                                       | Label    | Description |
-| ----- | ------------------------------------------ | -------- | ----------- |
-| items | [Metadatum](#utxorpc-cardano-v1-Metadatum) | repeated |             |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| transaction_id | bytes |  |  |
+| governance_action_index | uint32 |  |  |
 
-<a name="utxorpc-cardano-v1-MetadatumMap"></a>
+<a name="utxorpc-v1beta-cardano-GovernanceActionProposal"></a>
 
-## MetadatumMap
+### GovernanceActionProposal
+Define a governance action proposal
 
-| Field | Type                                               | Label    | Description |
-| ----- | -------------------------------------------------- | -------- | ----------- |
-| pairs | [MetadatumPair](#utxorpc-cardano-v1-MetadatumPair) | repeated |             |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| deposit | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | The amount deposited for the governance action |
+| reward_account | bytes |  | The reward account the deposit should be returned to |
+| gov_action | [GovernanceAction](#utxorpc-v1beta-cardano-GovernanceAction) |  |  |
+| anchor | [Anchor](#utxorpc-v1beta-cardano-Anchor) |  |  |
 
-<a name="utxorpc-cardano-v1-MetadatumPair"></a>
+<a name="utxorpc-v1beta-cardano-HardForkInitiationAction"></a>
 
-## MetadatumPair
+### HardForkInitiationAction
 
-| Field | Type                                       | Label | Description |
-| ----- | ------------------------------------------ | ----- | ----------- |
-| key   | [Metadatum](#utxorpc-cardano-v1-Metadatum) |       |             |
-| value | [Metadatum](#utxorpc-cardano-v1-Metadatum) |       |             |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| gov_action_id | [GovernanceActionId](#utxorpc-v1beta-cardano-GovernanceActionId) |  |  |
+| protocol_version | [ProtocolVersion](#utxorpc-v1beta-cardano-ProtocolVersion) |  | The protocol version to fork to |
 
-<a name="utxorpc-cardano-v1-MoveInstantaneousRewardCert"></a>
+<a name="utxorpc-v1beta-cardano-HeavyDelegation"></a>
 
-## MoveInstantaneousRewardCert
+### HeavyDelegation
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| cert | string |  |  |
+| delegate_pk | string |  |  |
+| issuer_pk | string |  |  |
+| omega | uint32 |  |  |
+
+<a name="utxorpc-v1beta-cardano-InfoAction"></a>
+
+### InfoAction
+
+<a name="utxorpc-v1beta-cardano-Metadata"></a>
+
+### Metadata
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| label | uint64 |  |  |
+| value | [Metadatum](#utxorpc-v1beta-cardano-Metadatum) |  |  |
+
+<a name="utxorpc-v1beta-cardano-Metadatum"></a>
+
+### Metadatum
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| int | int64 |  |  |
+| bytes | bytes |  |  |
+| text | string |  |  |
+| array | [MetadatumArray](#utxorpc-v1beta-cardano-MetadatumArray) |  |  |
+| map | [MetadatumMap](#utxorpc-v1beta-cardano-MetadatumMap) |  |  |
+
+<a name="utxorpc-v1beta-cardano-MetadatumArray"></a>
+
+### MetadatumArray
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Metadatum](#utxorpc-v1beta-cardano-Metadatum) | repeated |  |
+
+<a name="utxorpc-v1beta-cardano-MetadatumMap"></a>
+
+### MetadatumMap
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pairs | [MetadatumPair](#utxorpc-v1beta-cardano-MetadatumPair) | repeated |  |
+
+<a name="utxorpc-v1beta-cardano-MetadatumPair"></a>
+
+### MetadatumPair
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [Metadatum](#utxorpc-v1beta-cardano-Metadatum) |  |  |
+| value | [Metadatum](#utxorpc-v1beta-cardano-Metadatum) |  |  |
+
+<a name="utxorpc-v1beta-cardano-MirCert"></a>
+
+### MirCert
 Represents a move instantaneous reward certificate in Cardano.
 
-Define the fields of MoveInstantaneousReward based on your original Rust code
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| from | [MirSource](#utxorpc-v1beta-cardano-MirSource) |  |  |
+| to | [MirTarget](#utxorpc-v1beta-cardano-MirTarget) | repeated |  |
+| other_pot | uint64 |  |  |
 
-<a name="utxorpc-cardano-v1-Multiasset"></a>
+<a name="utxorpc-v1beta-cardano-MirTarget"></a>
 
-## Multiasset
+### MirTarget
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| delta_coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+
+<a name="utxorpc-v1beta-cardano-Multiasset"></a>
+
+### Multiasset
 Represents a multi-asset group in the Cardano blockchain.
 
-| Field     | Type                               | Label    | Description                            |
-| --------- | ---------------------------------- | -------- | -------------------------------------- |
-| policy_id | [bytes](#bytes)                    |          | Policy ID governing the custom assets. |
-| assets    | [Asset](#utxorpc-cardano-v1-Asset) | repeated | List of custom assets.                 |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| policy_id | bytes |  | Policy ID governing the custom assets. |
+| assets | [Asset](#utxorpc-v1beta-cardano-Asset) | repeated | List of custom assets. |
 
-<a name="utxorpc-cardano-v1-NativeScript"></a>
+<a name="utxorpc-v1beta-cardano-NativeScript"></a>
 
-## NativeScript
-
+### NativeScript
 Represents a native script in Cardano.
 
-| Field             | Type                                                     | Label | Description                                                     |
-| ----------------- | -------------------------------------------------------- | ----- | --------------------------------------------------------------- |
-| script_pubkey     | [bytes](#bytes)                                          |       | Script based on an address key hash.                            |
-| script_all        | [NativeScriptList](#utxorpc-cardano-v1-NativeScriptList) |       | Script that requires all nested scripts to be satisfied.        |
-| script_any        | [NativeScriptList](#utxorpc-cardano-v1-NativeScriptList) |       | Script that requires any of the nested scripts to be satisfied. |
-| script_n_of_k     | [ScriptNOfK](#utxorpc-cardano-v1-ScriptNOfK)             |       | Script that requires k out of n nested scripts to be satisfied. |
-| invalid_before    | [uint64](#uint64)                                        |       | Slot number before which the script is invalid.                 |
-| invalid_hereafter | [uint64](#uint64)                                        |       | Slot number after which the script is invalid.                  |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| script_pubkey_hash | bytes |  | Script based on an address key hash. |
+| script_all | [NativeScriptList](#utxorpc-v1beta-cardano-NativeScriptList) |  | Script that requires all nested scripts to be satisfied. |
+| script_any | [NativeScriptList](#utxorpc-v1beta-cardano-NativeScriptList) |  | Script that requires any of the nested scripts to be satisfied. |
+| script_n_of_k | [ScriptNOfK](#utxorpc-v1beta-cardano-ScriptNOfK) |  | Script that requires k out of n nested scripts to be satisfied. |
+| invalid_before | uint64 |  | Slot number before which the script is invalid. |
+| invalid_hereafter | uint64 |  | Slot number after which the script is invalid. |
 
-<a name="utxorpc-cardano-v1-NativeScriptList"></a>
+<a name="utxorpc-v1beta-cardano-NativeScriptList"></a>
 
-## NativeScriptList
-
+### NativeScriptList
 Represents a list of native scripts.
 
-| Field | Type                                             | Label    | Description             |
-| ----- | ------------------------------------------------ | -------- | ----------------------- |
-| items | [NativeScript](#utxorpc-cardano-v1-NativeScript) | repeated | List of native scripts. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [NativeScript](#utxorpc-v1beta-cardano-NativeScript) | repeated | List of native scripts. |
 
-<a name="utxorpc-cardano-v1-PlutusData"></a>
+<a name="utxorpc-v1beta-cardano-NewCommitteeCredentials"></a>
 
-## PlutusData
+### NewCommitteeCredentials
+The new committee credential are passed as a map where the key is the committee cold credential hash
+and the value is the expiration epoch for that credential
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| committee_cold_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| expires_epoch | uint32 |  |  |
+
+<a name="utxorpc-v1beta-cardano-NewConstitutionAction"></a>
+
+### NewConstitutionAction
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| gov_action_id | [GovernanceActionId](#utxorpc-v1beta-cardano-GovernanceActionId) |  |  |
+| constitution | [Constitution](#utxorpc-v1beta-cardano-Constitution) |  | The Constitution proposed |
+
+<a name="utxorpc-v1beta-cardano-NoConfidenceAction"></a>
+
+### NoConfidenceAction
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| gov_action_id | [GovernanceActionId](#utxorpc-v1beta-cardano-GovernanceActionId) |  |  |
+
+<a name="utxorpc-v1beta-cardano-PParams"></a>
+
+### PParams
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| coins_per_utxo_byte | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | The number of coins per UTXO byte. |
+| max_tx_size | uint64 |  | The maximum transaction size. |
+| min_fee_coefficient | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | The minimum fee coefficient. |
+| min_fee_constant | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | The minimum fee constant. |
+| max_block_body_size | uint64 |  | The maximum block body size. |
+| max_block_header_size | uint64 |  | The maximum block header size. |
+| stake_key_deposit | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | The stake key deposit. |
+| pool_deposit | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | The pool deposit. |
+| pool_retirement_epoch_bound | uint64 |  | The pool retirement epoch bound. |
+| desired_number_of_pools | uint64 |  | The desired number of pools. |
+| pool_influence | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  | The pool influence. |
+| monetary_expansion | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  | The monetary expansion. |
+| treasury_expansion | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  | The treasury expansion. |
+| min_pool_cost | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | The minimum pool cost. |
+| protocol_version | [ProtocolVersion](#utxorpc-v1beta-cardano-ProtocolVersion) |  | The protocol version. |
+| max_value_size | uint64 |  | The maximum value size. |
+| collateral_percentage | uint64 |  | The collateral percentage. |
+| max_collateral_inputs | uint64 |  | The maximum collateral inputs. |
+| cost_models | [CostModels](#utxorpc-v1beta-cardano-CostModels) |  | The cost models. |
+| prices | [ExPrices](#utxorpc-v1beta-cardano-ExPrices) |  | The prices. |
+| max_execution_units_per_transaction | [ExUnits](#utxorpc-v1beta-cardano-ExUnits) |  | The maximum execution units per transaction. |
+| max_execution_units_per_block | [ExUnits](#utxorpc-v1beta-cardano-ExUnits) |  | The maximum execution units per block. |
+| min_fee_script_ref_cost_per_byte | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  | The minimum fee per script reference byte. |
+| pool_voting_thresholds | [VotingThresholds](#utxorpc-v1beta-cardano-VotingThresholds) |  | The pool voting thresholds. |
+| drep_voting_thresholds | [VotingThresholds](#utxorpc-v1beta-cardano-VotingThresholds) |  | The drep voting thresholds. |
+| min_committee_size | uint32 |  | The minimum committee size. |
+| committee_term_limit | uint64 |  | The committee term limit. |
+| governance_action_validity_period | uint64 |  | The governance action validity period. |
+| governance_action_deposit | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | The governance action deposit. |
+| drep_deposit | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | The drep deposit. |
+| drep_inactivity_period | uint64 |  | The drep inactivity period. |
+
+<a name="utxorpc-v1beta-cardano-ParameterChangeAction"></a>
+
+### ParameterChangeAction
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| gov_action_id | [GovernanceActionId](#utxorpc-v1beta-cardano-GovernanceActionId) |  |  |
+| protocol_param_update | [PParams](#utxorpc-v1beta-cardano-PParams) |  | The updates proposed |
+| policy_hash | bytes |  |  |
+
+<a name="utxorpc-v1beta-cardano-PlutusData"></a>
+
+### PlutusData
 Represents a Plutus data item in Cardano.
 
-| Field         | Type                                                   | Label | Description           |
-| ------------- | ------------------------------------------------------ | ----- | --------------------- |
-| constr        | [Constr](#utxorpc-cardano-v1-Constr)                   |       | Constructor.          |
-| map           | [PlutusDataMap](#utxorpc-cardano-v1-PlutusDataMap)     |       | Map of Plutus data.   |
-| big_int       | [BigInt](#utxorpc-cardano-v1-BigInt)                   |       | Big integer.          |
-| bounded_bytes | [BoundedBytes](#utxorpc-cardano-v1-BoundedBytes)       |       | Bounded bytes.        |
-| array         | [PlutusDataArray](#utxorpc-cardano-v1-PlutusDataArray) |       | Array of Plutus data. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| constr | [Constr](#utxorpc-v1beta-cardano-Constr) |  | Constructor. |
+| map | [PlutusDataMap](#utxorpc-v1beta-cardano-PlutusDataMap) |  | Map of Plutus data. |
+| big_int | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | Big integer. |
+| bounded_bytes | bytes |  | Bounded bytes. |
+| array | [PlutusDataArray](#utxorpc-v1beta-cardano-PlutusDataArray) |  | Array of Plutus data. |
 
-<a name="utxorpc-cardano-v1-PlutusDataArray"></a>
+<a name="utxorpc-v1beta-cardano-PlutusDataArray"></a>
 
-## PlutusDataArray
-
+### PlutusDataArray
 Represents an array of Plutus data in Cardano.
 
-| Field | Type                                         | Label    | Description                |
-| ----- | -------------------------------------------- | -------- | -------------------------- |
-| items | [PlutusData](#utxorpc-cardano-v1-PlutusData) | repeated | List of Plutus data items. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [PlutusData](#utxorpc-v1beta-cardano-PlutusData) | repeated | List of Plutus data items. |
 
-<a name="utxorpc-cardano-v1-PlutusDataMap"></a>
+<a name="utxorpc-v1beta-cardano-PlutusDataMap"></a>
 
-## PlutusDataMap
-
+### PlutusDataMap
 Represents a map of Plutus data in Cardano.
 
-| Field | Type                                                 | Label    | Description              |
-| ----- | ---------------------------------------------------- | -------- | ------------------------ |
-| pairs | [PlutusDataPair](#utxorpc-cardano-v1-PlutusDataPair) | repeated | List of key-value pairs. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pairs | [PlutusDataPair](#utxorpc-v1beta-cardano-PlutusDataPair) | repeated | List of key-value pairs. |
 
-<a name="utxorpc-cardano-v1-PlutusDataPair"></a>
+<a name="utxorpc-v1beta-cardano-PlutusDataPair"></a>
 
-## PlutusDataPair
-
+### PlutusDataPair
 Represents a key-value pair for Plutus data in Cardano.
 
-| Field | Type                                         | Label | Description        |
-| ----- | -------------------------------------------- | ----- | ------------------ |
-| key   | [PlutusData](#utxorpc-cardano-v1-PlutusData) |       | Key of the pair.   |
-| value | [PlutusData](#utxorpc-cardano-v1-PlutusData) |       | Value of the pair. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [PlutusData](#utxorpc-v1beta-cardano-PlutusData) |  | Key of the pair. |
+| value | [PlutusData](#utxorpc-v1beta-cardano-PlutusData) |  | Value of the pair. |
 
-<a name="utxorpc-cardano-v1-PoolMetadata"></a>
+<a name="utxorpc-v1beta-cardano-PoolMetadata"></a>
 
-## PoolMetadata
-
+### PoolMetadata
 Represents pool metadata in Cardano.
 
-Define the fields of PoolMetadata based on your original Rust code
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| url | string |  |  |
+| hash | bytes |  |  |
 
-<a name="utxorpc-cardano-v1-PoolRegistrationCert"></a>
+<a name="utxorpc-v1beta-cardano-PoolRegistrationCert"></a>
 
-## PoolRegistrationCert
-
+### PoolRegistrationCert
 Represents a pool registration certificate in Cardano.
 
-| Field          | Type                                             | Label    | Description                    |
-| -------------- | ------------------------------------------------ | -------- | ------------------------------ |
-| operator       | [bytes](#bytes)                                  |          | Operator key hash.             |
-| vrf_keyhash    | [bytes](#bytes)                                  |          | VRF key hash.                  |
-| pledge         | [uint64](#uint64)                                |          | Pledge amount.                 |
-| cost           | [uint64](#uint64)                                |          | Pool cost.                     |
-| margin         | [UnitInterval](#utxorpc-cardano-v1-UnitInterval) |          | Pool margin.                   |
-| reward_account | [bytes](#bytes)                                  |          | Reward account.                |
-| pool_owners    | [bytes](#bytes)                                  | repeated | List of pool owner key hashes. |
-| relays         | [Relay](#utxorpc-cardano-v1-Relay)               | repeated | List of relays.                |
-| pool_metadata  | [PoolMetadata](#utxorpc-cardano-v1-PoolMetadata) |          | Pool metadata.                 |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| operator | bytes |  | Operator key hash. |
+| vrf_keyhash | bytes |  | VRF key hash. |
+| pledge | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | Pledge amount. |
+| cost | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | Pool cost. |
+| margin | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  | Pool margin. |
+| reward_account | bytes |  | Reward account. |
+| pool_owners | bytes | repeated | List of pool owner key hashes. |
+| relays | [Relay](#utxorpc-v1beta-cardano-Relay) | repeated | List of relays. |
+| pool_metadata | [PoolMetadata](#utxorpc-v1beta-cardano-PoolMetadata) |  | Pool metadata. |
 
-<a name="utxorpc-cardano-v1-PoolRetirementCert"></a>
+<a name="utxorpc-v1beta-cardano-PoolRegistrationPattern"></a>
 
-## PoolRetirementCert
+### PoolRegistrationPattern
+Pattern for pool registration certificates
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| operator | bytes |  | Match registrations by this operator |
+| pool_keyhash | bytes |  | Match registrations for this pool (derived from operator) |
+
+<a name="utxorpc-v1beta-cardano-PoolRetirementCert"></a>
+
+### PoolRetirementCert
 Represents a pool retirement certificate in Cardano.
 
-| Field        | Type              | Label | Description       |
-| ------------ | ----------------- | ----- | ----------------- |
-| pool_keyhash | [bytes](#bytes)   |       | Pool key hash.    |
-| epoch        | [uint64](#uint64) |       | Retirement epoch. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pool_keyhash | bytes |  | Pool key hash. |
+| epoch | uint64 |  | Retirement epoch. |
 
-<a name="utxorpc-cardano-v1-Redeemer"></a>
+<a name="utxorpc-v1beta-cardano-PoolRetirementPattern"></a>
 
-## Redeemer
+### PoolRetirementPattern
+Pattern for pool retirement certificates
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pool_keyhash | bytes |  | Match retirements of this pool |
+| epoch | uint64 |  | Match retirements in this epoch |
+
+<a name="utxorpc-v1beta-cardano-PoolStakeShare"></a>
+
+### PoolStakeShare
+Per-pool stake share. Mirrors Ouroboros IndividualPoolStake.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pool_keyhash | bytes |  | Pool key hash (pool id). |
+| stake_fraction | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  | Fraction of total active stake delegated to this pool. |
+| vrf_keyhash | bytes |  | Pool&#39;s VRF key hash, as reported by the node. |
+
+<a name="utxorpc-v1beta-cardano-PoolVotingThresholds"></a>
+
+### PoolVotingThresholds
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| motion_no_confidence | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| committee_normal | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| committee_no_confidence | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| hard_fork_initiation | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+| pp_security_group | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  |  |
+
+<a name="utxorpc-v1beta-cardano-ProtocolConsts"></a>
+
+### ProtocolConsts
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| k | uint32 |  |  |
+| protocol_magic | uint32 |  |  |
+| vss_max_ttl | uint32 |  |  |
+| vss_min_ttl | uint32 |  |  |
+
+<a name="utxorpc-v1beta-cardano-ProtocolVersion"></a>
+
+### ProtocolVersion
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| major | uint32 |  |  |
+| minor | uint32 |  |  |
+
+<a name="utxorpc-v1beta-cardano-RationalNumber"></a>
+
+### RationalNumber
+Represents a rational number as a fraction.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| numerator | int32 |  |  |
+| denominator | uint32 |  |  |
+
+<a name="utxorpc-v1beta-cardano-Redeemer"></a>
+
+### Redeemer
 Redeemer information for a Plutus script.
 
-| Field   | Type                                         | Label | Description                               |
-| ------- | -------------------------------------------- | ----- | ----------------------------------------- |
-| purpose | [Purpose](#utxorpc-cardano-v1-Purpose)       |       | Purpose of the redeemer.                  |
-| datum   | [PlutusData](#utxorpc-cardano-v1-PlutusData) |       | Plutus data associated with the redeemer. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| purpose | [RedeemerPurpose](#utxorpc-v1beta-cardano-RedeemerPurpose) |  | Purpose of the redeemer. |
+| payload | [PlutusData](#utxorpc-v1beta-cardano-PlutusData) |  | Plutus data associated with the redeemer. |
+| index | uint32 |  | Index of the redeemer. |
+| ex_units | [ExUnits](#utxorpc-v1beta-cardano-ExUnits) |  | Execution units consumed by the redeemer. |
+| original_cbor | bytes |  | Original cbor-encoded data as seen on-chain |
 
-<a name="utxorpc-cardano-v1-Relay"></a>
+<a name="utxorpc-v1beta-cardano-RegCert"></a>
 
-## Relay
+### RegCert
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+
+<a name="utxorpc-v1beta-cardano-RegDRepCert"></a>
+
+### RegDRepCert
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| drep_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+| anchor | [Anchor](#utxorpc-v1beta-cardano-Anchor) |  |  |
+
+<a name="utxorpc-v1beta-cardano-Relay"></a>
+
+### Relay
 Represents a relay in Cardano.
 
-Define the fields of Relay based on your original Rust code
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ip_v4 | bytes |  |  |
+| ip_v6 | bytes |  |  |
+| dns_name | string |  |  |
+| port | uint32 |  |  |
 
-<a name="utxorpc-cardano-v1-Script"></a>
+<a name="utxorpc-v1beta-cardano-ResignCommitteeColdCert"></a>
 
-## Script
+### ResignCommitteeColdCert
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| committee_cold_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| anchor | [Anchor](#utxorpc-v1beta-cardano-Anchor) |  |  |
+
+<a name="utxorpc-v1beta-cardano-Script"></a>
+
+### Script
 Represents a script in Cardano.
 
-| Field     | Type                                             | Label | Description       |
-| --------- | ------------------------------------------------ | ----- | ----------------- |
-| native    | [NativeScript](#utxorpc-cardano-v1-NativeScript) |       | Native script.    |
-| plutus_v1 | [bytes](#bytes)                                  |       | Plutus V1 script. |
-| plutus_v2 | [bytes](#bytes)                                  |       | Plutus V2 script. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| native | [NativeScript](#utxorpc-v1beta-cardano-NativeScript) |  | Native script. |
+| plutus_v1 | bytes |  | Plutus V1 script. |
+| plutus_v2 | bytes |  | Plutus V2 script. |
+| plutus_v3 | bytes |  | Plutus V3 script. |
+| plutus_v4 | bytes |  | Plutus V4 script. |
 
-<a name="utxorpc-cardano-v1-ScriptNOfK"></a>
+<a name="utxorpc-v1beta-cardano-ScriptNOfK"></a>
 
-## ScriptNOfK
-
+### ScriptNOfK
 Represents a &#34;k out of n&#34; native script.
 
-| Field   | Type                                             | Label    | Description                               |
-| ------- | ------------------------------------------------ | -------- | ----------------------------------------- |
-| k       | [uint32](#uint32)                                |          | The number of required satisfied scripts. |
-| scripts | [NativeScript](#utxorpc-cardano-v1-NativeScript) | repeated | List of native scripts.                   |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| k | uint32 |  | The number of required satisfied scripts. |
+| scripts | [NativeScript](#utxorpc-v1beta-cardano-NativeScript) | repeated | List of native scripts. |
 
-<a name="utxorpc-cardano-v1-StakeCredential"></a>
+<a name="utxorpc-v1beta-cardano-SoftforkRule"></a>
 
-## StakeCredential
+### SoftforkRule
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| init_thd | string |  |  |
+| min_thd | string |  |  |
+| thd_decrement | string |  |  |
+
+<a name="utxorpc-v1beta-cardano-StakeCredential"></a>
+
+### StakeCredential
 Represents a stake credential in Cardano.
 
-| Field         | Type            | Label | Description       |
-| ------------- | --------------- | ----- | ----------------- |
-| addr_key_hash | [bytes](#bytes) |       | Address key hash. |
-| script_hash   | [bytes](#bytes) |       | Script hash.      |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| addr_key_hash | bytes |  | Address key hash. |
+| script_hash | bytes |  | Script hash. |
 
-<a name="utxorpc-cardano-v1-StakeDelegationCert"></a>
+<a name="utxorpc-v1beta-cardano-StakeDelegationCert"></a>
 
-## StakeDelegationCert
-
+### StakeDelegationCert
 Represents a stake delegation certificate in Cardano.
 
-| Field            | Type                                                   | Label | Description       |
-| ---------------- | ------------------------------------------------------ | ----- | ----------------- |
-| stake_credential | [StakeCredential](#utxorpc-cardano-v1-StakeCredential) |       | Stake credential. |
-| pool_keyhash     | [bytes](#bytes)                                        |       | Pool key hash.    |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  | Stake credential. |
+| pool_keyhash | bytes |  | Pool key hash. |
 
-<a name="utxorpc-cardano-v1-Tx"></a>
+<a name="utxorpc-v1beta-cardano-StakeDelegationPattern"></a>
 
-## Tx
+### StakeDelegationPattern
+Pattern for stake delegation certificates
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  | Match delegations from this credential |
+| pool_keyhash | bytes |  | Match delegations to this pool |
+
+<a name="utxorpc-v1beta-cardano-StakePoolDistribution"></a>
+
+### StakePoolDistribution
+Result of a stake pool distribution query.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pools | [PoolStakeShare](#utxorpc-v1beta-cardano-PoolStakeShare) | repeated | One entry per pool present in the snapshot. |
+
+<a name="utxorpc-v1beta-cardano-StakeRegDelegCert"></a>
+
+### StakeRegDelegCert
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| pool_keyhash | bytes |  |  |
+| coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+
+<a name="utxorpc-v1beta-cardano-StakeVoteDelegCert"></a>
+
+### StakeVoteDelegCert
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| pool_keyhash | bytes |  |  |
+| drep | [DRep](#utxorpc-v1beta-cardano-DRep) |  |  |
+
+<a name="utxorpc-v1beta-cardano-StakeVoteRegDelegCert"></a>
+
+### StakeVoteRegDelegCert
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| pool_keyhash | bytes |  |  |
+| drep | [DRep](#utxorpc-v1beta-cardano-DRep) |  |  |
+| coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+
+<a name="utxorpc-v1beta-cardano-StateData"></a>
+
+### StateData
+Envelope of a Cardano ledger-state query result.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_pool_distribution | [StakePoolDistribution](#utxorpc-v1beta-cardano-StakePoolDistribution) |  | Result of a stake pool distribution query. |
+
+<a name="utxorpc-v1beta-cardano-StateQuery"></a>
+
+### StateQuery
+Envelope of a Cardano ledger-state query.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_pool_distribution | [GetStakePoolDistribution](#utxorpc-v1beta-cardano-GetStakePoolDistribution) |  | Active stake distribution across pools. |
+
+<a name="utxorpc-v1beta-cardano-TreasuryWithdrawalsAction"></a>
+
+### TreasuryWithdrawalsAction
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| withdrawals | [WithdrawalAmount](#utxorpc-v1beta-cardano-WithdrawalAmount) | repeated | A list of the withdrawals to make |
+| policy_hash | bytes |  |  |
+
+<a name="utxorpc-v1beta-cardano-Tx"></a>
+
+### Tx
 Represents a transaction in the Cardano blockchain.
 
-| Field            | Type                                           | Label    | Description                                                |
-| ---------------- | ---------------------------------------------- | -------- | ---------------------------------------------------------- |
-| inputs           | [TxInput](#utxorpc-cardano-v1-TxInput)         | repeated | List of transaction inputs                                 |
-| outputs          | [TxOutput](#utxorpc-cardano-v1-TxOutput)       | repeated | List of transaction outputs                                |
-| certificates     | [Certificate](#utxorpc-cardano-v1-Certificate) | repeated | List of certificates                                       |
-| withdrawals      | [Withdrawal](#utxorpc-cardano-v1-Withdrawal)   | repeated | List of withdrawals                                        |
-| mint             | [Multiasset](#utxorpc-cardano-v1-Multiasset)   | repeated | List of minted custom assets                               |
-| reference_inputs | [TxInput](#utxorpc-cardano-v1-TxInput)         | repeated | List of reference inputs                                   |
-| witnesses        | [WitnessSet](#utxorpc-cardano-v1-WitnessSet)   |          | Witnesses that validte the transaction                     |
-| collateral       | [Collateral](#utxorpc-cardano-v1-Collateral)   |          | Collateral details in case of failed transaction           |
-| fee              | [uint64](#uint64)                              |          | Transaction fee in ADA                                     |
-| validity         | [TxValidity](#utxorpc-cardano-v1-TxValidity)   |          | Validity interval of the transaction                       |
-| successful       | [bool](#bool)                                  |          | Flag indicating whether the transaction was successful     |
-| auxiliary        | [AuxData](#utxorpc-cardano-v1-AuxData)         |          | Auxiliary data not directly tied to the validation process |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| inputs | [TxInput](#utxorpc-v1beta-cardano-TxInput) | repeated | List of transaction inputs |
+| outputs | [TxOutput](#utxorpc-v1beta-cardano-TxOutput) | repeated | List of transaction outputs |
+| certificates | [Certificate](#utxorpc-v1beta-cardano-Certificate) | repeated | List of certificates |
+| withdrawals | [Withdrawal](#utxorpc-v1beta-cardano-Withdrawal) | repeated | List of withdrawals |
+| mint | [Multiasset](#utxorpc-v1beta-cardano-Multiasset) | repeated | List of minted custom assets |
+| reference_inputs | [TxInput](#utxorpc-v1beta-cardano-TxInput) | repeated | List of reference inputs |
+| witnesses | [WitnessSet](#utxorpc-v1beta-cardano-WitnessSet) |  | Witnesses that validte the transaction |
+| collateral | [Collateral](#utxorpc-v1beta-cardano-Collateral) |  | Collateral details in case of failed transaction |
+| fee | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | Transaction fee in ADA |
+| validity | [TxValidity](#utxorpc-v1beta-cardano-TxValidity) |  | Validity interval of the transaction |
+| successful | bool |  | Flag indicating whether the transaction was successful |
+| auxiliary | [AuxData](#utxorpc-v1beta-cardano-AuxData) |  | Auxiliary data not directly tied to the validation process |
+| hash | bytes |  | Hash of the transaction that serves as main identifier |
+| proposals | [GovernanceActionProposal](#utxorpc-v1beta-cardano-GovernanceActionProposal) | repeated | List of governance actions proposed |
+| votes | [VoterVotes](#utxorpc-v1beta-cardano-VoterVotes) | repeated | List of voters and their corresponding votes cast in this transaction |
 
-<a name="utxorpc-cardano-v1-TxInput"></a>
+<a name="utxorpc-v1beta-cardano-TxEval"></a>
 
-## TxInput
+### TxEval
+Result of evaluating a transaction against the current ledger state.
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| fee | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | Computed minimum fee for the transaction. |
+| ex_units | [ExUnits](#utxorpc-v1beta-cardano-ExUnits) |  | Total execution units consumed across all redeemers. |
+| errors | [EvalReport](#utxorpc-v1beta-cardano-EvalReport) | repeated | Per-redeemer script execution errors. |
+| traces | [EvalReport](#utxorpc-v1beta-cardano-EvalReport) | repeated | Per-redeemer script execution traces. |
+| redeemers | [Redeemer](#utxorpc-v1beta-cardano-Redeemer) | repeated | Redeemers with evaluated execution units. |
+
+<a name="utxorpc-v1beta-cardano-TxFeePolicy"></a>
+
+### TxFeePolicy
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| multiplier | string |  |  |
+| summand | string |  |  |
+
+<a name="utxorpc-v1beta-cardano-TxInput"></a>
+
+### TxInput
 Represents a transaction input in the Cardano blockchain.
 
-| Field        | Type                                     | Label | Description                                                           |
-| ------------ | ---------------------------------------- | ----- | --------------------------------------------------------------------- |
-| tx_hash      | [bytes](#bytes)                          |       | Hash of the previous transaction.                                     |
-| output_index | [uint32](#uint32)                        |       | Index of the output in the previous transaction.                      |
-| as_output    | [TxOutput](#utxorpc-cardano-v1-TxOutput) |       | Content of the input represented as output of the related transaction |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| tx_hash | bytes |  | Hash of the previous transaction. |
+| output_index | uint32 |  | Index of the output in the previous transaction. |
+| as_output | [TxOutput](#utxorpc-v1beta-cardano-TxOutput) |  | Content of the input represented as output of the related transaction |
+| redeemer | [Redeemer](#utxorpc-v1beta-cardano-Redeemer) | optional | Redeemer for the Plutus script. |
 
-<a name="utxorpc-cardano-v1-TxOutput"></a>
+<a name="utxorpc-v1beta-cardano-TxOutput"></a>
 
-## TxOutput
-
+### TxOutput
 Represents a transaction output in the Cardano blockchain.
 
-| Field      | Type                                         | Label    | Description                                       |
-| ---------- | -------------------------------------------- | -------- | ------------------------------------------------- |
-| address    | [bytes](#bytes)                              |          | Address receiving the output.                     |
-| coin       | [uint64](#uint64)                            |          | Amount of ADA in the output.                      |
-| assets     | [Multiasset](#utxorpc-cardano-v1-Multiasset) | repeated | Additional native (non-ADA) assets in the output. |
-| datum      | [PlutusData](#utxorpc-cardano-v1-PlutusData) |          | Plutus data associated with the output.           |
-| datum_hash | [bytes](#bytes)                              |          | Hash of the Plutus data.                          |
-| script     | [Script](#utxorpc-cardano-v1-Script)         |          | Script associated with the output.                |
-| redeemer   | [Redeemer](#utxorpc-cardano-v1-Redeemer)     |          | Redeemer for the Plutus script.                   |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| address | bytes |  | Address receiving the output. |
+| coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | Amount of ADA in the output. |
+| assets | [Multiasset](#utxorpc-v1beta-cardano-Multiasset) | repeated | Additional native (non-ADA) assets in the output. |
+| datum | [Datum](#utxorpc-v1beta-cardano-Datum) | optional | Plutus data associated with the output. |
+| script | [Script](#utxorpc-v1beta-cardano-Script) | optional | Script associated with the output. |
+| original_cbor | bytes | optional | Original cbor-encoded output as seen on-chain. |
 
-<a name="utxorpc-cardano-v1-TxValidity"></a>
+<a name="utxorpc-v1beta-cardano-TxOutputPattern"></a>
 
-## TxValidity
+### TxOutputPattern
+Pattern of a tx output that can be used to evaluate matching predicates.
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| address | [AddressPattern](#utxorpc-v1beta-cardano-AddressPattern) | optional | Match any address in the output that exhibits this pattern. |
+| asset | [AssetPattern](#utxorpc-v1beta-cardano-AssetPattern) | optional | Match any asset in the output that exhibits this pattern. |
+
+<a name="utxorpc-v1beta-cardano-TxPattern"></a>
+
+### TxPattern
+Pattern of a Tx that can be used to evaluate matching predicates.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| consumes | [TxOutputPattern](#utxorpc-v1beta-cardano-TxOutputPattern) |  | Match any input that exhibits this pattern. |
+| produces | [TxOutputPattern](#utxorpc-v1beta-cardano-TxOutputPattern) |  | Match any output that exhibits this pattern. |
+| has_address | [AddressPattern](#utxorpc-v1beta-cardano-AddressPattern) |  | Match any address (inputs, outputs, collateral, etc) that exhibits this pattern. |
+| moves_asset | [AssetPattern](#utxorpc-v1beta-cardano-AssetPattern) |  | Match any asset that exhibits this pattern. |
+| mints_asset | [AssetPattern](#utxorpc-v1beta-cardano-AssetPattern) |  | Match any tx that either mint or burn the the asset pattern. |
+| has_certificate | [CertificatePattern](#utxorpc-v1beta-cardano-CertificatePattern) |  | Match any transaction that includes this certificate pattern. |
+
+<a name="utxorpc-v1beta-cardano-TxValidity"></a>
+
+### TxValidity
 Represents the validity interval of a transaction.
 
-| Field | Type              | Label | Description                                       |
-| ----- | ----------------- | ----- | ------------------------------------------------- |
-| start | [uint64](#uint64) |       | Start of the validity interval.                   |
-| ttl   | [uint64](#uint64) |       | End of the validity interval (TTL: Time to Live). |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| start | uint64 |  | Start of the validity interval. |
+| ttl | uint64 |  | End of the validity interval (TTL: Time to Live). |
 
-<a name="utxorpc-cardano-v1-UnitInterval"></a>
+<a name="utxorpc-v1beta-cardano-UnRegCert"></a>
 
-## UnitInterval
+### UnRegCert
 
-Represents a unit interval in Cardano.
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
 
-Define the fields of UnitInterval based on your original Rust code
+<a name="utxorpc-v1beta-cardano-UnRegDRepCert"></a>
 
-<a name="utxorpc-cardano-v1-VKeyWitness"></a>
+### UnRegDRepCert
 
-## VKeyWitness
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| drep_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
 
+<a name="utxorpc-v1beta-cardano-UpdateCommitteeAction"></a>
+
+### UpdateCommitteeAction
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| gov_action_id | [GovernanceActionId](#utxorpc-v1beta-cardano-GovernanceActionId) |  |  |
+| remove_committee_credentials | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) | repeated | Committee members to remove (if any) |
+| new_committee_credentials | [NewCommitteeCredentials](#utxorpc-v1beta-cardano-NewCommitteeCredentials) | repeated | The new committee members |
+| new_committee_threshold | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) |  | The required threshold for the committee |
+
+<a name="utxorpc-v1beta-cardano-UpdateDRepCert"></a>
+
+### UpdateDRepCert
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| drep_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| anchor | [Anchor](#utxorpc-v1beta-cardano-Anchor) |  |  |
+
+<a name="utxorpc-v1beta-cardano-VKeyWitness"></a>
+
+### VKeyWitness
 Represents a VKey witness used to sign a transaction.
 
-| Field     | Type            | Label | Description                                           |
-| --------- | --------------- | ----- | ----------------------------------------------------- |
-| vkey      | [bytes](#bytes) |       | Verification key.                                     |
-| signature | [bytes](#bytes) |       | Signature generated using the associated private key. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| vkey | bytes |  | Verification key. |
+| signature | bytes |  | Signature generated using the associated private key. |
 
-<a name="utxorpc-cardano-v1-Withdrawal"></a>
+<a name="utxorpc-v1beta-cardano-VoteDelegCert"></a>
 
-## Withdrawal
+### VoteDelegCert
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| drep | [DRep](#utxorpc-v1beta-cardano-DRep) |  |  |
+
+<a name="utxorpc-v1beta-cardano-VoteRegDelegCert"></a>
+
+### VoteRegDelegCert
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stake_credential | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  |  |
+| drep | [DRep](#utxorpc-v1beta-cardano-DRep) |  |  |
+| coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+
+<a name="utxorpc-v1beta-cardano-VoterVotes"></a>
+
+### VoterVotes
+Groups a voter with all votes they cast in the transaction.
+SPOs can only identify via pool key hash; DReps and CC members may use key or script hash.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| constitutional_committee | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  | Constitutional Committee member. |
+| drep | [StakeCredential](#utxorpc-v1beta-cardano-StakeCredential) |  | Delegated Representative. |
+| spo | bytes |  | Stake Pool Operator (pool key hash). |
+| votes | [VotingProcedure](#utxorpc-v1beta-cardano-VotingProcedure) | repeated | Votes cast by this voter. |
+
+<a name="utxorpc-v1beta-cardano-VotingProcedure"></a>
+
+### VotingProcedure
+A single cast vote on a governance action.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| gov_action_id | [GovernanceActionId](#utxorpc-v1beta-cardano-GovernanceActionId) |  | ID of the governance action being voted on. |
+| vote | [Vote](#utxorpc-v1beta-cardano-Vote) |  | The vote cast. |
+| anchor | [Anchor](#utxorpc-v1beta-cardano-Anchor) | optional | Optional anchor for voter rationale. |
+
+<a name="utxorpc-v1beta-cardano-VotingThresholds"></a>
+
+### VotingThresholds
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| thresholds | [RationalNumber](#utxorpc-v1beta-cardano-RationalNumber) | repeated |  |
+
+<a name="utxorpc-v1beta-cardano-VssCert"></a>
+
+### VssCert
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| expiry_epoch | uint32 |  |  |
+| signature | string |  |  |
+| signing_key | string |  |  |
+| vss_key | string |  |  |
+
+<a name="utxorpc-v1beta-cardano-Withdrawal"></a>
+
+### Withdrawal
 Represents a withdrawal from a reward account.
 
-| Field          | Type              | Label | Description                    |
-| -------------- | ----------------- | ----- | ------------------------------ |
-| reward_account | [bytes](#bytes)   |       | Address of the reward account. |
-| coin           | [uint64](#uint64) |       | Amount of ADA withdrawn.       |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| reward_account | bytes |  | Address of the reward account. |
+| coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  | Amount of ADA withdrawn. |
+| redeemer | [Redeemer](#utxorpc-v1beta-cardano-Redeemer) |  | Redeemer for the Plutus script. |
 
-<a name="utxorpc-cardano-v1-WitnessSet"></a>
+<a name="utxorpc-v1beta-cardano-WithdrawalAmount"></a>
 
-## WitnessSet
+### WithdrawalAmount
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| reward_account | bytes |  |  |
+| coin | [BigInt](#utxorpc-v1beta-cardano-BigInt) |  |  |
+
+<a name="utxorpc-v1beta-cardano-WitnessSet"></a>
+
+### WitnessSet
 Represents a set of witnesses that validate a transaction
 
-| Field         | Type                                           | Label    | Description                                                   |
-| ------------- | ---------------------------------------------- | -------- | ------------------------------------------------------------- |
-| vkeywitness   | [VKeyWitness](#utxorpc-cardano-v1-VKeyWitness) | repeated | List of VKey witnesses.                                       |
-| script        | [Script](#utxorpc-cardano-v1-Script)           | repeated | List of scripts.                                              |
-| plutus_datums | [PlutusData](#utxorpc-cardano-v1-PlutusData)   | repeated | List of Plutus data elements associated with the transaction. |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| vkeywitness | [VKeyWitness](#utxorpc-v1beta-cardano-VKeyWitness) | repeated | List of VKey witnesses. |
+| script | [Script](#utxorpc-v1beta-cardano-Script) | repeated | List of scripts. |
+| plutus_datums | [PlutusData](#utxorpc-v1beta-cardano-PlutusData) | repeated | List of Plutus data elements associated with the transaction. |
+| redeemers | [Redeemer](#utxorpc-v1beta-cardano-Redeemer) | repeated | List of redeemers |
+| bootstrapWitnesses | [BootstrapWitness](#utxorpc-v1beta-cardano-BootstrapWitness) | repeated | List of bootstrap witnesses |
 
-<a name="utxorpc-cardano-v1-Purpose"></a>
+ 
 
-## Purpose
+<a name="utxorpc-v1beta-cardano-MirSource"></a>
 
+### MirSource
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| MIR_SOURCE_UNSPECIFIED | 0 |  |
+| MIR_SOURCE_RESERVES | 1 |  |
+| MIR_SOURCE_TREASURY | 2 |  |
+
+<a name="utxorpc-v1beta-cardano-RedeemerPurpose"></a>
+
+### RedeemerPurpose
 Purpose of the redeemer in a transaction.
 
-| Name                | Number | Description |
-| ------------------- | ------ | ----------- |
-| PURPOSE_UNSPECIFIED | 0      |             |
-| PURPOSE_SPEND       | 1      |             |
-| PURPOSE_MINT        | 2      |             |
-| PURPOSE_CERT        | 3      |             |
-| PURPOSE_REWARD      | 4      |             |
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| REDEEMER_PURPOSE_UNSPECIFIED | 0 |  |
+| REDEEMER_PURPOSE_SPEND | 1 |  |
+| REDEEMER_PURPOSE_MINT | 2 |  |
+| REDEEMER_PURPOSE_CERT | 3 |  |
+| REDEEMER_PURPOSE_REWARD | 4 |  |
+| REDEEMER_PURPOSE_VOTE | 5 |  |
+| REDEEMER_PURPOSE_PROPOSE | 6 |  |
+
+<a name="utxorpc-v1beta-cardano-Vote"></a>
+
+### Vote
+Valid vote choices for a governance action (CIP-1694).
+On-chain CBOR mapping: No=0, Yes=1, Abstain=2.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| VOTE_UNSPECIFIED | 0 |  |
+| VOTE_NO | 1 |  |
+| VOTE_YES | 2 |  |
+| VOTE_ABSTAIN | 3 |  |
+
+ 
+
+ 
+
+ 
+
+<a name="utxorpc_v1beta_handshake_handshake-proto"></a>
