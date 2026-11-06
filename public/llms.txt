@@ -1,8 +1,8 @@
 # UTxO RPC
 
-> UTxO RPC (u5c) is a gRPC interface for interacting with UTxO-based blockchains. It is defined in protobuf, with Sync, Query, Submit and Watch modules and generated SDKs in several languages.
+> UTxO RPC (u5c) is a gRPC interface for interacting with UTxO-based blockchains. It is defined in protobuf, with ledger-agnostic Sync, Query, Submit and Watch modules, one set of message types per ledger, and generated SDKs in several languages.
 
-Packages follow `utxorpc.{version}.{module}`: `v1alpha` and `v1beta` are published, and `v1` isn't released yet. The Cardano types live in `cardano`.
+Packages follow `utxorpc.{version}.{module}`: `v1alpha` and `v1beta` are published, and `v1` isn't released yet. Each ledger is its own package under the version, such as `cardano` and `bitcoin`.
 
 ## Start here
 
@@ -17,7 +17,11 @@ Packages follow `utxorpc.{version}.{module}`: `v1alpha` and `v1beta` are publish
 - [Query](https://utxorpc.org/query/intro): read chain and ledger state ([schema](https://utxorpc.org/query/spec))
 - [Submit](https://utxorpc.org/submit/intro): evaluate and submit transactions ([schema](https://utxorpc.org/submit/spec))
 - [Watch](https://utxorpc.org/watch/intro): react to matching transactions ([schema](https://utxorpc.org/watch/spec))
-- [Cardano types](https://utxorpc.org/cardano): the `cardano` message schema
+
+## Ledgers
+
+- [Cardano](https://utxorpc.org/cardano): the `cardano` message schema
+- [Bitcoin](https://utxorpc.org/bitcoin): the `bitcoin` message schema
 
 ## SDKs
 
