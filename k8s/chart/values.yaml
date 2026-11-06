@@ -65,6 +65,11 @@ grpcui:
   # host:port of a UTxO RPC server with gRPC reflection enabled.
   target: ""
   plaintext: false
+  # The services gRPC UI exposes, by full name. Anything else is hidden and its
+  # calls are refused, so this is what keeps a public playground from reaching
+  # services it shouldn't. Required: without a list gRPC UI would expose every
+  # service the target reflects.
+  services: []
   # Optional Secret with an API_KEY key, sent to the target in the header named
   # by API_KEY_HEADER (set it in env if the default doesn't apply).
   existingSecret: ""
