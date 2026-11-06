@@ -20,6 +20,7 @@
   "submit": "Submit Module",
   "sync": "Sync Module",
   "watch": "Watch Module",
+  "handshake": "Handshake Module",
   "playground":  { "display": "hidden" },
   "-- Ledgers --": {
     "type": "separator",

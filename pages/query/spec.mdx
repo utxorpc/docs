@@ -1,247 +1,279 @@
-# Query
+# Query Module Spec
 
-<a name="utxorpc-v1alpha-query-AnyChainDatum"></a>
+This reference covers `v1beta`, generated from spec v0.19.2.
+
+<a name="utxorpc-v1beta-query-AnyChainBlock"></a>
+
+### AnyChainBlock
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| native_bytes | bytes |  | Original bytes as defined by the chain |
+| cardano | [utxorpc.v1beta.cardano.Block](/cardano#utxorpc-v1beta-cardano-Block) |  | A parsed Cardano block. |
+
+<a name="utxorpc-v1beta-query-AnyChainDatum"></a>
 
 ### AnyChainDatum
 An evenlope that holds a datum for any of the compatible chains
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| native_bytes | [bytes](#bytes) |  | Original bytes as defined by the chain |
-| key | [bytes](#bytes) |  |  |
-| cardano | [utxorpc.v1alpha.cardano.PlutusData](#utxorpc-v1alpha-cardano-PlutusData) |  | A cardano UTxO |
+| native_bytes | bytes |  | Original bytes as defined by the chain |
+| key | bytes |  |  |
+| cardano | [utxorpc.v1beta.cardano.PlutusData](/cardano#utxorpc-v1beta-cardano-PlutusData) |  | A cardano UTxO |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-AnyChainParams"></a>
+<a name="utxorpc-v1beta-query-AnyChainParams"></a>
 
 ### AnyChainParams
 An evenlope that holds parameter data from any of the compatible chains
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| cardano | [utxorpc.v1beta.cardano.PParams](/cardano#utxorpc-v1beta-cardano-PParams) |  | Cardano parameters |
+
+<a name="utxorpc-v1beta-query-AnyChainStateData"></a>
+
+### AnyChainStateData
+An envelope that wraps a chain-specific ledger-state query result.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| cardano | [utxorpc.v1alpha.cardano.PParams](#utxorpc-v1alpha-cardano-PParams) |  | Cardano parameters |
+| cardano | [utxorpc.v1beta.cardano.StateData](/cardano#utxorpc-v1beta-cardano-StateData) |  | A Cardano ledger-state query result. |
 
+<a name="utxorpc-v1beta-query-AnyChainStateQuery"></a>
 
+### AnyChainStateQuery
+An envelope that wraps a chain-specific ledger-state query.
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| cardano | [utxorpc.v1beta.cardano.StateQuery](/cardano#utxorpc-v1beta-cardano-StateQuery) |  | A Cardano ledger-state query. |
 
+<a name="utxorpc-v1beta-query-AnyChainTx"></a>
 
+### AnyChainTx
+Represents a transaction from any supported blockchain.
 
-<a name="utxorpc-v1alpha-query-AnyUtxoData"></a>
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| native_bytes | bytes |  | Original bytes as defined by the chain |
+| cardano | [utxorpc.v1beta.cardano.Tx](/cardano#utxorpc-v1beta-cardano-Tx) |  | A Cardano transaction. |
+| block_ref | [ChainPoint](#utxorpc-v1beta-query-ChainPoint) |  | The chain point that represents the block this transaction belongs to. |
+
+<a name="utxorpc-v1beta-query-AnyUtxoData"></a>
 
 ### AnyUtxoData
 An evenlope that holds an UTxO from any of compatible chains
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| native_bytes | [bytes](#bytes) |  | Original bytes as defined by the chain |
-| txo_ref | [TxoRef](#utxorpc-v1alpha-query-TxoRef) |  | Hash of the previous transaction. |
-| cardano | [utxorpc.v1alpha.cardano.TxOutput](#utxorpc-v1alpha-cardano-TxOutput) |  | A cardano UTxO |
+| native_bytes | bytes |  | Original bytes as defined by the chain |
+| txo_ref | [TxoRef](#utxorpc-v1beta-query-TxoRef) |  | Hash of the previous transaction. |
+| cardano | [utxorpc.v1beta.cardano.TxOutput](/cardano#utxorpc-v1beta-cardano-TxOutput) |  | A cardano UTxO |
+| block_ref | [ChainPoint](#utxorpc-v1beta-query-ChainPoint) |  | The chain point that represents the block this UTxO was created in. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-AnyUtxoPattern"></a>
+<a name="utxorpc-v1beta-query-AnyUtxoPattern"></a>
 
 ### AnyUtxoPattern
 An evenlope that holds an UTxO patterns from any of compatible chains
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| cardano | [utxorpc.v1alpha.cardano.TxOutputPattern](#utxorpc-v1alpha-cardano-TxOutputPattern) |  |  |
+| cardano | [utxorpc.v1beta.cardano.TxOutputPattern](/cardano#utxorpc-v1beta-cardano-TxOutputPattern) |  |  |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-ChainPoint"></a>
+<a name="utxorpc-v1beta-query-ChainPoint"></a>
 
 ### ChainPoint
 Represents a specific point in the blockchain.
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| slot | [uint64](#uint64) |  | Slot number. |
-| hash | [bytes](#bytes) |  | Block hash. |
+| slot | uint64 |  | Slot number. |
+| hash | bytes |  | Block hash. |
+| height | uint64 |  | Block height. |
+| timestamp | uint64 |  | Block ms timestamp |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-ReadDataRequest"></a>
+<a name="utxorpc-v1beta-query-ReadDataRequest"></a>
 
 ### ReadDataRequest
 Request to get data (as in plural of datum)
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| keys | [bytes](#bytes) | repeated |  |
-| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields in the response. |
+| keys | bytes | repeated |  |
+| field_mask | google.protobuf.FieldMask |  | Field mask to selectively return fields in the response. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-ReadDataResponse"></a>
+<a name="utxorpc-v1beta-query-ReadDataResponse"></a>
 
 ### ReadDataResponse
 Response containing data (as in plural of datum)
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| values | [AnyChainDatum](#utxorpc-v1beta-query-AnyChainDatum) | repeated | The value of each datum. |
+| ledger_tip | [ChainPoint](#utxorpc-v1beta-query-ChainPoint) |  | The chain point that represent the ledger current position. |
+
+<a name="utxorpc-v1beta-query-ReadEraSummaryRequest"></a>
+
+### ReadEraSummaryRequest
+Request to get the era summary
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| values | [AnyChainDatum](#utxorpc-v1alpha-query-AnyChainDatum) | repeated | The value of each datum. |
-| ledger_tip | [ChainPoint](#utxorpc-v1alpha-query-ChainPoint) |  | The chain point that represent the ledger current position. |
+| field_mask | google.protobuf.FieldMask |  | Field mask to selectively return fields in the parsed response. |
 
+<a name="utxorpc-v1beta-query-ReadEraSummaryResponse"></a>
 
+### ReadEraSummaryResponse
+Response containing the era summaries
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| cardano | [utxorpc.v1beta.cardano.EraSummaries](/cardano#utxorpc-v1beta-cardano-EraSummaries) |  | Cardano era summaries |
 
+<a name="utxorpc-v1beta-query-ReadGenesisRequest"></a>
 
+### ReadGenesisRequest
+Request to get the chain config
 
-<a name="utxorpc-v1alpha-query-ReadParamsRequest"></a>
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| field_mask | google.protobuf.FieldMask |  | Field mask to selectively return fields in the parsed response. |
+
+<a name="utxorpc-v1beta-query-ReadGenesisResponse"></a>
+
+### ReadGenesisResponse
+Response containing the genesis configs
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| genesis | bytes |  | genesis hash for the chain |
+| caip2 | string |  | the caip-2 ID for this network |
+| cardano | [utxorpc.v1beta.cardano.Genesis](/cardano#utxorpc-v1beta-cardano-Genesis) |  | Cardano genesis |
+
+<a name="utxorpc-v1beta-query-ReadParamsRequest"></a>
 
 ### ReadParamsRequest
 Request to get the chain parameters
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields in the parsed response. |
+| field_mask | google.protobuf.FieldMask |  | Field mask to selectively return fields in the parsed response. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-ReadParamsResponse"></a>
+<a name="utxorpc-v1beta-query-ReadParamsResponse"></a>
 
 ### ReadParamsResponse
 Response containing the chain parameters
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| values | [AnyChainParams](#utxorpc-v1beta-query-AnyChainParams) |  | The value of the parameters. |
+| ledger_tip | [ChainPoint](#utxorpc-v1beta-query-ChainPoint) |  | The chain point that represent the ledger current position. |
+
+<a name="utxorpc-v1beta-query-ReadStateRequest"></a>
+
+### ReadStateRequest
+Request to run a chain-specific ledger-state query against the current ledger snapshot.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| values | [AnyChainParams](#utxorpc-v1alpha-query-AnyChainParams) |  | The value of the parameters. |
-| ledger_tip | [ChainPoint](#utxorpc-v1alpha-query-ChainPoint) |  | The chain point that represent the ledger current position. |
+| query | [AnyChainStateQuery](#utxorpc-v1beta-query-AnyChainStateQuery) |  | The chain-specific query to evaluate. |
+| field_mask | google.protobuf.FieldMask |  | Field mask to selectively return fields. |
 
+<a name="utxorpc-v1beta-query-ReadStateResponse"></a>
 
+### ReadStateResponse
+Response carrying the ledger-state query result.
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| result | [AnyChainStateData](#utxorpc-v1beta-query-AnyChainStateData) |  | The query result. |
+| ledger_tip | [ChainPoint](#utxorpc-v1beta-query-ChainPoint) |  | Chain point representing the snapshot the query was evaluated against. |
 
+<a name="utxorpc-v1beta-query-ReadTxRequest"></a>
 
+### ReadTxRequest
+Request to get a transaction by hash
 
-<a name="utxorpc-v1alpha-query-ReadUtxosRequest"></a>
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| hash | bytes |  | The hash of the transaction. |
+| field_mask | google.protobuf.FieldMask |  | Field mask to selectively return fields in the response. |
+
+<a name="utxorpc-v1beta-query-ReadTxResponse"></a>
+
+### ReadTxResponse
+Response containing the transaction associated with the requested hash.
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| tx | [AnyChainTx](#utxorpc-v1beta-query-AnyChainTx) |  | The transaction. |
+| ledger_tip | [ChainPoint](#utxorpc-v1beta-query-ChainPoint) |  | The chain point that represent the ledger current position. |
+
+<a name="utxorpc-v1beta-query-ReadUtxosRequest"></a>
 
 ### ReadUtxosRequest
 Request to get specific UTxOs
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| keys | [TxoRef](#utxorpc-v1alpha-query-TxoRef) | repeated | List of keys UTxOs. |
-| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields. |
+| keys | [TxoRef](#utxorpc-v1beta-query-TxoRef) | repeated | List of keys UTxOs. |
+| field_mask | google.protobuf.FieldMask |  | Field mask to selectively return fields. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-ReadUtxosResponse"></a>
+<a name="utxorpc-v1beta-query-ReadUtxosResponse"></a>
 
 ### ReadUtxosResponse
 Response containing the UTxOs associated with the requested addresses.
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| items | [AnyUtxoData](#utxorpc-v1alpha-query-AnyUtxoData) | repeated | List of UTxOs. |
-| ledger_tip | [ChainPoint](#utxorpc-v1alpha-query-ChainPoint) |  | The chain point that represent the ledger current position. |
+| items | [AnyUtxoData](#utxorpc-v1beta-query-AnyUtxoData) | repeated | List of UTxOs. |
+| ledger_tip | [ChainPoint](#utxorpc-v1beta-query-ChainPoint) |  | The chain point that represent the ledger current position. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-SearchUtxosRequest"></a>
+<a name="utxorpc-v1beta-query-SearchUtxosRequest"></a>
 
 ### SearchUtxosRequest
 Request to search for UTxO based on a pattern.
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| predicate | [UtxoPredicate](#utxorpc-v1alpha-query-UtxoPredicate) |  | Pattern to match UTxOs by. |
-| field_mask | [google.protobuf.FieldMask](#google-protobuf-FieldMask) |  | Field mask to selectively return fields. |
-| max_items | [int32](#int32) |  | The maximum number of items to return. |
-| start_token | [string](#string) |  | The next_page_token value returned from a previous request, if any. |
+| predicate | [UtxoPredicate](#utxorpc-v1beta-query-UtxoPredicate) | optional | Pattern to match UTxOs by. |
+| field_mask | google.protobuf.FieldMask |  | Field mask to selectively return fields. |
+| max_items | int32 | optional | The maximum number of items to return. |
+| start_token | string | optional | The next_page_token value returned from a previous request, if any. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-SearchUtxosResponse"></a>
+<a name="utxorpc-v1beta-query-SearchUtxosResponse"></a>
 
 ### SearchUtxosResponse
 Response containing the UTxOs that match the requested addresses.
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| items | [AnyUtxoData](#utxorpc-v1alpha-query-AnyUtxoData) | repeated | List of UTxOs. |
-| ledger_tip | [ChainPoint](#utxorpc-v1alpha-query-ChainPoint) |  | The chain point that represent the ledger current position. |
-| next_token | [string](#string) |  | Token to retrieve the next page of results, or empty if there are no more results. |
+| items | [AnyUtxoData](#utxorpc-v1beta-query-AnyUtxoData) | repeated | List of UTxOs. |
+| ledger_tip | [ChainPoint](#utxorpc-v1beta-query-ChainPoint) |  | The chain point that represent the ledger current position. |
+| next_token | string | optional | Token to retrieve the next page of results, absent if there are no more results. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-TxoRef"></a>
+<a name="utxorpc-v1beta-query-TxoRef"></a>
 
 ### TxoRef
 Represents a reference to a transaction output
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| hash | [bytes](#bytes) |  | Tx hash. |
-| index | [uint32](#uint32) |  | Output index. |
+| hash | bytes |  | Tx hash. |
+| index | uint32 |  | Output index. |
 
-
-
-
-
-
-<a name="utxorpc-v1alpha-query-UtxoPredicate"></a>
+<a name="utxorpc-v1beta-query-UtxoPredicate"></a>
 
 ### UtxoPredicate
 Represents a simple utxo predicate that can composed to create more complex ones
 
-
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| match | [AnyUtxoPattern](#utxorpc-v1alpha-query-AnyUtxoPattern) |  | Predicate is true if tx exhibits pattern. |
-| not | [UtxoPredicate](#utxorpc-v1alpha-query-UtxoPredicate) | repeated | Predicate is true if tx doesn&#39;t exhibit pattern. |
-| all_of | [UtxoPredicate](#utxorpc-v1alpha-query-UtxoPredicate) | repeated | Predicate is true if utxo exhibits all of the patterns. |
-| any_of | [UtxoPredicate](#utxorpc-v1alpha-query-UtxoPredicate) | repeated | Predicate is true if utxo exhibits any of the patterns. |
-
-
-
-
+| match | [AnyUtxoPattern](#utxorpc-v1beta-query-AnyUtxoPattern) | optional | Predicate is true if tx exhibits pattern. |
+| not | [UtxoPredicate](#utxorpc-v1beta-query-UtxoPredicate) | repeated | Predicate is true if tx doesn&#39;t exhibit pattern. |
+| all_of | [UtxoPredicate](#utxorpc-v1beta-query-UtxoPredicate) | repeated | Predicate is true if utxo exhibits all of the patterns. |
+| any_of | [UtxoPredicate](#utxorpc-v1beta-query-UtxoPredicate) | repeated | Predicate is true if utxo exhibits any of the patterns. |
 
  
 
@@ -249,15 +281,22 @@ Represents a simple utxo predicate that can composed to create more complex ones
 
  
 
-
-<a name="utxorpc-v1alpha-query-QueryService"></a>
+<a name="utxorpc-v1beta-query-QueryService"></a>
 
 ### QueryService
 Service definition for querying the state of the chain.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| ReadParams | [ReadParamsRequest](#utxorpc-v1alpha-query-ReadParamsRequest) | [ReadParamsResponse](#utxorpc-v1alpha-query-ReadParamsResponse) | Get overall chain state. |
-| ReadUtxos | [ReadUtxosRequest](#utxorpc-v1alpha-query-ReadUtxosRequest) | [ReadUtxosResponse](#utxorpc-v1alpha-query-ReadUtxosResponse) | Read specific UTxOs by reference. |
-| SearchUtxos | [SearchUtxosRequest](#utxorpc-v1alpha-query-SearchUtxosRequest) | [SearchUtxosResponse](#utxorpc-v1alpha-query-SearchUtxosResponse) | Search for UTxO based on a pattern. |
-| ReadData | [ReadDataRequest](#utxorpc-v1alpha-query-ReadDataRequest) | [ReadDataResponse](#utxorpc-v1alpha-query-ReadDataResponse) | Read specific datum by hash |
+| ReadParams | [ReadParamsRequest](#utxorpc-v1beta-query-ReadParamsRequest) | [ReadParamsResponse](#utxorpc-v1beta-query-ReadParamsResponse) | Get overall chain state. |
+| ReadUtxos | [ReadUtxosRequest](#utxorpc-v1beta-query-ReadUtxosRequest) | [ReadUtxosResponse](#utxorpc-v1beta-query-ReadUtxosResponse) | Read specific UTxOs by reference. |
+| SearchUtxos | [SearchUtxosRequest](#utxorpc-v1beta-query-SearchUtxosRequest) | [SearchUtxosResponse](#utxorpc-v1beta-query-SearchUtxosResponse) | Search for UTxO based on a pattern. |
+| ReadData | [ReadDataRequest](#utxorpc-v1beta-query-ReadDataRequest) | [ReadDataResponse](#utxorpc-v1beta-query-ReadDataResponse) | Read specific datum by hash |
+| ReadTx | [ReadTxRequest](#utxorpc-v1beta-query-ReadTxRequest) | [ReadTxResponse](#utxorpc-v1beta-query-ReadTxResponse) | Get Txs by chain-specific criteria. |
+| ReadGenesis | [ReadGenesisRequest](#utxorpc-v1beta-query-ReadGenesisRequest) | [ReadGenesisResponse](#utxorpc-v1beta-query-ReadGenesisResponse) | Get the genesis configuration |
+| ReadEraSummary | [ReadEraSummaryRequest](#utxorpc-v1beta-query-ReadEraSummaryRequest) | [ReadEraSummaryResponse](#utxorpc-v1beta-query-ReadEraSummaryResponse) | Get the chain era summary |
+| ReadState | [ReadStateRequest](#utxorpc-v1beta-query-ReadStateRequest) | [ReadStateResponse](#utxorpc-v1beta-query-ReadStateResponse) | Run a chain-specific ledger-state query (e.g. stake pool distribution). |
+
+ 
+
+<a name="utxorpc_v1beta_submit_submit-proto"></a>
