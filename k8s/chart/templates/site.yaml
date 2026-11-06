@@ -1,0 +1,2 @@
+{{- $probe := dict "tcpSocket" (dict "port" "http") }}
+{{ include "utxorpc-docs.workload" (dict "root" . "component" "site" "values" .Values.site "env" dict "probe" $probe) }}

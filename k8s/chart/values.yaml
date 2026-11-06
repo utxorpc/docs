@@ -1,0 +1,94 @@
+# The documentation site (Dockerfile) and the gRPC UI behind its playground
+# (Dockerfile.grpcui), each built by its own workflow into ghcr.io.
+#
+# These defaults are instance-agnostic: no cluster, hostname, gRPC endpoint or
+# image version is assumed. What an instance must supply is empty here and
+# `required` in the templates, so a missing value fails at render instead of
+# deploying a half-configured service.
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Placement shared by both components; a component's own nodeSelector or
+# tolerations replace these.
+nodeSelector: {}
+tolerations: []
+
+site:
+  image:
+    repository: ghcr.io/utxorpc/docs
+    # The workflows tag every image with the full commit SHA. Pin a tag and
+    # its digest; never a moving tag.
+    tag: ""
+    digest: ""
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  port: 3000
+  # Extra plain environment variables.
+  env: {}
+  nodeSelector: {}
+  tolerations: []
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+  securityContext:
+    allowPrivilegeEscalation: false
+  service:
+    type: ClusterIP
+    port: 3000
+    annotations: {}
+  ingress:
+    enabled: false
+    className: ""
+    clusterIssuer: ""
+    host: ""
+    path: /
+    pathType: Prefix
+    tlsSecretName: ""
+    annotations: {}
+
+# Runs apart from the site: gRPC UI exits when its target is unreachable, which
+# must not take the site down. The playground embeds it at /grpcui/, so route
+# that path here on the same host and strip the prefix before it reaches gRPC UI.
+grpcui:
+  enabled: true
+  image:
+    repository: ghcr.io/utxorpc/grpcui
+    tag: ""
+    digest: ""
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  port: 8081
+  # host:port of a UTxO RPC server with gRPC reflection enabled.
+  target: ""
+  plaintext: false
+  # Optional Secret with an API_KEY key, sent to the target in the header named
+  # by API_KEY_HEADER (set it in env if the default doesn't apply).
+  existingSecret: ""
+  env: {}
+  nodeSelector: {}
+  tolerations: []
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+  securityContext:
+    allowPrivilegeEscalation: false
+  service:
+    type: ClusterIP
+    port: 8081
+    annotations: {}
+  ingress:
+    enabled: false
+    className: ""
+    clusterIssuer: ""
+    host: ""
+    path: /grpcui
+    pathType: Prefix
+    tlsSecretName: ""
+    annotations: {}
