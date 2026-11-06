@@ -1,8 +1,8 @@
 {{/*
 One component's Deployment, Service and optional Ingress. The caller passes
 root (the chart context), component (its name), values (its values block),
-env (the environment the component needs, which wins over values.env) and
-probe (a probe handler).
+env (the environment the component needs, which wins over values.env), probe
+(a probe handler) and optionally command (replaces the image's).
 */}}
 {{- define "utxorpc-docs.workload" -}}
 {{- $name := include "utxorpc-docs.componentName" . -}}
@@ -30,6 +30,10 @@ spec:
         - name: {{ .component }}
           image: {{ include "utxorpc-docs.image" . }}
           imagePullPolicy: {{ .values.image.pullPolicy }}
+          {{- with .command }}
+          command:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .values.port | int }}

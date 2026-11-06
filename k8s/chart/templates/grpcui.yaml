@@ -3,9 +3,20 @@
 {{- $env := dict
   "GRPC_TARGET" (required "grpcui.target is required" $values.target)
   "GRPC_PORT" $values.port
-  "USE_PLAINTEXT" $values.plaintext
 }}
+{{- if not $values.services }}
+{{- fail "grpcui.services is required: list the services to expose" }}
+{{- end }}
+{{- $flags := list }}
+{{- range $values.services }}
+{{- $flags = append $flags (printf "-service %s" .) }}
+{{- end }}
+{{- if $values.plaintext }}
+{{- $flags = append $flags "-plaintext" }}
+{{- end }}
+{{- $script := printf "exec grpcui -bind 0.0.0.0 -port $GRPC_PORT -also-serve $STATIC_DIR -extra-css $CSS_FILE -extra-js $JS_FILE ${API_KEY:+-rpc-header \"$API_KEY_HEADER:$API_KEY\"} %s $GRPC_TARGET" (join " " $flags) }}
+{{- $command := list "sh" "-c" $script }}
 {{- $probe := dict "tcpSocket" (dict "port" "http") }}
 ---
-{{ include "utxorpc-docs.workload" (dict "root" . "component" "grpcui" "values" $values "env" $env "probe" $probe) }}
+{{ include "utxorpc-docs.workload" (dict "root" . "component" "grpcui" "values" $values "env" $env "probe" $probe "command" $command) }}
 {{- end }}
