@@ -1,111 +1,171 @@
 import { Callout } from "nextra-theme-docs";
 
-## .NET SDK
+# .NET SDK
 
-### Overview
-This provides an interface for interacting with UTxORPC compatible nodes. It currently only includes the `SyncServiceClient`, which allows you to fetch blocks and follow the tip of the blockchain.
+Utxorpc.Sdk is the .NET client for UTxO RPC. One `UtxorpcClient` gives you the Sync, Query, Submit and Watch modules of both `v1beta` and `v1alpha` over one connection, with short methods that take plain .NET values. Calls return the Spec's messages; chain-event streams return the SDK's own event types.
 
-### Installation
+## Prerequisites
 
-To install the SDK, you can add the NuGet package to your project:
+- **.NET 11** SDK or later.
+
+## Installation
+
+Start with `dotnet new console` (or `dotnet new web` for section 5), then install the SDK:
 
 ```bash
-dotnet add package Utxorpc.Sdk
+dotnet add package Utxorpc.Sdk --version 2.0.0-alpha
 ```
 
-### Getting Started
+## Usage
+
 <Callout type="note">
     The following code samples assume that the UTxORPC node is running locally on `localhost:50051`. If your node is hosted remotely or on a different server, replace `"http://localhost:50051"` with the appropriate server URL and port for your environment. 
     
     For more details on configuring your node, refer to the [UTxORPC Ecosystem Servers Documentation](/servers).
 </Callout>
 
-Here’s how you can start using the `SyncServiceClient` to interact with the UTxORPC.
+The samples are taken from the [example programs](https://github.com/utxorpc/dotnet-sdk/tree/main/examples) in the SDK's repository, which you can run as they are.
 
-#### 1. Initialize the Client
+### 1. Connect
 
-Here's how to initialize the client:
+Start a console program with these lines. Create one client and keep it for the life of your program; headers, such as a provider's API key, go on every call. The `dmtr-api-key` header shown here is Demeter's. Each of the next three samples continues this program.
+
+```csharp
+using System.Diagnostics;
+using Google.Protobuf.WellKnownTypes;
+using Utxorpc.Sdk;
+using Utxorpc.Sdk.V1Beta;
+using Beta = Utxorpc.V1Beta;
+
+string url = Environment.GetEnvironmentVariable("UTXORPC_URL") ?? "http://localhost:50051";
+string? apiKey = Environment.GetEnvironmentVariable("DMTR_API_KEY");
+Dictionary<string, string>? headers = apiKey is null ? null : new() { ["dmtr-api-key"] = apiKey };
+using UtxorpcClient u5c = new(url, headers);
+
+// Ctrl+C cancels the call in flight.
+using CancellationTokenSource cancellation = new();
+Console.CancelKeyPress += (_, e) =>
+{
+    e.Cancel = true;
+    cancellation.Cancel();
+};
+CancellationToken ct = cancellation.Token;
+```
+
+### 2. Follow the tip
+
+Read the tip, then follow the chain from there. Each event is one of three cases, and the compiler warns when a switch expression misses one; the explicit `null` arm preserves that check.
+
+```csharp
+try
+{
+    Beta.Sync.BlockRef tip = (await u5c.V1Beta.Sync.ReadTipAsync(ct)).Tip;
+    Console.WriteLine($"Tip: slot {tip.Slot}, hash {Convert.ToHexString(tip.Hash.Span)}");
+    BlockPoint point = new(tip.Slot, tip.Hash.Memory);
+    await foreach (FollowTipEvent e in u5c.V1Beta.Sync.FollowTipAsync(point, cancellationToken: ct))
+    {
+        Console.WriteLine(e switch
+        {
+            BlockApplied a => $"Apply: {a.Block.NativeBytes.Length} bytes",
+            BlockUndone u => $"Undo: {u.Block.NativeBytes.Length} bytes",
+            Reset r => $"Reset: slot {r.Point.Slot}",
+            null => throw new UnreachableException()
+        });
+    }
+}
+catch (OperationCanceledException)
+{
+    Console.WriteLine("Stopped.");
+}
+```
+
+### 3. Query
+
+Read the protocol parameters, then every unspent output of an address, passed as hex on the command line. Addresses are raw bytes, and the search reads all pages for you. The mask asks only for the parameter values.
+
+```csharp
+try
+{
+    Beta.Cardano.PParams parameters = (await u5c.V1Beta.Query.ReadParamsAsync(
+        FieldMask.FromFieldNumbers<Beta.Query.ReadParamsResponse>(Beta.Query.ReadParamsResponse.ValuesFieldNumber), ct)).Values.Cardano;
+    Console.WriteLine($"Largest transaction: {parameters.MaxTxSize} bytes");
+    byte[] address = Convert.FromHexString(args[0]);
+    await foreach (Beta.Query.AnyUtxoData output in u5c.V1Beta.Query.SearchUtxosByAddressAsync(address, cancellationToken: ct))
+    {
+        Console.WriteLine($"{Convert.ToHexString(output.TxoRef.Hash.Span)}#{output.TxoRef.Index}: {output.NativeBytes.Length} bytes");
+    }
+}
+catch (OperationCanceledException)
+{
+    Console.WriteLine("Stopped.");
+}
+```
+
+### 4. Submit
+
+Evaluate a transaction you signed, passed as hex on the command line, then submit it and wait until it is confirmed. Submitting spends the transaction's fee; evaluating spends nothing.
+
+```csharp
+byte[] tx = Convert.FromHexString(args[0]);
+try
+{
+    Beta.Submit.EvalTxResponse evaluation = await u5c.V1Beta.Submit.EvalTxAsync(tx, ct);
+    Console.WriteLine($"Evaluation: {evaluation.Report}");
+    Beta.Submit.SubmitTxResponse submitted = await u5c.V1Beta.Submit.SubmitTxAsync(tx, ct);
+    await foreach (Beta.Submit.WaitForTxResponse update in u5c.V1Beta.Submit.WaitForTxAsync(submitted.Ref.Memory, ct))
+    {
+        Console.WriteLine(update.Stage);
+        if (update.Stage == Beta.Submit.Stage.Confirmed) break;
+    }
+}
+catch (UtxorpcException error)
+{
+    string outcome = error.Kind == UtxorpcErrorKind.InvalidTx ? "Rejected" : "Failed";
+    Console.WriteLine($"{outcome} ({error.Kind}): {error.Detail}");
+}
+catch (OperationCanceledException)
+{
+    Console.WriteLine("Stopped.");
+}
+```
+
+### 5. Dependency injection and worker services
+
+In a web application, register one shared client from configuration. This is a whole `Program.cs`; put the server's address under `Utxorpc:Url` in `appsettings.json`.
+
 ```csharp
 using Utxorpc.Sdk;
+using Beta = Utxorpc.V1Beta;
 
-var headers = new Dictionary<string, string>
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+builder.Services.AddUtxorpcClient(o =>
 {
-    { "api-key", "" },
-};
+    builder.Configuration.GetSection("Utxorpc").Bind(o);
+    // Set DMTR_API_KEY in the environment for a hosted server; keep keys out of files.
+    if (builder.Configuration["DMTR_API_KEY"] is { } apiKey) o.Headers["dmtr-api-key"] = apiKey;
+});
+builder.Services.AddHealthChecks().AddCheck<UtxorpcHealthCheck>("utxorpc", timeout: TimeSpan.FromSeconds(5));
+WebApplication app = builder.Build();
+app.MapHealthChecks("/health");
 
-var client = new SyncServiceClient(
-    url: "http://localhost:50051",
-    headers
-);
-```
-This sample is structured in a way that can be used if your UTxORPC node comes from a provider and you need to attach needed information to your header.
-
-#### 2. Follow the Tip of the Blockchain
-
-The `FollowTipAsync` method allows you to receive real-time updates as the blockchain progresses. You need to provide a `BlockRef` or a Block Reference to indicate where you want to start following.
-
-```csharp
-using Utxorpc.Sdk.Models;
-using Utxorpc.Sdk.Models.Enums;
-
-await foreach (NextResponse? response in client.FollowTipAsync(
-    new BlockRef
-    (
-        "b977e548f3364b114505f3311a10f89e5f5cf47e815765bce6750a5de48e5951",
-        58717900
-    )))
+app.MapGet("/tip", async (UtxorpcClient u5c, CancellationToken ct) =>
 {
-    Console.WriteLine("___________________");
-    switch (response.Action)
-    {
-        case NextResponseAction.Apply:
-            Block? applyBlock = response.AppliedBlock;
-            if (applyBlock is not null)
-            {
-                Console.WriteLine($"Apply Block: {applyBlock.Hash} Slot: {applyBlock.Slot}");
-                Console.WriteLine($"Cbor: {Convert.ToHexString(applyBlock.NativeBytes ?? [])}");
-            }
-            break;
-        case NextResponseAction.Undo:
-            Block? undoBlock = response.UndoneBlock;
-            if (undoBlock is not null)
-            {
-                Console.WriteLine($"Undo Block: {undoBlock.Hash} Slot: {undoBlock.Slot}");
-            }
-            break;
-        case NextResponseAction.Reset:
-            BlockRef? resetRef = response.ResetRef;
-            if (resetRef is not null)
-            {
-                Console.WriteLine($"Reset to Block: {resetRef.Hash} Slot: {resetRef.Index}");
-            }
-            break;
-    }
-    Console.WriteLine("___________________");
-}
+    Beta.Sync.BlockRef tip = (await u5c.V1Beta.Sync.ReadTipAsync(ct)).Tip;
+    return Results.Ok(new { tip.Slot, Hash = Convert.ToHexString(tip.Hash.Span) });
+});
+
+app.Run();
 ```
 
-This example listens for updates from the blockchain and handles them based on whether blocks are applied, undone, or reset.
+Or start from a worker service that already follows the chain:
 
-#### 3. Fetch a Block
-
-The `FetchBlockAsync` method retrieves a specific block by providing a `BlockRef`.
-
-```csharp
-BlockRef? blockRef = new BlockRef("b977e548f3364b114505f3311a10f89e5f5cf47e815765bce6750a5de48e5951", 58717900);
-Block? block = await syncServiceClient.FetchBlockAsync(blockRef);
-
-if (block is not null)
-{
-    Console.WriteLine($"Block Hash: {block.Hash}");
-    Console.WriteLine($"Block Slot: {block.Slot}");
-    Console.WriteLine($"Block CBOR: {Convert.ToHexString(block.NativeBytes ?? [])}");
-}
+```bash
+dotnet new install Utxorpc.Templates::2.0.0-alpha
+dotnet new utxorpc-worker --name MyIndexer --url http://localhost:50051
 ```
-Certainly! Here's a conclusion in the same format typically used in Node.js documentation:
 
----
+## More
 
-### Conclusion
-
-The `SyncServiceClient` in this SDK offers streamlined access to blockchain data through intuitive methods like `FetchBlockAsync` and `FollowTipAsync`. With these tools, you can effortlessly integrate block retrieval and real-time blockchain monitoring into your .NET applications, enabling you to stay synchronized with the latest network state and react promptly to blockchain events.
+- [README](https://github.com/utxorpc/dotnet-sdk#readme): every short method, predicates, field masks, errors and timeouts, the servers each call works on, and migrating from 1.8.0-alpha.
+- [Examples](https://github.com/utxorpc/dotnet-sdk/tree/main/examples): query, sync, submit, dependency injection and a worker service.
+- [Utxorpc.Sdk on NuGet](https://www.nuget.org/packages/Utxorpc.Sdk).
