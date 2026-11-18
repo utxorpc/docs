@@ -28,7 +28,7 @@ The samples are taken from the [example programs](https://github.com/utxorpc/dot
 
 ### 1. Connect
 
-Start a console program with these lines. Create one client and keep it for the life of your program; headers, such as a provider's API key, go on every call. The `dmtr-api-key` header shown here is Demeter's. Each of the next three samples continues this program.
+Start a console program with these lines. Create one client and keep it for the life of your program; headers, such as a provider's API key, go on every call. The `dmtr-api-key` header shown here is Demeter's. Append just one of the next three samples to this program.
 
 ```csharp
 using System.Diagnostics;
@@ -101,6 +101,10 @@ catch (OperationCanceledException)
 }
 ```
 
+```bash
+dotnet run -- <address hex>
+```
+
 ### 4. Submit
 
 Evaluate a transaction you signed, passed as hex on the command line, then submit it and wait until it is confirmed. Submitting spends the transaction's fee; evaluating spends nothing.
@@ -127,6 +131,10 @@ catch (OperationCanceledException)
 {
     Console.WriteLine("Stopped.");
 }
+```
+
+```bash
+dotnet run -- <signed transaction hex>
 ```
 
 ### 5. Dependency injection and worker services
@@ -160,12 +168,12 @@ app.Run();
 Or start from a worker service that already follows the chain:
 
 ```bash
-dotnet new install Utxorpc.Templates::2.0.0-alpha
+dotnet new install Utxorpc.Templates@2.0.0-alpha
 dotnet new utxorpc-worker --name MyIndexer --url http://localhost:50051
 ```
 
 ## More
 
 - [README](https://github.com/utxorpc/dotnet-sdk#readme): every short method, predicates, field masks, errors and timeouts, the servers each call works on, and migrating from 1.8.0-alpha.
-- [Examples](https://github.com/utxorpc/dotnet-sdk/tree/main/examples): query, sync, submit, dependency injection and a worker service.
+- [Examples](https://github.com/utxorpc/dotnet-sdk/tree/main/examples): query, sync, submit, dependency injection, a worker service and a Blazor WebAssembly sample showing the tip and incoming blocks.
 - [Utxorpc.Sdk on NuGet](https://www.nuget.org/packages/Utxorpc.Sdk).
